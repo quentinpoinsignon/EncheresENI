@@ -18,30 +18,24 @@ public class encheresServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("In the doGet");
-		String action = request.getParameter("action");
-		RequestDispatcher rd = null;
+		String action = request.getParameter("inscription");
+		System.out.println(action);
+		
 		if(("inscription").equals(action)) {
-			System.out.println("getparameter ok");
-		rd = this.getServletContext().getRequestDispatcher("/WEB-INF/pages/inscription.jsp");
-		rd.forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 		}
-//		if (action != null) {
-//			System.out.println("action ok");
-//		}
-//		RequestDispatcher rd=null;
-//		rd = this.getServletContext().getNamedDispatcher("/WEB-INF/pages/accueil.jsp");
-//		rd.forward(request, response);
-//		if(("inscription").equals(action)) {
-//			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
-//		}
-//		else {
+		else {
+			System.out.println("else");
+			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+		}
+		
+
 		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-//	}
-		}
+
+		
+}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

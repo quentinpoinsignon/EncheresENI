@@ -11,9 +11,9 @@
 <header>
 <h1>ENI Encheres</h1>
 
-<a href="/pages/inscription?action=inscription">S'inscrire - </a>
-<a href="">Se connecter</a>
-
+<a href="EncheresENI/encheres?action=inscription">S'inscrire - </a>
+<a href="${pageContext.request.contextPath}/encheres?action=login">Se connecter</a>
+ 
 <h2>Liste des encheres</h2>
 </header>
 
