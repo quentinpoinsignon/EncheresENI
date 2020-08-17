@@ -1,7 +1,6 @@
 package fr.eni.encheres.bo;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class Enchere {
 	private int noEnchere;

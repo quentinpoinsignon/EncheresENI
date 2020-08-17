@@ -1,0 +1,14 @@
+header {
+}
+
+h1 {
+	text-align:left;
+}
+
+header, a {
+	text-align : right;
+}
+
+header h2 {
+	text-align : center;
+}
