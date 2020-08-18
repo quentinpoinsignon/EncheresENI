@@ -7,6 +7,6 @@ import fr.eni.encheres.bo.Article;
 
 public interface ArticleDAO {
 
-	public List<Article> selectAllArticle() throws SQLException;
+	public List<Article> selectAllArticle() throws SQLException, Exception;
 
 }

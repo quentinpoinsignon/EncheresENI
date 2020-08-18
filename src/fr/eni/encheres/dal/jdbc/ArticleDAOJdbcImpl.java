@@ -10,12 +10,29 @@ import java.util.List;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.dal.interfaces.ArticleDAO;
 
+/**
+ * 
+ * @author jarrigon2020
+ * 
+ *         Cette classe contient les différentes méthodes permettant de réaliser
+ *         les requête sql concernant lees articles vendus sur l'application
+ */
+
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private final String SELECT_ALL_ARTICLE = "";
+	private final String SELECT_ALL_ARTICLE = "SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial_prix_vente,no_utilisateur,no_categorie,vente_effectuee FROM ARTICLES_VENDUS";
+
+	/**
+	 * @author jarrigon2020
+	 * @return liste -> Objet de type List contenant des Objets de type Article
+	 * 
+	 *         Cette méthode permet de récupérer l'ensemble des articles présents
+	 *         dans la base de données
+	 * 
+	 */
 
 	@Override
-	public List<Article> selectAllArticle() throws SQLException {
+	public List<Article> selectAllArticle() throws Exception {
 
 		Statement request = null;
 		ResultSet myResultset = null;
@@ -25,21 +42,21 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		try (Connection databaseconnexion = JdbcTools.getConnection();) {
 
 			request = databaseconnexion.createStatement();
-			myResultset = request.executeQuery(SQL_SELECT_ALL);
-			Article art = null;
+			myResultset = request.executeQuery(SELECT_ALL_ARTICLE);
+			Article article = null;
 
-			while (rs.next()) {
+			while (myResultset.next()) {
+
+				liste.add(article);
 
 			}
+		} catch (SQLException e) {
 
-		}
-		liste.add(art);
-	}}catch(SQLException e)
-	{
 			throw new Exception(e.getMessage());
-		}return liste;
+		}
 
-	return null;
-}
+		return liste;
+
+	}
 
 }
