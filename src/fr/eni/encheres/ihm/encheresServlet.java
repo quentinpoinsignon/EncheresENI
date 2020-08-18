@@ -35,11 +35,6 @@ public class encheresServlet extends HttpServlet {
 }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
 	}
 
-	protected void traitementLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
-	}
 }

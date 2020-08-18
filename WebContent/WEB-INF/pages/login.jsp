@@ -7,7 +7,7 @@
 <title>Login encheres</title>
 </head>
 <body>
-<h1>ENI - Enchères</h1>
+<h1>ENI-Enchères</h1>
 
 <form action="${pageContext.request.contextPath}/encheres" method="post">
 	<label for="identifiant">Identifiant : </label>
