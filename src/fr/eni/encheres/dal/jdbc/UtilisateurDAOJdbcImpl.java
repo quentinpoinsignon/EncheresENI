@@ -32,11 +32,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		requestResult = stmt.executeQuery(verifEmailRequest);
 
 		if (requestResult != null) {
+
 			System.out.println("Email existe");
 			requestResult = stmt.executeQuery(VerifPassword);
+
 			if (requestResult != null) {
 				System.out.println("Mot de passe ok");
-
+				requestResult = null;
 				requestResult = stmt.executeQuery(RecupUserInfo);
 
 				Boolean nextResult = requestResult.next();
@@ -52,6 +54,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					nextResult = requestResult.next();
 
 				}
+
 				requestResult.close();
 
 			}
