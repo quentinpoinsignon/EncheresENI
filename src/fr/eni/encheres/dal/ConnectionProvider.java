@@ -24,10 +24,10 @@ public abstract class ConnectionProvider {
 	static {
 		try {
 			Context context = new InitialContext();
-			Context envContext = (Context) context.lookup("java:/comp/env");
-			dataSource = (DataSource) envContext.lookup("/jdbc/pool_cnx");
+
+			dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/pool_cnx");
 		} catch (NamingException e) {
-			throw new RuntimeException("Impossible d'accéder à la base de données");
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
