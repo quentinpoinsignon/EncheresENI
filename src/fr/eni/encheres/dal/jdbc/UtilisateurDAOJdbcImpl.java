@@ -2,6 +2,7 @@ package fr.eni.encheres.dal.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import fr.eni.encheres.bo.Utilisateur;
@@ -14,16 +15,63 @@ import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
+	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?)";
+	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND password = ?";;
+
 	public static Connection getConnection() throws SQLException {
 
 		return JdbcTools.getConnection();
 
 	}
 
-	@Override
-	public void userInsert(Utilisateur user) throws Exception {
+	public Utilisateur userConnection(String email, String password) throws Exception {
 
-		final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?)";
+		ResultSet MyResultset = null;
+		Utilisateur user = null;
+
+		try (Connection databaseConnection = getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(VERIF_USER_DATABASE);) {
+
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, password);
+
+			MyResultset = preparedStatement.executeQuery();
+
+			if (MyResultset.next()) {
+
+				String pseudo = MyResultset.getString(1);
+				String nom = MyResultset.getString(2);
+				String prenom = MyResultset.getString(3);
+				String userEmail = MyResultset.getString(4);
+				String telephone = MyResultset.getString(5);
+				String rue = MyResultset.getString(6);
+				String codePostal = MyResultset.getString(7);
+				String ville = MyResultset.getString(8);
+				String motDePasse = MyResultset.getString(9);
+
+				user = new Utilisateur(pseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville, motDePasse);
+
+			}
+
+		} catch (SQLException e) {
+
+			throw new Exception("Erreur lors de l'ajout de l'utilisateur");
+
+		}
+
+		return user;
+
+	}
+
+	@Override
+	/**
+	 * @author jarrigon2020
+	 * @param user -> Objet de type Utilisateur
+	 * 
+	 *             Cette fonction permet d'enregistrer un nouvel utilisateur dans la
+	 *             base de données
+	 */
+	public void userInsert(Utilisateur user) throws Exception {
 
 		try (Connection databaseConnection = getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(USER_INSERT);) {
