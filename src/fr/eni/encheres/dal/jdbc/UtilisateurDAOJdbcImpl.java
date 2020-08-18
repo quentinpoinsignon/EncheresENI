@@ -15,8 +15,13 @@ import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
+
 	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?)";
 	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";
+
+	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
+	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";
+
 
 	public static Connection getConnection() throws SQLException {
 
@@ -24,6 +29,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 
+	/**
+	 * @author jarrigon2020
+	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
+	 *                 l'utilisateur
+	 * @param password -> Chaine de caractère correspondant au mot de passe fourni
+	 *                 par l'utilisateur
+	 * @return user -> Objet de type Utilisateur
+	 * 
+	 *         Cette méthode permet de vérifier si l'email et le mot de passe fourni
+	 *         par l'utilisateur sont bien présents dans la base de données et
+	 *         correspondent entre eux.
+	 */
 	public Utilisateur userConnection(String email, String password) throws Exception {
 
 		ResultSet MyResultset = null;
@@ -76,8 +93,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		try (Connection databaseConnection = getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(USER_INSERT);) {
 
-			// Valoriser les paramÃ¨tres de la requete
-
 			preparedStatement.setString(1, user.getPseudo());
 			preparedStatement.setString(2, user.getNom());
 			preparedStatement.setString(3, user.getPrenom());
@@ -87,8 +102,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			preparedStatement.setString(7, user.getCodePostal());
 			preparedStatement.setString(8, user.getVille());
 			preparedStatement.setString(9, user.getMotDePasse());
-			preparedStatement.setInt(10, user.getCredit());
-			preparedStatement.setBoolean(5, user.getAdministrateur());
 
 			preparedStatement.executeUpdate();
 
