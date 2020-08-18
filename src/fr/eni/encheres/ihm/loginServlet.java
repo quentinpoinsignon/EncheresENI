@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.UtilisateurManager;
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 @WebServlet("/login")
 public class loginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static UtilisateurManager uMger = new UtilisateurManager();
+
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
