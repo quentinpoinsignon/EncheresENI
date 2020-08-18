@@ -2,8 +2,10 @@ package fr.eni.encheres.dal.interfaces;
 
 import java.sql.SQLException;
 
+import fr.eni.encheres.bo.Utilisateur;
+
 public interface UtilisateurDAO {
 
-	void userConnection(String email, String password) throws SQLException;
+	void userInsert(Utilisateur user) throws SQLException, Exception;
 
 }
