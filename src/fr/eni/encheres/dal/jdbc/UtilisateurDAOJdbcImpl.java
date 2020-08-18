@@ -9,18 +9,14 @@ import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 /**
- * Classe implï¿½mentant l'interface UtilisateurDAO et contenant les diffï¿½rentes
- * mï¿½thodes permettant de gï¿½rer les requï¿½tes SQL liï¿½es aux utilisateurs
+ * Classe implémentant l'interface UtilisateurDAO et contenant les différentes
+ * méthodes permettant de gérer les requêtes SQL liées aux utilisateurs
  */
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-
-	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?)";
-	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";
-
-
-
+	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
+	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";;
 
 	public static Connection getConnection() throws SQLException {
 
@@ -30,14 +26,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
 	 * @author jarrigon2020
-	 * @param email    -> Chaine de caractï¿½re qui correspond ï¿½ l'email fourni par
+	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
 	 *                 l'utilisateur
-	 * @param password -> Chaine de caractï¿½re correspondant au mot de passe fourni
+	 * @param password -> Chaine de caractère correspondant au mot de passe fourni
 	 *                 par l'utilisateur
 	 * @return user -> Objet de type Utilisateur
 	 * 
-	 *         Cette mï¿½thode permet de vï¿½rifier si l'email et le mot de passe fourni
-	 *         par l'utilisateur sont bien prï¿½sents dans la base de donnï¿½es et
+	 *         Cette méthode permet de vérifier si l'email et le mot de passe fourni
+	 *         par l'utilisateur sont bien présents dans la base de données et
 	 *         correspondent entre eux.
 	 */
 	public Utilisateur userConnection(String email, String password) throws Exception {
@@ -85,7 +81,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @param user -> Objet de type Utilisateur
 	 * 
 	 *             Cette fonction permet d'enregistrer un nouvel utilisateur dans la
-	 *             base de donnï¿½es
+	 *             base de données
 	 */
 	public void userInsert(Utilisateur user) throws Exception {
 
@@ -114,8 +110,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
 	 * 
-	 * String userEmail = email; // Il faut rï¿½cupï¿½rer les informations String
-	 * userPassword = password; // rentrï¿½es dans le formulaire par l'utilisateur
+	 * String userEmail = email; // Il faut récupérer les informations String
+	 * userPassword = password; // rentrées dans le formulaire par l'utilisateur
 	 * 
 	 * ResultSet requestResult = null;
 	 * 
@@ -142,7 +138,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * 
 	 * while (nextResult) {
 	 * 
-	 * // Crï¿½ation de la session
+	 * // Création de la session
 	 * 
 	 * requestResult.getString(1); requestResult.getString(2);
 	 * requestResult.getString(3);
