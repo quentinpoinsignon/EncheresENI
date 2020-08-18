@@ -18,20 +18,19 @@ public class encheresServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("In the doGet");
-		String action = request.getParameter("inscription");
+		String action = request.getParameter("action");
 		System.out.println(action);
 		
 		if(("inscription").equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 		}
-		else {
-			System.out.println("else");
+		if(("login").equals(action)) {
+			request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+		}
+		if((action) == null) {
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		}
 		
-
-		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-
 		
 }
 

@@ -7,6 +7,6 @@
 <title>Login encheres</title>
 </head>
 <body>
-<h1>Ecran de login/h1>
+<h1>Ecran de login</h1>
 </body>
 </html>
