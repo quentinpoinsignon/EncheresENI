@@ -9,6 +9,16 @@ header, a {
 	text-align : right;
 }
 
-header h2 {
+h2 {
 	text-align : center;
+}
+body, h2 {
+	text-align : center;
+}
+
+.input{
+    text-align: center;
+    justify-content: space-between;
+    width: 200px;
+    margin: 10px;
 }
