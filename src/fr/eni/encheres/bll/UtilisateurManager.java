@@ -21,7 +21,7 @@ public class UtilisateurManager {
 	}
 	
 	
-	public void checkUtilisateur(String email, String password) {
+	public Utilisateur checkUtilisateur(String email, String password) {
 		Utilisateur userBDD = null;
 		try {
 			userBDD = uDAO.userConnection(email, password);
@@ -29,6 +29,6 @@ public class UtilisateurManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(userBDD.getNom());
+		return userBDD;
 	}
 }
