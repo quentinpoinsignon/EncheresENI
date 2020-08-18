@@ -19,8 +19,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?)";
 	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";
 
-	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
-	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";
+
 
 
 	public static Connection getConnection() throws SQLException {
@@ -31,14 +30,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
 	 * @author jarrigon2020
-	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
+	 * @param email    -> Chaine de caractï¿½re qui correspond ï¿½ l'email fourni par
 	 *                 l'utilisateur
-	 * @param password -> Chaine de caractère correspondant au mot de passe fourni
+	 * @param password -> Chaine de caractï¿½re correspondant au mot de passe fourni
 	 *                 par l'utilisateur
 	 * @return user -> Objet de type Utilisateur
 	 * 
-	 *         Cette méthode permet de vérifier si l'email et le mot de passe fourni
-	 *         par l'utilisateur sont bien présents dans la base de données et
+	 *         Cette mï¿½thode permet de vï¿½rifier si l'email et le mot de passe fourni
+	 *         par l'utilisateur sont bien prï¿½sents dans la base de donnï¿½es et
 	 *         correspondent entre eux.
 	 */
 	public Utilisateur userConnection(String email, String password) throws Exception {
