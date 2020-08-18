@@ -1,15 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Liste enchères</title>
+<meta charset="ISO-8859-1">
+<title>Liste Encheres</title>
 </head>
 <body>
-
-<h1>ENI-Enchères</h1>
-<p>Bienvenue dans liste enchères</p>
-
+<h1>Liste des ench�res</h1>
 </body>
 </html>

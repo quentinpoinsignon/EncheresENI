@@ -1,6 +1,8 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,11 +40,24 @@ public class inscriptionServlet extends HttpServlet {
         String ville = request.getParameter("ville");
         String password = request.getParameter("password");
         String confirmation = request.getParameter("confirmation");
+<<<<<<< HEAD
         
         Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse)
 
 
 
+=======
+        String message;
+        
+        if (password != confirmation) {
+        	
+        	message = "La confirmation est différente du mot de passe!";
+			this.getServletContext().getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+        }
+        Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, password);
+        request.getRequestDispatcher("/WEB-INF/pages/listeEnchres.jsp").forward(request, response);
+        System.out.println(utilisateur.getNom());
+>>>>>>> 6042f29190b72ea60264afb4cc2c78306100643d
 	}
 
 }
