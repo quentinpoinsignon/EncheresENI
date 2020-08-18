@@ -17,9 +17,9 @@ public class encheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("In the doGet");
+		//System.out.println("In the doGet");
 		String action = request.getParameter("action");
-		System.out.println(action);
+		//System.out.println(action);
 		
 		if(("inscription").equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
@@ -35,6 +35,11 @@ public class encheresServlet extends HttpServlet {
 }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 	}
 
+	protected void traitementLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+	}
 }
