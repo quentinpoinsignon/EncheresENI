@@ -18,12 +18,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
 	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";;
 
-	public static Connection getConnection() throws SQLException {
-
-		return JdbcTools.getConnection();
-
-	}
-
 	/**
 	 * @author jarrigon2020
 	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
@@ -41,7 +35,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		ResultSet MyResultset = null;
 		Utilisateur user = null;
 
-		try (Connection databaseConnection = getConnection();
+		try (Connection databaseConnection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(VERIF_USER_DATABASE);) {
 
 			preparedStatement.setString(1, email);
@@ -85,7 +79,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 */
 	public void userInsert(Utilisateur user) throws Exception {
 
-		try (Connection databaseConnection = getConnection();
+		try (Connection databaseConnection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(USER_INSERT);) {
 
 			preparedStatement.setString(1, user.getPseudo());
