@@ -47,12 +47,10 @@ public class inscriptionServlet extends HttpServlet {
 //        	message = "La confirmation est diff�rente du mot de passe!";
 //			this.getServletContext().getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 //        }
+        Utilisateur utilisateur = null;
         if(("1").equals(creer)) {
-        Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, password);
-//        request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);
-        System.out.println(utilisateur.toString());
-        uMger.addUtilisateur(utilisateur);
-        System.out.println(utilisateur.getNom());
+        	utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, password);
+        	uMger.addUtilisateur(utilisateur);
         }
         request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);
 

@@ -14,7 +14,7 @@
 <br>
 <article>
 <h2>Mon profil</h2>
-<form method="post" name="inscription">
+<form method="post" name="inscription" action="${pageContext.request.contextPath}/inscription">
              <div class="data">
                 <div style="float:left;width:50%;">
   				    <div><label for="pseudo"> Pseudo : </label>
@@ -50,14 +50,14 @@
                     <div><label for="confirmation" > Confirmation :  </label>
                         <input class="input" name="confirmation" id="confirmation" type="password" required>
                     </div>
+					<div>
+					<button type= "submit" name="creer" id="creer" value="1">Créer</button>
+					</div>
+					<div>
+					<a href="encheres"> <input type="button" value="Annuler"> </a>
+					</div>
                 </div>
            </div>
-<!-- bouton remplacé car douteux ?            <p> -->
-<!--            		<input type="submit" name="creer" value="Creer"/> -->
-<!--            		 -->
-<!--            </p> -->
-			<button type= "submit" name="creer" id="creer" value="1">Créer</button>
-			<a href="encheres"> <input type="button" value="Annuler"> </a>
 </form>
 </article>
 </body>
