@@ -9,14 +9,14 @@ import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 /**
- * Classe implémentant l'interface UtilisateurDAO et contenant les différentes
- * méthodes permettant de gérer les requêtes SQL liées aux utilisateurs
+ * Classe implï¿½mentant l'interface UtilisateurDAO et contenant les diffï¿½rentes
+ * mï¿½thodes permettant de gï¿½rer les requï¿½tes SQL liï¿½es aux utilisateurs
  */
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES(?,?,?,?,?,?,?,?)";
-	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND password = ?";;
+	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";
 
 	public static Connection getConnection() throws SQLException {
 
@@ -69,7 +69,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @param user -> Objet de type Utilisateur
 	 * 
 	 *             Cette fonction permet d'enregistrer un nouvel utilisateur dans la
-	 *             base de données
+	 *             base de donnï¿½es
 	 */
 	public void userInsert(Utilisateur user) throws Exception {
 
@@ -102,8 +102,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
 	 * 
-	 * String userEmail = email; // Il faut récupérer les informations String
-	 * userPassword = password; // rentrées dans le formulaire par l'utilisateur
+	 * String userEmail = email; // Il faut rï¿½cupï¿½rer les informations String
+	 * userPassword = password; // rentrï¿½es dans le formulaire par l'utilisateur
 	 * 
 	 * ResultSet requestResult = null;
 	 * 
@@ -130,7 +130,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * 
 	 * while (nextResult) {
 	 * 
-	 * // Création de la session
+	 * // Crï¿½ation de la session
 	 * 
 	 * requestResult.getString(1); requestResult.getString(2);
 	 * requestResult.getString(3);

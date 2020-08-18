@@ -14,7 +14,7 @@
 	<input type="text" name="identifiant" id="identifiant" autofocus><br><br>
 	<label for="password">Mot de Passe : </label>
 	<input type="password" name="password" id="password" ><br><br>
-	<button type="submit" name="connexion" id="connexion">Connexion</button>
+	<button type="submit" name="connexion" id="connexion" value="1">Connexion</button>
 	<input type="checkbox" name="rememberme" id="rememberme">
 	<label for="rememberme">Se souvenir de moi</label><br><br>
 	<a href="${pageContext.request.contextPath}/encheres?action=inscription">Mot de passe oublié ?</a><br><br>
