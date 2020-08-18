@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -17,6 +18,7 @@ import fr.eni.encheres.bo.Utilisateur;
 @WebServlet("/inscription")
 public class inscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private UtilisateurManager uMger = new UtilisateurManager();
 	
        
     
@@ -35,18 +37,21 @@ public class inscriptionServlet extends HttpServlet {
         String password = request.getParameter("password");
         String confirmation = request.getParameter("confirmation");
         String creer = request.getParameter("creer");
+        
 
 
-        String message;
+//        String message;
         
 //        if (password != confirmation) {
 //        	
 //        	message = "La confirmation est diff�rente du mot de passe!";
 //			this.getServletContext().getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 //        }
-        if(creer != null) {
+        if(("1").equals(creer)) {
         Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, password);
 //        request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);
+        System.out.println(utilisateur.toString());
+        uMger.addUtilisateur(utilisateur);
         System.out.println(utilisateur.getNom());
         }
         request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);

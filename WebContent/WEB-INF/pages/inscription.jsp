@@ -52,10 +52,12 @@
                     </div>
                 </div>
            </div>
-           <p>
-           		<input type="submit" name="creer" value="Creer"/>
-           		<a href="encheres"> <input type="button" value="Annuler"> </a>
-           </p>
+<!-- bouton remplacé car douteux ?            <p> -->
+<!--            		<input type="submit" name="creer" value="Creer"/> -->
+<!--            		 -->
+<!--            </p> -->
+			<button type= "submit" name="creer" id="creer" value="1">Créer</button>
+			<a href="encheres"> <input type="button" value="Annuler"> </a>
 </form>
 </article>
 </body>

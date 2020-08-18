@@ -15,6 +15,7 @@ import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 @WebServlet("/login")
 public class loginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private UtilisateurManager uMger = new UtilisateurManager();
 
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,17 +45,14 @@ public class loginServlet extends HttpServlet {
 		}
 		
 		if (("1").equals(connexion) && identifiant != null && password != null) {
-			System.out.println(identifiant.toString());
-			System.out.println(password.toString());
-		}
+			System.out.println((String)identifiant);
+			uMger.checkUtilisateur(identifiant, password);
+//		}
 		
 		
-		System.out.println(identifiant);
-		System.out.println(password);
-		System.out.println(connexion);
-		System.out.println(rememberme);
-		System.out.println(creercompte);
-		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+	
+//		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 	}
 
+}
 }
