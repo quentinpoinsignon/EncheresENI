@@ -20,7 +20,7 @@ import fr.eni.encheres.dal.interfaces.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private final String SELECT_ALL_ARTICLE = "SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial_prix_vente,no_utilisateur,no_categorie,vente_effectuee FROM ARTICLES_VENDUS";
+	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie,vente_effectuee FROM ARTICLES_VENDUS";
 
 	/**
 	 * @author jarrigon2020
