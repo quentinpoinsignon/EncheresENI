@@ -19,7 +19,9 @@
 	<label for="rememberme">Se souvenir de moi</label><br><br>
 	<a href="${pageContext.request.contextPath}/encheres?action=inscription">Mot de passe oublié ?</a><br><br>
 <!-- 	<button type="submit" name="creercompte" id="creercompte" value="1">Créer un compte ?</button> -->
-  	<button type= "submit" name="creercompte" id="creercompte" value="1">Créer un compte ?</button>
+  	<button type= "submit" name="creercompte" id="creercompte" value="1">Créer un compte ?</button><br><br>
 </form>
+<%--   	<%String messageErreur = (String) request.getAttribute("erreurMessage");%> --%>
+	<p>${erreurLogin}</p>  	
 </body>
 </html>
