@@ -11,4 +11,11 @@ public interface UtilisateurDAO {
 	public Utilisateur userConnection(String email, String password) throws Exception;
 
 	public Utilisateur userConnectionPseudo(String pseudo, String password) throws Exception;
+
+	public Utilisateur showUserProfil(String pseudo) throws Exception;
+
+	public void editUserProfil(String pseudo, String name, String firstName, String email, String telephoneNumber,
+			String street, String postalCode, String password);
+
+	public Utilisateur getUserInformation(int idUser) throws Exception;
 }

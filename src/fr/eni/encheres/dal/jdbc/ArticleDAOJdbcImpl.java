@@ -14,8 +14,9 @@ import fr.eni.encheres.dal.interfaces.ArticleDAO;
  * 
  * @author jarrigon2020
  * 
- *         Cette classe contient les différentes méthodes permettant de réaliser
- *         les requête sql concernant lees articles vendus sur l'application
+ * @commentaire Cette classe contient les différentes méthodes permettant de
+ *              réaliser les requête sql concernant lees articles vendus sur
+ *              l'application
  */
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
