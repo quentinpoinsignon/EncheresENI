@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="accueil.css">
 <title>Inscription encheres</title>
 </head>
 <body>
@@ -18,7 +18,7 @@
              <div class="data">
                 <div style="float:left;width:50%;">
   				    <div><label for="pseudo"> Pseudo : </label>
-                        <input class="input" name="pseudo" id="pseudo" type="text" value="${pseudo}" pattern="^[a-zA-Z0-9]*$" required >
+                        <input class="input" name="pseudo" id="pseudo" type="text" value="${pseudo}" pattern="^[a-zA-Z0-9]*$" title="caractères alphanumériques uniquement" required >
                     </div>
                     <div><label for="prenom" > Prénom: : </label>
                         <input  class="input" name="prenom" id="prenom" type="text" value="${prenom}" required>
