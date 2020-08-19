@@ -38,15 +38,8 @@ public class inscriptionServlet extends HttpServlet {
         String confirmation = request.getParameter("confirmation");
         String creer = request.getParameter("creer");
         
-
-
-//        String message;
         
-//        if (password != confirmation) {
-//        	
-//        	message = "La confirmation est diff�rente du mot de passe!";
-//			this.getServletContext().getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
-//        }
+
         Utilisateur utilisateur = null;
         if(("1").equals(creer)) {
         	utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, password);
