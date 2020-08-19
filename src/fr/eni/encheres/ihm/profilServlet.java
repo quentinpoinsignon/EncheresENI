@@ -21,6 +21,8 @@ import fr.eni.encheres.bo.Utilisateur;
 public class profilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager uMger = new UtilisateurManager();
+	
+	
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pseudoTemp = request.getParameter("user");
