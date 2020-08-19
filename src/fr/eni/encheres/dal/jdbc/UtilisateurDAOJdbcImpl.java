@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
@@ -23,26 +24,40 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * 
 	 * @Constante USER_INSERT -> String contenant la requête SQL permettant
 	 *            d'enregistrer un nouvel utilisateur dans la base de données
-	 * @Constante VERIF_USER_DATABASE -> String contenant la requête SQL permettant
+	 * 
+	 **/
+	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
+
+	/**
+	 * @Constante VERIF_EMAIL_DATABASE -> String contenant la requête SQL permettant
 	 *            de vérifier un utilisateur est enregistré dans la base de données
 	 *            à l'aide de son mail et de son mot de passe
-	 * @Constante USER_INSERT -> String contenant la requête SQL permettant de
-	 *            vérifier un utilisateur est enregistré dans la base de données à
-	 *            l'aide de son pseudo et de son mot de passe
+	 **/
+	private final String VERIF_EMAIL_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";;
+	/**
+	 * @Constante VERIF_PSEUDO_DATABASE -> String contenant la requête SQL
+	 *            permettant de vérifier un utilisateur est enregistré dans la base
+	 *            de données à l'aide de son pseudo et de son mot de passe
+	 */
+	private final String VERIF_PSEUDO_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where pseudo= ? AND mot_de_passe = ?";
+	/**
 	 * @Constante USER_PROFIL_REQUEST_BY_PSEUDO -> String contenant la requête sql
 	 *            permettant de rechercher un utilisateur grâce à son pseudo et
 	 *            d'afficher son profil
+	 */
+	private final String USER_PROFIL_REQUEST_BY_PSEUDO = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE pseudo = ?";
+	/**
 	 * @Constante EDIT_USER_PROFIL -> String contenant la requête sql permettant de
 	 *            modifier les informations d'un utilisateur dans la base de
 	 *            données. On sélectionne l'utilisateur grâce à l'id utilisateur
-	 * 
 	 */
-
-	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
-	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";;
-	private final String VERIF_PSEUDO_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where pseudo= ? AND mot_de_passe = ?";
-	private final String USER_PROFIL_REQUEST_BY_PSEUDO = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE pseudo = ?";
 	private final String EDIT_USER_PROFIL = "";
+
+	/**
+	 * @Constante USER_PROFIL_REQUEST_BY_ID -> String contenant la requête SQL
+	 *            permettant de récupérer les informations d'un utilisateur grâce à
+	 *            son identifiant
+	 */
 	private final String USER_PROFIL_REQUEST_BY_ID = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	/**
@@ -66,7 +81,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		Utilisateur user = null;
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
-				PreparedStatement preparedStatement = databaseConnection.prepareStatement(VERIF_USER_DATABASE);) {
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(VERIF_EMAIL_DATABASE);) {
 
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, password);
@@ -74,18 +89,19 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			MyResultset = preparedStatement.executeQuery();
 
 			if (MyResultset.next()) {
+				int userId = MyResultset.getInt(1);
+				String pseudo = MyResultset.getString(2);
+				String nom = MyResultset.getString(3);
+				String prenom = MyResultset.getString(4);
+				String userEmail = MyResultset.getString(5);
+				String telephone = MyResultset.getString(6);
+				String rue = MyResultset.getString(7);
+				String codePostal = MyResultset.getString(8);
+				String ville = MyResultset.getString(9);
+				String motDePasse = MyResultset.getString(10);
 
-				String pseudo = MyResultset.getString(1);
-				String nom = MyResultset.getString(2);
-				String prenom = MyResultset.getString(3);
-				String userEmail = MyResultset.getString(4);
-				String telephone = MyResultset.getString(5);
-				String rue = MyResultset.getString(6);
-				String codePostal = MyResultset.getString(7);
-				String ville = MyResultset.getString(8);
-				String motDePasse = MyResultset.getString(9);
-
-				user = new Utilisateur(pseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville, motDePasse);
+				user = new Utilisateur(userId, pseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
+						motDePasse);
 
 			}
 
@@ -129,7 +145,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			MyResultset = preparedStatement.executeQuery();
 
 			if (MyResultset.next()) {
-
+				int userId = MyResultset.getInt(1);
 				String userPseudo = MyResultset.getString(1);
 				String nom = MyResultset.getString(2);
 				String prenom = MyResultset.getString(3);
@@ -140,7 +156,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				String ville = MyResultset.getString(8);
 				String motDePasse = MyResultset.getString(9);
 
-				user = new Utilisateur(userPseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
+				user = new Utilisateur(userId, userPseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
 						motDePasse);
 
 			}
@@ -168,7 +184,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void userInsert(Utilisateur user) throws Exception {
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
-				PreparedStatement preparedStatement = databaseConnection.prepareStatement(USER_INSERT);) {
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(USER_INSERT,
+						Statement.RETURN_GENERATED_KEYS)) {
 
 			preparedStatement.setString(1, user.getPseudo());
 			preparedStatement.setString(2, user.getNom());
@@ -179,6 +196,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			preparedStatement.setString(7, user.getCodePostal());
 			preparedStatement.setString(8, user.getVille());
 			preparedStatement.setString(9, user.getMotDePasse());
+
+			// preparedStatement.getGeneratedKeys();
 
 			preparedStatement.executeUpdate();
 
@@ -325,50 +344,4 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 
-	/**
-	 * 
-	 * String userEmail = email; // Il faut récupérer les informations String
-	 * userPassword = password; // rentrées dans le formulaire par l'utilisateur
-	 * 
-	 * ResultSet requestResult = null;
-	 * 
-	 * String verifEmailRequest = " SELECT email FROM UTILISATEURS WHERE email =" +
-	 * userEmail; String VerifPassword = "SELECT mot_de_passe FROM UTILISATEURS
-	 * WHERE email =" + userPassword; String RecupUserInfo = "SELECT
-	 * pseudo,nom,prenom FROM UTILISATEURS WHERE email = " + userEmail + " AND
-	 * mot_de_passe =" + userPassword;
-	 * 
-	 * Connection connect = JdbcTools.getConnection();
-	 * 
-	 * Statement stmt = connect.createStatement(); requestResult =
-	 * stmt.executeQuery(verifEmailRequest);
-	 * 
-	 * if (requestResult != null) {
-	 * 
-	 * System.out.println("Email existe"); requestResult =
-	 * stmt.executeQuery(VerifPassword);
-	 * 
-	 * if (requestResult != null) { System.out.println("Mot de passe ok");
-	 * requestResult = null; requestResult = stmt.executeQuery(RecupUserInfo);
-	 * 
-	 * Boolean nextResult = requestResult.next();
-	 * 
-	 * while (nextResult) {
-	 * 
-	 * // Création de la session
-	 * 
-	 * requestResult.getString(1); requestResult.getString(2);
-	 * requestResult.getString(3);
-	 * 
-	 * nextResult = requestResult.next();
-	 * 
-	 * }
-	 * 
-	 * requestResult.close();
-	 * 
-	 * } }
-	 * 
-	 * }
-	 * 
-	 */
 }
