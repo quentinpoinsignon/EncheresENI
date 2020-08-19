@@ -252,6 +252,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				userProfil = new Utilisateur(userPseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville);
 
 			}
+			MyResultset.close();
 
 		} catch (SQLException e) {
 
@@ -335,7 +336,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 						motDePasse);
 
 			}
-
+			MyResultset.close();
 		} catch (SQLException e) {
 
 			throw new Exception("Problème lors de la récupération des informations de l'utilisateur");
