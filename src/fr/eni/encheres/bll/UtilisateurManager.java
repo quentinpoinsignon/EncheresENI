@@ -9,7 +9,7 @@ import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 /**
  * @author qpoinsig2020
- * Classe de la bll gérant les utilisateurs
+ * Classe de la bll gerant les utilisateurs
  */
 public class UtilisateurManager {
 	private UtilisateurDAO uDAO;

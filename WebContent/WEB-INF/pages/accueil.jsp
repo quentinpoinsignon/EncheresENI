@@ -4,7 +4,9 @@
 <%@page import="java.util.List"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="fr.eni.encheres.bll.ArticleManager"%>
+<%@page import="fr.eni.encheres.bll.CategorieManager"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
+<%@page import="fr.eni.encheres.bo.Categorie"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,13 +28,16 @@
 	<label for="txtSearch">Filtres : </label>
 	<input type="search" name="txtSearch" id="txtSearch"><br><br>
 	
+	
+<!-- affichage de la liste des catégories -->
+<%! CategorieManager cMger = new CategorieManager();%>
+<%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 	<label for="listCategories">Catégorie : </label>
 	<select id="listCategories" name="listCategories">
 			<option value="0" selected disabled hidden>Toutes</option>
-			<option value="1">Informatique</option>
-			<option value="2">Ameublement</option>
-			<option value="2">Vêtement</option>
-			<option value="3">Sports&Loisirs</option>
+			<%for(Categorie cat : listeCategories) {%>
+			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
+			<%}%>
 	</select><br><br>
 
 	<button type= "submit" name="btnRechercher" id="btnRechercher" value="1">Rechercher</button><br><br>
