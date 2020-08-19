@@ -1,12 +1,20 @@
 package fr.eni.encheres.bll;
 
+import java.util.List;
+
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
+/**
+ * @author qpoinsig2020
+ * Classe de la bll gérant les utilisateurs
+ */
 public class UtilisateurManager {
 	private UtilisateurDAO uDAO;
-
+	
+	
 	public UtilisateurManager() {
 		uDAO = DAOFactory.getUtilisateurDAO();
 	}
@@ -41,4 +49,5 @@ public class UtilisateurManager {
 		}
 		return userBDD;
 	}
+	
 }

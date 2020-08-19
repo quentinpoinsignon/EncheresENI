@@ -1,26 +1,31 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.ArticleManager;
+import fr.eni.encheres.bo.Article;
+
+
 /**
- * Servlet implementation class encheresServlet
+ * @author qpoinsig2020
+ * Servlet de la page d'accueil
  */
-@WebServlet("/encheres")
+
+@WebServlet({"/encheres", "/accueil"})
 public class encheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private ArticleManager aMger = new ArticleManager();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//System.out.println("In the doGet");
+		//redirection avec boutons inscrire et connecter 
 		String action = request.getParameter("action");
-		//System.out.println(action);
-		
 		if(("inscription").equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 		}
@@ -30,11 +35,9 @@ public class encheresServlet extends HttpServlet {
 		if((action) == null) {
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		}
-		
-		
-}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
-}
+	}

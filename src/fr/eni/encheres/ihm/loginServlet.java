@@ -49,7 +49,7 @@ public class loginServlet extends HttpServlet {
 		}
 		
 		if (("1").equals(connexion) && identifiant != null && password != null) {
-			System.out.println("nature identifiant : " +ihmUtils.natureIdentifiant(identifiant));
+			System.out.println("nature identifiant : " + ihmUtils.natureIdentifiant(identifiant));
 			Utilisateur connectedUser = null;
 			switch (ihmUtils.natureIdentifiant(identifiant)) {
 			case "pseudo":
