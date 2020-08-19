@@ -44,10 +44,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *                 par l'utilisateur
 	 * @return user -> Objet de type Utilisateur
 	 * 
-	 *         Cette méthode permet de vérifier si l'email et le mot de passe fourni
-	 *         par l'utilisateur sont bien présents dans la base de données et
-	 *         correspondent entre eux.
+	 * @commentaire
+	 * 
+	 *              Cette méthode permet de vérifier si l'email et le mot de passe
+	 *              fourni par l'utilisateur sont bien présents dans la base de
+	 *              données et correspondent entre eux.
 	 */
+	@Override
 	public Utilisateur userConnection(String email, String password) throws Exception {
 
 		ResultSet MyResultset = null;
@@ -95,10 +98,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *                 par l'utilisateur
 	 * @return user -> Objet de type Utilisateur
 	 * 
-	 *         Cette méthode permet de vérifier si le pseudo et le mot de passe
-	 *         fourni par l'utilisateur sont bien présents dans la base de données
-	 *         et correspondent entre eux.
+	 * @commentaire
+	 * 
+	 *              Cette méthode permet de vérifier si le pseudo et le mot de passe
+	 *              fourni par l'utilisateur sont bien présents dans la base de
+	 *              données et correspondent entre eux.
 	 */
+
+	@Override
 	public Utilisateur userConnectionPseudo(String pseudo, String password) throws Exception {
 
 		ResultSet MyResultset = null;
@@ -139,14 +146,16 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	}
 
-	@Override
 	/**
 	 * @author jarrigon2020
 	 * @param user -> Objet de type Utilisateur
 	 * 
-	 *             Cette fonction permet d'enregistrer un nouvel utilisateur dans la
-	 *             base de données
+	 * @commentaire
+	 * 
+	 *              Cette fonction permet d'enregistrer un nouvel utilisateur dans
+	 *              la base de données
 	 */
+	@Override
 	public void userInsert(Utilisateur user) throws Exception {
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
