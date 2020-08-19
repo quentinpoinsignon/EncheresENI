@@ -1,19 +1,21 @@
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@page import = "java.time.LocalDateTime"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="fr.eni.encheres.bll.ArticleManager"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
-<%@page import="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="/styles/accueil.css">
 <title>Accueil encheres</title>
 </head>
 <body>
 <header>
-<h1>ENI Encheres</h1>
+<h1>ENI Enchères</h1>
 
 <a href="${pageContext.request.contextPath}/encheres?action=inscription">S'inscrire - </a>
 <a href="${pageContext.request.contextPath}/encheres?action=login">Se connecter</a>
@@ -40,11 +42,18 @@
 <!-- affichage de la liste des articles -->
 <%! ArticleManager aMger = new ArticleManager();%>
 <%! List<Article> listeArticles = aMger.selectTop3Articles();%>
-
-<% for (Article article : listeArticles) {
-		out.println(article.getNomArticle());
-		} %>
-
+<%! String formatDate = "dd/mm/yyyy"; %>
+<%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
+<% if (listeArticles != null) {%>
+<%for (Article article : listeArticles) {%>
+		<div id=listArticles>
+			<p><%=article.getNomArticle()%></p><br>
+			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
+			<p>Fin de l'enchère : <%=article.getDateFinEncheres().format(formatter)%></p><br>
+			<p>Fin de l'enchère : <%=article.getUtilisateur().getNom()%></p><br>
+		</div>
+		 <%}%>
+<%}%>
 
 </body>
 </html>
