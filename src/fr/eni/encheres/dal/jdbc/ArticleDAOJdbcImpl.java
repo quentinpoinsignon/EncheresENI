@@ -21,7 +21,17 @@ import fr.eni.encheres.dal.interfaces.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie,vente_effectuee FROM ARTICLES_VENDUS ORDER BY date_debut_encheres DESC";
+	/**
+	 * @Constante SELECT_ALL_ARTICLE -> Chaine de caractère contenant une requête
+	 *            SQL permettant de récupérer les trois derniers articles
+	 *            enregistrés dans la base de données ainsi que l'utilisateur les
+	 *            ayant mis en vente et la catégorie à laquelle ils appartiennent
+	 */
+
+	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 utl.pseudo,utl.nom,ctgr.libelle,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM ARTICLES_VENDUS artvd\n"
+			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
+			+ "ORDER BY date_debut_encheres DESC";
 
 	/**
 	 * @author jarrigon2020
@@ -45,6 +55,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 			request = databaseConnexion.createStatement();
 			myResultset = request.executeQuery(SELECT_ALL_ARTICLE);
+
 			Article article = null;
 
 			while (myResultset.next()) {
