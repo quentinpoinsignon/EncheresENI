@@ -14,7 +14,7 @@
 <a href="${pageContext.request.contextPath}/encheres?action=inscription">S'inscrire - </a>
 <a href="${pageContext.request.contextPath}/encheres?action=login">Se connecter</a>
  
-<h2>Liste des encheres</h2>
+<h2>Liste des enchères</h2>
 </header>
 
 </body>
