@@ -161,6 +161,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 			}
 
+			MyResultset.close();
+
 		} catch (SQLException e) {
 
 			throw new Exception("Erreur lors de la tentative de connexion");

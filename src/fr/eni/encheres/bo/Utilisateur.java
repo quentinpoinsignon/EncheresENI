@@ -31,6 +31,19 @@ public class Utilisateur {
 		this.article = article;
 	}
 
+	/**
+	 * @author jarrigon2020
+	 * @param pseudo -> String
+	 * 
+	 * @Commentaire
+	 * 
+	 *              Constructeur n'utilisant que le pseudo de l'utilisateur
+	 */
+	public Utilisateur(String pseudo) {
+		this.pseudo = pseudo;
+
+	}
+
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String codePostal, String ville, String motDePasse) {
 		this.pseudo = pseudo;
