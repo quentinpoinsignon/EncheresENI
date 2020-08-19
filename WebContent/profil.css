@@ -1,0 +1,27 @@
+header {
+}
+
+h1 {
+	text-align:left;
+	font-color : red;
+}
+
+header, a {
+	text-align : right;
+}
+
+h2 {
+	text-align : center;
+}
+body, h2 {
+	text-align : center;
+}
+
+.input{
+    text-align: right;
+    justify-content: space-between;
+    width: 200px;
+    margin: 10px;
+}
+
+

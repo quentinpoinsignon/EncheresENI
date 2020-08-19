@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="/styles/accueil.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/accueil.css">
 <title>Accueil encheres</title>
 </head>
 <body>
@@ -40,20 +40,20 @@
 </form>
 
 <!-- affichage de la liste des articles -->
-<%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
-<%! String formatDate = "dd/mm/yyyy"; %>
-<%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
-<% if (listeArticles != null) {%>
-<%for (Article article : listeArticles) {%>
-		<div id=listArticles>
-			<p><%=article.getNomArticle()%></p><br>
-			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
-			<p>Fin de l'enchère : <%=article.getDateFinEncheres().format(formatter)%></p><br>
-			<p>Fin de l'enchère : <%=article.getUtilisateur().getNom()%></p><br>
-		</div>
-		 <%}%>
-<%}%>
+<%-- <%! ArticleManager aMger = new ArticleManager();%> --%>
+<%-- <%! List<Article> listeArticles = aMger.selectTop3Articles();%> --%>
+<%-- <%! String formatDate = "dd/mm/yyyy"; %> --%>
+<%-- <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %> --%>
+<%-- <% if (listeArticles != null) {%> --%>
+<%-- <%for (Article article : listeArticles) {%> --%>
+<!-- 		<div id=listArticles> -->
+<%-- 			<p><%=article.getNomArticle()%></p><br> --%>
+<%-- 			<p>Prix : <%=article.getPrixInitial()%> points</p><br> --%>
+<%-- 			<p>Fin de l'enchère : <%=article.getDateFinEncheres().format(formatter)%></p><br> --%>
+<%-- 			<p>Fin de l'enchère : <%=article.getUtilisateur().getNom()%></p><br> --%>
+<!-- 		</div> -->
+<%-- 		 <%}%> --%>
+<%-- <%}%> --%>
 
 </body>
 </html>
