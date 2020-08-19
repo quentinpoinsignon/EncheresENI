@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bll.ArticleManager;
+import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bo.Article;
 
 
@@ -22,6 +23,7 @@ import fr.eni.encheres.bo.Article;
 public class encheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArticleManager aMger = new ArticleManager();
+	private CategorieManager cMger = new CategorieManager();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//redirection avec boutons inscrire et connecter 

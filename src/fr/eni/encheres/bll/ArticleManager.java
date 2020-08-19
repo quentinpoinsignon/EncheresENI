@@ -22,15 +22,16 @@ public class ArticleManager {
 	public List<Article> selectTop3Articles() {
 		List<Article> top3Articles = null;
 		
-		try {
-			top3Articles = aDAO.selectAllArticle();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				top3Articles = aDAO.selectAllArticle();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
 		return top3Articles;
 	}
 }
