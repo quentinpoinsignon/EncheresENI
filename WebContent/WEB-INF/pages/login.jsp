@@ -11,7 +11,7 @@
 
 <form action="${pageContext.request.contextPath}/login" method="post">
 	<label for="identifiant">Identifiant : </label>
-	<input type="text" name="identifiant" id="identifiant" autofocus><br><br>
+	<input type="text" name="identifiant" id="identifiant" autofocus title="Entrez votre pseudo ou email"><br><br>
 	<label for="password">Mot de Passe : </label>
 	<input type="password" name="password" id="password" ><br><br>
 	<button type="submit" name="connexion" id="connexion" value="1">Connexion</button>
