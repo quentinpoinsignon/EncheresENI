@@ -31,7 +31,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 *            ayant mis en vente et la catégorie à laquelle ils appartiennent
 	 */
 
-	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 utl.pseudo,utl.nom,ctgr.libelle,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,vente_effectue FROM ARTICLES_VENDUS artvd\r\n"
+	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 utl.pseudo,ctgr.libelle,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM ARTICLES_VENDUS artvd\r\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\r\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n"
 			+ "WHERE vente_effectuee = 0\r\n" + "ORDER BY date_debut_encheres DESC";
@@ -92,7 +92,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		} catch (SQLException e) {
 
-			throw new Exception("Erreur lors de l'ajout de l'utilisateur");
+			throw new Exception(e.getMessage());
 
 		}
 		return listeArticles;
