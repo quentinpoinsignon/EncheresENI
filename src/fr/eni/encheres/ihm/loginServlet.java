@@ -39,21 +39,24 @@ public class loginServlet extends HttpServlet {
 		String creercompte = request.getParameter("creercompte");
 		String messageErreur = "";
 		
-		System.out.println(creercompte);
-//		if(identifiant != null && password != null) {
-//			System.out.println("ok");
-//		}
-		
 		if (("1").equals(creercompte)) {
 			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 		}
 		
 		if (("1").equals(connexion) && identifiant != null && password != null) {
-			System.out.println((String)identifiant);
 			Utilisateur connectedUser = null;
-			connectedUser = uMger.checkUtilisateur(identifiant, password);
+			switch (ihmUtils.natureIdentifiant(identifiant)) {
+			case "pseudo":
+				connectedUser = uMger.checkUtilisateur(identifiant, password);
+				break;
+			case "email":
+				connectedUser = uMger.checkUtilisateur(identifiant, password);
+				break;
+			default:
+				break;
+			}
 			if(connectedUser != null) {
-				session.setAttribute("utilisateurOK", connectedUser);
+				session.setAttribute("connectedUser", connectedUser);
 				request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);
 			}
 			else {
