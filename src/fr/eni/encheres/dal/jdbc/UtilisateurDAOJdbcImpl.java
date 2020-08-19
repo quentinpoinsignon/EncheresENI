@@ -11,10 +11,9 @@ import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 /**
  * @author jarrigon2020
  * 
- *
- *         Classe implémentant l'interface UtilisateurDAO et contenant les
- *         différentes méthodes permettant de gérer les requêtes SQL liées aux
- *         utilisateurs
+ * @Commentaire Classe implémentant l'interface UtilisateurDAO et contenant les
+ *              différentes méthodes permettant de gérer les requêtes SQL liées
+ *              aux utilisateurs
  */
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
@@ -30,11 +29,21 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante USER_INSERT -> String contenant la requête SQL permettant de
 	 *            vérifier un utilisateur est enregistré dans la base de données à
 	 *            l'aide de son pseudo et de son mot de passe
+	 * @Constante USER_PROFIL_REQUEST_BY_PSEUDO -> String contenant la requête sql
+	 *            permettant de rechercher un utilisateur grâce à son pseudo et
+	 *            d'afficher son profil
+	 * @Constante EDIT_USER_PROFIL -> String contenant la requête sql permettant de
+	 *            modifier les informations d'un utilisateur dans la base de
+	 *            données. On sélectionne l'utilisateur grâce à l'id utilisateur
+	 * 
 	 */
 
 	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
 	private final String VERIF_USER_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";;
 	private final String VERIF_PSEUDO_DATABASE = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where pseudo= ? AND mot_de_passe = ?";
+	private final String USER_PROFIL_REQUEST_BY_PSEUDO = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE pseudo = ?";
+	private final String EDIT_USER_PROFIL = "";
+	private final String USER_PROFIL_REQUEST_BY_ID = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	/**
 	 * @author jarrigon2020
@@ -82,7 +91,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		} catch (SQLException e) {
 
-			throw new Exception("Erreur lors de l'ajout de l'utilisateur");
+			throw new Exception("Erreur lors la tentative de connexion");
 
 		}
 
@@ -138,7 +147,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		} catch (SQLException e) {
 
-			throw new Exception("Erreur lors de l'ajout de l'utilisateur");
+			throw new Exception("Erreur lors de la tentative de connexion");
 
 		}
 
@@ -178,6 +187,141 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new Exception("Erreur lors de l'ajout de l'utilisateur");
 
 		}
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @param pseudo -> Chaine de caractère correspondant au pseudo fourni
+	 * 
+	 * @return userProfil -> Objet de type Utilisateur
+	 * @throws Exception
+	 * 
+	 * @Commentaire
+	 * 
+	 *              Permet de rechercher le profil d'un utilisateur à partir de son
+	 *              pseudo et d'afficher l'ensemble de ses informations
+	 */
+	@Override
+	public Utilisateur showUserProfil(String pseudo) throws Exception {
+
+		ResultSet MyResultset = null;
+		Utilisateur userProfil = null;
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection
+						.prepareStatement(USER_PROFIL_REQUEST_BY_PSEUDO);) {
+
+			preparedStatement.setString(1, pseudo);
+
+			MyResultset = preparedStatement.executeQuery();
+
+			if (MyResultset.next()) {
+
+				String userPseudo = MyResultset.getString(1);
+				String nom = MyResultset.getString(2);
+				String prenom = MyResultset.getString(3);
+				String userEmail = MyResultset.getString(4);
+				String telephone = MyResultset.getString(5);
+				String rue = MyResultset.getString(6);
+				String codePostal = MyResultset.getString(7);
+				String ville = MyResultset.getString(8);
+
+				userProfil = new Utilisateur(userPseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville);
+
+			}
+
+		} catch (SQLException e) {
+
+			throw new Exception("L'utilisateur demandé n'existe pas");
+
+		}
+
+		return userProfil;
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @param pseudo          -> Chaine de caractère correspondant au pseudo de
+	 *                        l'utilisateur
+	 * @param name            -> Chaine de caractère correspondant au nom de
+	 *                        l'utilisateur
+	 * @param firstName       -> Chaine de caractère correspondant au prénom de
+	 *                        l'utilisateur
+	 * @param email           -> Chaine de caractère correspondant à l'email de
+	 *                        l'utilisateur
+	 * @param telephoneNumber -> Chaine de caractère correspondant au numéro de
+	 *                        téléphone de l'utilisateur
+	 * @param street          -> Chaine de caractère correspondant à la rue de
+	 *                        l'utilisateur
+	 * @param postalCode      -> Chaine de caractère correspondant au code postal de
+	 *                        l'utilisateur
+	 * @param password        -> Chaine de caractère correspondant au mot de passe
+	 *                        de l'utilisateur
+	 * 
+	 * @commentaire
+	 * 
+	 *              Cette méthode permet de modifier les informations de
+	 *              l'utilisateur dans la base de données
+	 */
+	@Override
+	public void editUserProfil(String pseudo, String name, String firstName, String email, String telephoneNumber,
+			String street, String postalCode, String password) {
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * @param idUser -> int Correspond à l'identifiant de l'utilisateur dans la base
+	 *               de données
+	 * 
+	 * @return userInformation -> Objet de type utilisateur
+	 * @throws Exception
+	 * 
+	 * @Commentaire Cette méthode permet de récupérer les informations d'un
+	 *              utilisateur grâce à son identifiant
+	 * 
+	 */
+	@Override
+	public Utilisateur getUserInformation(int idUser) throws Exception {
+
+		ResultSet MyResultset = null;
+		Utilisateur userInformation = null;
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(USER_PROFIL_REQUEST_BY_ID);) {
+
+			preparedStatement.setInt(1, idUser);
+
+			MyResultset = preparedStatement.executeQuery();
+
+			if (MyResultset.next()) {
+
+				String userPseudo = MyResultset.getString(1);
+				String nom = MyResultset.getString(2);
+				String prenom = MyResultset.getString(3);
+				String userEmail = MyResultset.getString(4);
+				String telephone = MyResultset.getString(5);
+				String rue = MyResultset.getString(6);
+				String codePostal = MyResultset.getString(7);
+				String ville = MyResultset.getString(8);
+				String motDePasse = MyResultset.getString(9);
+
+				userInformation = new Utilisateur(userPseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
+						motDePasse);
+
+			}
+
+		} catch (SQLException e) {
+
+			throw new Exception("Problème lors de la récupération des informations de l'utilisateur");
+
+		}
+
+		return userInformation;
 
 	}
 

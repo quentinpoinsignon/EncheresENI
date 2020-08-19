@@ -39,6 +39,8 @@ public class UtilisateurManager {
 		return userBDD;
 	}
 	
+
+
 	public Utilisateur connectionByPseudo(String pseudo, String password) {
 		Utilisateur userBDD = null;
 		try {
@@ -49,5 +51,5 @@ public class UtilisateurManager {
 		}
 		return userBDD;
 	}
-	
+
 }
