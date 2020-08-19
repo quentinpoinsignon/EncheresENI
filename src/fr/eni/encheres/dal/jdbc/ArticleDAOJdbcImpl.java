@@ -17,18 +17,18 @@ import fr.eni.encheres.dal.interfaces.ArticleDAO;
  * 
  * @author jarrigon2020
  * 
- * @commentaire Cette classe contient les différentes méthodes permettant de
- *              réaliser les requête sql concernant lees articles vendus sur
+ * @commentaire Cette classe contient les diffï¿½rentes mï¿½thodes permettant de
+ *              rï¿½aliser les requï¿½te sql concernant lees articles vendus sur
  *              l'application
  */
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	/**
-	 * @Constante SELECT_ALL_ARTICLE -> Chaine de caractère contenant une requête
-	 *            SQL permettant de récupérer les trois derniers articles
-	 *            enregistrés dans la base de données ainsi que l'utilisateur les
-	 *            ayant mis en vente et la catégorie à laquelle ils appartiennent
+	 * @Constante SELECT_ALL_ARTICLE -> Chaine de caractï¿½re contenant une requï¿½te
+	 *            SQL permettant de rï¿½cupï¿½rer les trois derniers articles
+	 *            enregistrï¿½s dans la base de donnï¿½es ainsi que l'utilisateur les
+	 *            ayant mis en vente et la catï¿½gorie ï¿½ laquelle ils appartiennent
 	 */
 
 	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 utl.pseudo,ctgr.libelle,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM ARTICLES_VENDUS artvd\n"
@@ -40,9 +40,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 * @author jarrigon2020
 	 * @return liste -> Objet de type List contenant des Objets de type Article
 	 * 
-	 *         Cette méthode permet de récupérer l'ensemble des articles présents
-	 *         dans la base de données et limite le résultat aux trois derniers
-	 *         enregistrés
+	 *         Cette mï¿½thode permet de rï¿½cupï¿½rer l'ensemble des articles prï¿½sents
+	 *         dans la base de donnï¿½es et limite le rï¿½sultat aux trois derniers
+	 *         enregistrï¿½s
 	 * 
 	 */
 
@@ -67,7 +67,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				user = new Utilisateur(userPseudo);
 
-				// Catégorie
+				// Catï¿½gorie
 				String categorieLibelle = myResultset.getString(2);
 
 				categorie = new Categorie(categorieLibelle);
