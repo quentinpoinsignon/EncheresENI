@@ -51,5 +51,16 @@ public class UtilisateurManager {
 		}
 		return userBDD;
 	}
-
+	
+	public Utilisateur getUserProfileByPseudo(String pseudo) {
+		Utilisateur userBDD = null;
+		try {
+			userBDD = uDAO.showUserProfil(pseudo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userBDD;
+	}
+	
 }
