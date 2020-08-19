@@ -20,14 +20,15 @@ import fr.eni.encheres.dal.interfaces.ArticleDAO;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie,vente_effectuee FROM ARTICLES_VENDUS";
+	private final String SELECT_ALL_ARTICLE = "SELECT TOP 3 no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie,vente_effectuee FROM ARTICLES_VENDUS ORDER BY date_debut_encheres DESC";
 
 	/**
 	 * @author jarrigon2020
 	 * @return liste -> Objet de type List contenant des Objets de type Article
 	 * 
 	 *         Cette méthode permet de récupérer l'ensemble des articles présents
-	 *         dans la base de données
+	 *         dans la base de données et limite le résultat aux trois derniers
+	 *         enregistrés
 	 * 
 	 */
 
@@ -39,9 +40,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		List<Article> liste = new ArrayList<Article>();
 
-		try (Connection databaseconnexion = JdbcTools.getConnection();) {
+		try (Connection databaseConnexion = JdbcTools.getConnection();) {
 
-			request = databaseconnexion.createStatement();
+			request = databaseConnexion.createStatement();
 			myResultset = request.executeQuery(SELECT_ALL_ARTICLE);
 			Article article = null;
 
