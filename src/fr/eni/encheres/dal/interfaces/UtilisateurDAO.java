@@ -9,4 +9,6 @@ public interface UtilisateurDAO {
 	void userInsert(Utilisateur user) throws SQLException, Exception;
 
 	public Utilisateur userConnection(String email, String password) throws Exception;
+
+	public Utilisateur userConnectionPseudo(String pseudo, String password) throws Exception;
 }

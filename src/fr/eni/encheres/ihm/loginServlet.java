@@ -13,6 +13,11 @@ import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
+/**
+ * @author qpoinsig2020
+ * traitement de la page de login
+ */
+
 @WebServlet("/login")
 public class loginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,20 +49,21 @@ public class loginServlet extends HttpServlet {
 		}
 		
 		if (("1").equals(connexion) && identifiant != null && password != null) {
+			System.out.println("nature identifiant : " +ihmUtils.natureIdentifiant(identifiant));
 			Utilisateur connectedUser = null;
 			switch (ihmUtils.natureIdentifiant(identifiant)) {
 			case "pseudo":
-				connectedUser = uMger.checkUtilisateur(identifiant, password);
+				connectedUser = uMger.connectionByPseudo(identifiant, password);
 				break;
 			case "email":
-				connectedUser = uMger.checkUtilisateur(identifiant, password);
+				connectedUser = uMger.connectionByEmail(identifiant, password);
 				break;
 			default:
 				break;
 			}
 			if(connectedUser != null) {
 				session.setAttribute("connectedUser", connectedUser);
-				request.getRequestDispatcher("/WEB-INF/pages/listeEncheres.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 			}
 			else {
 				messageErreur = "Login ou mot de passe incorrect";
@@ -66,11 +72,7 @@ public class loginServlet extends HttpServlet {
 			}
 			
 			
-//		}
-		
-		
-	
-//		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+
 	}
 
 }

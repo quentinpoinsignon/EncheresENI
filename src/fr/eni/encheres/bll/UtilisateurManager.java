@@ -20,7 +20,7 @@ public class UtilisateurManager {
 	}
 	
 	
-	public Utilisateur checkUtilisateur(String email, String password) {
+	public Utilisateur connectionByEmail(String email, String password) {
 		Utilisateur userBDD = null;
 		try {
 			userBDD = uDAO.userConnection(email, password);
@@ -31,5 +31,17 @@ public class UtilisateurManager {
 		return userBDD;
 	}
 	
+
+
+	public Utilisateur connectionByPseudo(String pseudo, String password) {
+		Utilisateur userBDD = null;
+		try {
+			userBDD = uDAO.userConnectionPseudo(pseudo, password);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userBDD;
+	}
 
 }
