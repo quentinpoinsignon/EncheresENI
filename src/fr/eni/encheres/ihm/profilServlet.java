@@ -7,37 +7,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
- */
+ 
 /**
  * @author qpoinsig2020
  * Servlet gérant l'affichage d'un profil utilisateur
  */
+ 
 @WebServlet("/profil")
 public class profilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public profilServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String action = request.getParameter("user");
+//		if(("inscription").equals(action)) {
+//			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+//		}
+//		if(("login").equals(action)) {
+//			request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+//		}
+//		if((action) == null) {
+//			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+//		}
+//	}
+		request.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

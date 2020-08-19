@@ -2,7 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
-<%@page import = "java.time.LocalDateTime"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="fr.eni.encheres.bll.ArticleManager"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
@@ -10,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="/styles/accueil.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/accueil.css">
 <title>Accueil encheres</title>
 </head>
 <body>
@@ -49,9 +48,10 @@
 		<div id=listArticles>
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
-			<p>Fin de l'enchère : <%=article.getDateFinEncheres().format(formatter)%></p><br>
-			<p>Fin de l'enchère : <%=article.getUtilisateur().getNom()%></p><br>
+			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
+			<p>Vendeur : <a href="${pageContext.request.contextPath}/profil?user=<%=article.getUtilisateur().getPseudo()%>"><%=article.getUtilisateur().getPseudo()%></a></p><br>
 		</div>
+		<br><br>
 		 <%}%>
 <%}%>
 
