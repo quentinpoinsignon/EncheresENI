@@ -28,11 +28,12 @@ public class profilServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Utilisateur connectedUser = (Utilisateur)session.getAttribute("connectedUser");
-		
 		String pseudoTemp = request.getParameter("user");
+		Boolean isConnectedUser = (connectedUser.getPseudo().equals(pseudoTemp)) ? true : false;
 		
 		Utilisateur utilisateur = uMger.getUserProfileByPseudo(pseudoTemp);
 		//définition des paramètres à envoyer à la jsp profil
+		request.setAttribute("isConnectedUser", isConnectedUser);
 		request.setAttribute("pseudo", utilisateur.getPseudo());
 		request.setAttribute("nom", utilisateur.getNom());
 		request.setAttribute("prenom", utilisateur.getPrenom());
@@ -47,9 +48,12 @@ public class profilServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String retour = request.getParameter("btnRetour");
-		if (("1").equals(retour)) {
+		String btnSubmitProfil = request.getParameter("btnRetour");
+		if (("retour").equals(btnSubmitProfil)) {
 			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+		}
+		if (("modifier").equals(btnSubmitProfil)) {
+			request.getRequestDispatcher("/WEB-INF/pages/modifUtilisateur.jsp").forward(request, response);
 		}
 	}
 

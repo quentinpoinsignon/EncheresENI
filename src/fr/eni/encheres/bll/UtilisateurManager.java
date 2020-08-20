@@ -82,4 +82,6 @@ public class UtilisateurManager {
 		return userBDD;
 	}
 	
+	public void editUserProfile() {
+	}
 }

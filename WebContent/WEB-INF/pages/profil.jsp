@@ -13,6 +13,8 @@
 </header>
 
 
+
+
 <!-- Récupération des paramètres à afficher -->
 
 
@@ -32,7 +34,7 @@
                         <input class="input" name="email" id="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}" title="de type nomprenom@domaine.fr" value=${email} disabled>
                     </div>
                     <div><label for="telephone"> Téléphone : </label>
-                        <input  class="input" name="telephone" id="telelphone" type="text" pattern="[0-9]{10}" title="sur 10 chiffres" value=${telephone} disabled>
+                        <input  class="input" name="telephone" id="telephone" type="text" pattern="[0-9]{10}" title="sur 10 chiffres" value=${telephone} disabled>
                     </div>
                     <div><label for="rue" > Rue : </label>
                         <input class="input" name="rue" id="rue" type="text"  value=${rue} disabled>
@@ -44,7 +46,9 @@
                         <input class="input" name="ville" id="ville" type="text"  value=${ville} disabled>
                     </div>
                     <div>
-                    	<button type="submit" name="btnRetour" id="btnRetour" value="1">Retour</button>
+                    	${isConnectedUser ? 
+                    	'<button type="submit" name="btnRetour" id="btnRetour" value="modifier">Modifier</button> ': 
+                    	'<button type="submit" name="btnRetour" id="btnRetour" value="retour">Retour</button>'}
                     </div>
                 </div>
 </form>
