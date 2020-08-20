@@ -89,7 +89,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            permettant de récupérer l'ensemble des emails enregistrés dans la
 	 *            base de données
 	 */
-	private final String SELECT_ALL_EMAIL = "SELECT email FROM UTILISATEURS\\r\\n\" + \"ORDER BY email";
+	private final String SELECT_ALL_EMAIL = "SELECT email FROM UTILISATEURS\r\n\" + \"ORDER BY email";
 
 	/**
 	 * @Constante SELECT_CRYPTED_PASSWORD -> Chaine de caratères contenant une
