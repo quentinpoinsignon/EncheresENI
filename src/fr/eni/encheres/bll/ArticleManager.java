@@ -34,4 +34,19 @@ public class ArticleManager {
 	
 		return top3Articles;
 	}
+	
+	public List<Article> selectAllArticles() {
+		List<Article> allArticles = null;
+		
+		try {
+			allArticles = aDAO.selectAllArticleInDatabase();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return allArticles;
+	}
+	
+	
 }

@@ -34,7 +34,7 @@
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 	<label for="listCategories">Catégorie : </label>
 	<select id="listCategories" name="listCategories">
-			<option value="0" selected disabled hidden>Toutes</option>
+			<option value="0" selected hidden default>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
 			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
 			<%}%>
@@ -45,7 +45,7 @@
 
 <!-- affichage de la liste des articles -->
 <%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
+<%! List<Article> listeArticles = aMger.selectAllArticles();%>
 <%! String formatDate = "dd/mm/yyyy"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeArticles != null) {%>

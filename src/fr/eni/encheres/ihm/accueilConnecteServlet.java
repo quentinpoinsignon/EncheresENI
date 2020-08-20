@@ -18,19 +18,19 @@ public class accueilConnecteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Paramètres nécessaires pour griser la partie achat vente en fonction de la sélection du bouton radio
 		String selectAchatsVentes = "achats";
-//		request.getParameter("rdoSelectAchatsVentes");
-//		System.out.println(selectAchatsVentes);
-//		switch (selectAchatsVentes) {
-//		case ("achats"):
-//			request.setAttribute("rdoAchatsVentes", "achats");
-//			break;
-//		case ("ventes"):
-//			request.setAttribute("rdoAchatsVentes", "ventes");
-//			break;
-//		default:
-//			request.setAttribute("rdoAchatsVentes", "achats");
-//			break;
-//		}
+		request.getParameter("rdoSelectAchatsVentes");
+		System.out.println(selectAchatsVentes);
+		switch (selectAchatsVentes) {
+		case ("achats"):
+			request.setAttribute("rdoAchatsVentes", "achats");
+			break;
+		case ("ventes"):
+			request.setAttribute("rdoAchatsVentes", "ventes");
+			break;
+		default:
+			request.setAttribute("rdoAchatsVentes", "achats");
+			break;
+		}
 		request.setAttribute("rdoAchatsVentes", "achats");
 		request.getRequestDispatcher("/WEB-INF/accueilConnecte.jsp").forward(request, response);
 	}
