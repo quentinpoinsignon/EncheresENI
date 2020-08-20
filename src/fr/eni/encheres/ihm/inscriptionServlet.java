@@ -41,15 +41,26 @@ public class inscriptionServlet extends HttpServlet {
         String motDePasse = request.getParameter("password");
         String confirmation = request.getParameter("confirmation");
         String creer = request.getParameter("creer");
-        String messageErreur = "";
-          
-        //vérification du login unique
-        /*for(pseudo:pseudos) {
-            if(pseudo) {
-            	
-            }
+        String messageErreurMdP = "";
+        String messageErreurPseudo = "";
+        String messageErreurEmail = "";
 
-        }*/
+       
+        //vérification du pseudo unique
+        
+        for(String pseudoVerif:uMger.getListPseudos()) {
+            if (pseudo.equals(pseudoVerif)) {
+            	messageErreurPseudo = "Pseudo déjà utilisé";
+            }
+        }
+        
+        //vérification du email unique
+        
+        for(String emailVerif:uMger.getListEmail()) {
+            if (pseudo.equals(emailVerif)) {
+            	messageErreurEmail = "Email déjà utilisé";
+            }
+        }
         
         //vérification confirmation = mot de passe
         if (confirmation.equals(motDePasse)) {
@@ -67,9 +78,9 @@ public class inscriptionServlet extends HttpServlet {
         	//sinon les mots de passe sont différents
         	//on affiche un message d'erreur à l'utilisateur
         	System.out.println("mots de passe différents!");
-        	messageErreur = "Les mots de passe sont différents!";
+        	messageErreurMdP = "Les mots de passe sont différents!";
         	//et on renvoye les champs corrects deja saisis 
-			request.setAttribute("erreurMotDePasse", messageErreur);
+			request.setAttribute("erreurMotDePasse", messageErreurMdP);
 			request.setAttribute("pseudo", pseudo);
 			request.setAttribute("nom", nom);
 			request.setAttribute("prenom", prenom);

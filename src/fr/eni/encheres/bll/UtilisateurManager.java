@@ -27,6 +27,25 @@ public class UtilisateurManager {
 		}
 	}
 	
+	public List<String> getListPseudos() {
+		List<String> listPseudos = null;
+		try {
+			listPseudos = uDAO.selectAllPseudo();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listPseudos;
+	}
+	
+	public List<String> getListEmail() {
+		List<String> listEmail = null;
+		try {
+			listEmail = uDAO.selectAllEmail();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listEmail;
+	}
 	
 	public Utilisateur connectionByEmail(String email, String password) {
 		Utilisateur userBDD = null;
