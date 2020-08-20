@@ -8,6 +8,8 @@
 <%@page import="fr.eni.encheres.bo.Article"%>
 <%@page import="fr.eni.encheres.bo.Categorie"%>
 <%@page import="fr.eni.encheres.bll.CategorieManager"%>
+<%@page import="javax.servlet.http.HttpSession"%>
+
 
 
 <!DOCTYPE html>
@@ -20,18 +22,14 @@
 <body>
 <header>
 <h1>ENI Enchères</h1>
+<br>
 
-
-<%
-	Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
-	System.out.println("dans la jsp connectedUser : " + utilisateur.getPseudo());
-%>
 
 
 <a href="${pageContext.request.contextPath}/accueilConnecte?action=encheres">Enchères    </a>
 <a href="${pageContext.request.contextPath}/accueilConnecte?action=vendre">Vendre un article    </a>
-<a href="${pageContext.request.contextPath}/profil?user=<%=utilisateur.getPseudo()%>">Mon profil    </a>
-<a href="${pageContext.request.contextPath}/accueilConnecte?action=deconnexion?user="">S'inscrire    </a>
+<a href="${pageContext.request.contextPath}/profil?user=${connectedUser.getPseudo()}">Mon profil    </a>
+<a href="${pageContext.request.contextPath}/accueilConnecte?action=deconnexion">Déconnexion    </a>
 
  
 <h2>Liste des enchères</h2>
@@ -58,7 +56,6 @@
 
 <!-- EN CHANTIER : affichage conditionnel du menu radio + checkboxes Achats ou Ventes -->
 <% String rdoAchatsVentes = (String)request.getAttribute("rdoAchatsVentes");%>
-<% System.out.println(rdoAchatsVentes); %>
 
 
 		<div>
