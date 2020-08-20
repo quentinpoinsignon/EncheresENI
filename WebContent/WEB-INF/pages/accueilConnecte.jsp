@@ -15,18 +15,22 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/accueil.css">
-<title>Accueil encheres</title>
+<title>Accueil enchères</title>
 </head>
 <body>
 <header>
 <h1>ENI Enchères</h1>
 
 
+<%
+	Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
+	System.out.println("dans la jsp connectedUser : " + utilisateur.getPseudo());
+%>
 
 
 <a href="${pageContext.request.contextPath}/accueilConnecte?action=encheres">Enchères    </a>
 <a href="${pageContext.request.contextPath}/accueilConnecte?action=vendre">Vendre un article    </a>
-<a href="${pageContext.request.contextPath}/accueilConnecte?action=profil?user="">Mon profil    </a>
+<a href="${pageContext.request.contextPath}/profil?user=<%=utilisateur.getPseudo()%>">Mon profil    </a>
 <a href="${pageContext.request.contextPath}/accueilConnecte?action=deconnexion?user="">S'inscrire    </a>
 
  

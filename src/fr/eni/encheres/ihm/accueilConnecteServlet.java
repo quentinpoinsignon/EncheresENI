@@ -33,12 +33,9 @@ public class accueilConnecteServlet extends HttpServlet {
 //		request.setAttribute("rdoAchatsVentes", "achats");
 		
 		//Gestion du menu nav en haut à droite
-		String action = request.getParameter("action");
 		
 		
-		
-		
-		request.getRequestDispatcher("/WEB-INF/accueilConnecte.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

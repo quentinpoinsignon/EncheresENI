@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
@@ -25,9 +26,13 @@ public class profilServlet extends HttpServlet {
 	
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pseudoTemp = request.getParameter("user");
-		Utilisateur utilisateur = uMger.getUserProfileByPseudo(pseudoTemp);
+		HttpSession session = request.getSession();
+		Utilisateur connectedUser = (Utilisateur)session.getAttribute("connectedUser");
 		
+		String pseudoTemp = request.getParameter("user");
+		
+		Utilisateur utilisateur = uMger.getUserProfileByPseudo(pseudoTemp);
+		System.out.println(pseudoTemp);
 		//définition des paramètres à envoyer à la jsp profil
 		request.setAttribute("pseudo", utilisateur.getPseudo());
 		request.setAttribute("nom", utilisateur.getNom());
