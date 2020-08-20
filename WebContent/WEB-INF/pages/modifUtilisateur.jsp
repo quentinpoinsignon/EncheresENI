@@ -56,14 +56,14 @@
                 </div>
      			
                 	<div>
+           </div>
+</form>
                 	<form method="get" action="${pageContext.request.contextPath}/modifUtilisateurServlet">
                 	<button type= "submit" name="btnAction" id="btnModifier" value="modifier">Modifier</button><br>
                 	<button type= "submit" name="btnAction" id="btnSupprimer" value="supprimer">Supprimer</button><br>
                 	<button type= "submit" name="btnAction" id="btnAnnuler" value="annuler">Annuler</button><br>
 					</div>
 					</form>
-           </div>
-</form>
 </article>
 <p>${erreurPseudo}</p>
 <p>${erreurMotDePasse}</p>

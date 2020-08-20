@@ -43,7 +43,7 @@
                          <input class="input" name="codepostal" id="codepostal" type="text" pattern="[0-9]{5}" title="sur 5 chiffres" value=${codePostal} disabled>
                     </div>
                      <div><label for="ville" > Ville : </label>
-                        <input class="input" name="ville" id="ville" type="text"  value=${ville} disabled>
+                        <input class="input" name="ville" id="ville" type="text"  value='${ville}' disabled>
                     </div>
                     <div>
                     	${isConnectedUser ? 
