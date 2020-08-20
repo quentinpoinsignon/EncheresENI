@@ -1,6 +1,7 @@
 package fr.eni.encheres.dal.interfaces;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import fr.eni.encheres.bo.Utilisateur;
 
@@ -20,4 +21,6 @@ public interface UtilisateurDAO {
 	public Utilisateur getUserInformation(int idUser) throws Exception;
 
 	void removeUserProfil(int idUser) throws Exception;
+
+	List<String> selectAllPseudo() throws Exception;
 }

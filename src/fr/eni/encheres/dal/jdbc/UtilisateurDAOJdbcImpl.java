@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
@@ -72,6 +74,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private final String REMOVE_USER_PROFIL = "UPDATE UTILISATEURS\r\n"
 			+ "SET nom  = 'Utilisateur désinscrit', prenom = 'Utilisateur désinscrit', email = 'XXXX@email.com',telephone = 'XXXXXXXXXX',rue='XXXXXXX',code_postal='XXXXX' ,ville='XXXXX', mot_de_passe='MNy5jH3we6SjA44UeJ7A68vn5DcrD2'\r\n"
 			+ "WHERE no_utilisateur =  ?";
+	/**
+	 * @Constante SELECT_ALL_PSEUDO -> Chaine de charactères contenant une requête
+	 *            sql permettant de récupérer l'ensemble des pseudos enregistrés
+	 *            dans la base de données
+	 */
+
+	private final String SELECT_ALL_PSEUDO = "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo;";
 
 	/**
 	 * @author jarrigon2020
@@ -411,6 +420,45 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			throw new Exception("Erreur lors de l'ajout de l'utilisateur");
 
 		}
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @return listPseudo -> Objet de type ArrayList contenant des chaines de
+	 *         caractères contenant l'ensemble des pseudo enregistrés sur le site
+	 * 
+	 * @Commentaire Cette méthode permet de récupérer l'ensemble des pseudo
+	 *              enregistrés dans la base de données
+	 */
+	@Override
+	public List<String> selectAllPseudo() throws Exception {
+
+		List<String> listPseudo = new ArrayList<String>();
+		String pseudo = null;
+		ResultSet MyResultset = null;
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(SELECT_ALL_PSEUDO)) {
+
+			MyResultset = preparedStatement.executeQuery();
+
+			while (MyResultset.next()) {
+
+				pseudo = MyResultset.getString(1);
+
+				listPseudo.add(pseudo);
+
+			}
+
+			MyResultset.close();
+
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+		return listPseudo;
 
 	}
 
