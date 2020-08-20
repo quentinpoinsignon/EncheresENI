@@ -49,7 +49,6 @@ public class loginServlet extends HttpServlet {
 		}
 		
 		if (("1").equals(connexion) && identifiant != null && password != null) {
-			System.out.println("nature identifiant : " + ihmUtils.natureIdentifiant(identifiant));
 			Utilisateur connectedUser = null;
 			switch (ihmUtils.natureIdentifiant(identifiant)) {
 			case "pseudo":
@@ -63,7 +62,7 @@ public class loginServlet extends HttpServlet {
 			}
 			if(connectedUser != null) {
 				session.setAttribute("connectedUser", connectedUser);
-				request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 			}
 			else {
 				messageErreur = "Login ou mot de passe incorrect";

@@ -32,13 +32,12 @@
  
 <h2>Liste des enchères</h2>
 </header>
+
 <form action="${pageContext.request.contextPath}/accueilConnecte" method="get">
 
 	<label for="txtSearch">Filtres : </label>
 	<input type="search" name="txtSearch" id="txtSearch"><br><br>
-</form>
 
-	
 <!-- affichage de la liste des catégories -->
 <%! CategorieManager cMger = new CategorieManager();%>
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
@@ -51,7 +50,45 @@
 	</select><br><br>
 
 	<button type= "submit" name="btnRechercher" id="btnRechercher" value="1">Rechercher</button><br><br>
+	
 
+<!-- affichage conditionnel du menu radio + checkboxes Achats ou Ventes -->
+<% String rdoAchatsVentes = (String)request.getAttribute("rdoAchatsVentes");%>
+<% System.out.println(rdoAchatsVentes); %>
+
+<!-- <div> -->
+<!-- 	<div> -->
+<!-- 		<input type="radio" name="rdoSelectAchatsVentes" value="achats" name="rdoAchats" checked="checked">Achats<br> -->
+<!-- 	  	<input type="checkbox" name="chkEncheresOuvertes" value="encheresOuvertes">enchères ouvertes<br> -->
+<!-- 	  	<input type="checkbox" name="chkMesEncheres" value="mesEncheres">mes enchères<br> -->
+<!-- 	  	<input type="checkbox" name="chkEncheresRemportees" value="encheresRemportees">mes enchères remportées<br> -->
+<!-- 	</div> -->
+<!-- 	<div> -->
+<!-- 		<input type="radio" name="rdoSelectAchatsVentes" value="ventes" name="rdoVentes">Ventes<br> -->
+<%-- 	  	<input type="checkbox" name="chkVentesEnCours" value="ventesEnCours" <%=(rdoAchatsVentes.equals("ventes")) ? "":"disabled"%>>mes ventes en cours<br> --%>
+<%-- 	  	<input type="checkbox" name="chkVentesNonDebutees" value="ventesNonDebutees" <%=(rdoAchatsVentes.equals("ventes")) ? "":"disabled"%>>ventes non débutées<br> --%>
+<%-- 	  	<input type="checkbox" name="chkVentesTerminees" value="ventesTerminees" <%=(rdoAchatsVentes.equals("ventes")) ? "":"disabled"%>>ventes terminées<br> --%>
+<!--   </div> -->
+<!-- </div> -->
+
+
+<div>
+	<div>
+		<input type="radio" name="rdoSelectAchatsVentes" value="achats" name="rdoAchats" checked="checked">Achats<br>
+		<form>
+	  	<input type="radio" name="rdoAchats" value="encheresOuvertes">enchères ouvertes<br>
+	  	<input type="radio" name="rdoAchats" value="mesEncheres">mes enchères<br>
+	  	<input type="radio" name="rdoAchats" value="encheresRemportees">mes enchères remportées<br>
+	  	</form>
+	</div>
+	<div>
+		<input type="radio" name="rdoSelectAchatsVentes" value="ventes" name="rdoVentes">Ventes<br>
+	  	<input type="radio" name="rdoVentes" value="ventesEnCours">mes ventes en cours<br>
+	  	<input type="radio" name="rdoVentes" value="ventesNonDebutees" >ventes non débutées<br>
+	  	<input type="radio" name="rdoVentes" value="ventesTerminees">ventes terminées<br>
+  </div>
+</div>	
+</form>
 
 <!-- affichage de la liste des articles -->
 <%! ArticleManager aMger = new ArticleManager();%>
