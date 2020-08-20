@@ -13,7 +13,8 @@ import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
- * @author rbonin2020 servlet permettant l'inscription d'un nouvel utilisateur
+ * @author rbonin2020
+ *  servlet permettant l'inscription d'un nouvel utilisateur
  */
 @WebServlet("/inscription")
 public class inscriptionServlet extends HttpServlet {
@@ -44,19 +45,48 @@ public class inscriptionServlet extends HttpServlet {
 		String messageErreurEmail = "";
 
 		// vérification du pseudo unique
-
+			// on  boucle sur la liste des pseudos
 		for (String pseudoVerif : uMger.getListPseudos()) {
+			// si le pseudo est déjà utilisé
 			if (pseudo.equals(pseudoVerif)) {
+				//on affiche un message à l'utilisateur
 				messageErreurPseudo = "Pseudo déjà utilisé";
+				request.setAttribute("erreurMotDePasse", messageErreurPseudo);
+
+				//et on affiche de nouveau le formulaire en conservant les champs déjà saisis
+				request.setAttribute("nom", nom);
+				request.setAttribute("prenom", prenom);
+				request.setAttribute("email", email);
+				request.setAttribute("telephone", telephone);
+				request.setAttribute("rue", rue);
+				request.setAttribute("codepostal", codepostal);
+				request.setAttribute("ville", ville);
+
+				request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 			}
 		}
 
 		// vérification du email unique
+			// on boucle sur la liste des emails
+		 for(String emailVerif:uMger.getListEmail()) {
+			 // si le mail est déjà utilisé
+			 if (email.equals(emailVerif)){
+				// on affiche un message à l'utilisateur
+				messageErreurEmail = "Email déjà utilisé";
+				request.setAttribute("erreurEmail", messageErreurEmail);
+				//et on affiche de nouveau le formulaire en conservant les champs déjà saisis
+				request.setAttribute("nom", nom);
+				request.setAttribute("prenom", prenom);
+				request.setAttribute("email", email);
+				request.setAttribute("telephone", telephone);
+				request.setAttribute("rue", rue);
+				request.setAttribute("codepostal", codepostal);
+				request.setAttribute("ville", ville);
 
-		/**
-		 * for(String emailVerif:uMger.getListEmail()) { if (pseudo.equals(emailVerif))
-		 * { messageErreurEmail = "Email déjà utilisé"; } }
-		 **/
+				request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+			 }
+		}
+		 
 
 		// vérification confirmation = mot de passe
 		if (confirmation.equals(motDePasse)) {
@@ -76,8 +106,8 @@ public class inscriptionServlet extends HttpServlet {
 			// on affiche un message d'erreur à l'utilisateur
 			System.out.println("mots de passe différents!");
 			messageErreurMdP = "Les mots de passe sont différents!";
-			// et on renvoye les champs corrects deja saisis
 			request.setAttribute("erreurMotDePasse", messageErreurMdP);
+			// et on renvoye les champs corrects deja saisis
 			request.setAttribute("pseudo", pseudo);
 			request.setAttribute("nom", nom);
 			request.setAttribute("prenom", prenom);
