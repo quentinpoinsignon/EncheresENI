@@ -61,6 +61,7 @@ public class loginServlet extends HttpServlet {
 				break;
 			}
 			if(connectedUser != null) {
+				System.out.println(connectedUser.getCredit());
 				session.setAttribute("connectedUser", connectedUser);
 				request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 			}

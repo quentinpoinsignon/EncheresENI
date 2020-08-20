@@ -26,3 +26,9 @@ body, h2 {
 #listArticles {
 	border : solid 1px grey;
 }
+
+p {
+	text_align : center;
+}
+
+

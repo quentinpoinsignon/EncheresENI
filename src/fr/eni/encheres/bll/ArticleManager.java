@@ -9,7 +9,7 @@ import fr.eni.encheres.dal.interfaces.ArticleDAO;
 
 /**
  * @author qpoinsig2020
- * Classe de la bll gérant les articles
+ * @Commentaire Classe de la bll gérant les articles
  */
 
 public class ArticleManager {
