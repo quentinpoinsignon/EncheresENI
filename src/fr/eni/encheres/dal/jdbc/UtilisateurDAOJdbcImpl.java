@@ -51,7 +51,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            modifier les informations d'un utilisateur dans la base de
 	 *            données. On sélectionne l'utilisateur grâce à l'id utilisateur
 	 */
-	private final String EDIT_USER_PROFIL = "";
+	private final String EDIT_USER_PROFIL = "UPDATE UTILISATEURS\r\n"
+			+ "SET pseudo = '? ' , nom  = '?', prenom = '?', email = '?',telephone = '?',rue='?', code_postal='?', ville='?', mot_de_passe='?'\r\n"
+			+ "WHERE no_utilisateur =  ?";
 
 	/**
 	 * @Constante USER_PROFIL_REQUEST_BY_ID -> String contenant la requête SQL
@@ -59,6 +61,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            son identifiant
 	 */
 	private final String USER_PROFIL_REQUEST_BY_ID = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE no_utilisateur = ?";
+
+	/**
+	 * @Constante REMOVE_USER_PROFIL -> Chaine de caractère contenant une requête
+	 *            SQL permettant de modifier les informations d'un utilisateur afin
+	 *            de supprimer toutes ses informations personelles en les remplaçant
+	 *            par des valeurs par défaut.
+	 * 
+	 */
+	private final String REMOVE_USER_PROFIL = "UPDATE UTILISATEURS\r\n"
+			+ "SET nom  = 'Utilisateur désinscrit', prenom = 'Utilisateur désinscrit', email = 'XXXX@email.com',telephone = 'XXXXXXXXXX',rue='XXXXXXX',code_postal='XXXXX' ,ville='XXXXX', mot_de_passe='MNy5jH3we6SjA44UeJ7A68vn5DcrD2'\r\n"
+			+ "WHERE no_utilisateur =  ?";
 
 	/**
 	 * @author jarrigon2020
@@ -283,6 +296,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *                        l'utilisateur
 	 * @param password        -> Chaine de caractère correspondant au mot de passe
 	 *                        de l'utilisateur
+	 * @param idUser          ->int correspondant à l'indentifiant de l'utilisateur
+	 *                        dans la base de données. Il permet de cibler
+	 *                        précisément l'utilisateur dont on souhaite modifier
+	 *                        les données
+	 * @throws SQLException
 	 * 
 	 * @commentaire
 	 * 
@@ -291,7 +309,28 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 */
 	@Override
 	public void editUserProfil(String pseudo, String name, String firstName, String email, String telephoneNumber,
-			String street, String postalCode, String password) {
+			String street, String postalCode, String password, int idUser) throws SQLException {
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(EDIT_USER_PROFIL);) {
+
+			preparedStatement.setString(1, pseudo);
+			preparedStatement.setString(2, name);
+			preparedStatement.setString(3, firstName);
+			preparedStatement.setString(4, email);
+			preparedStatement.setString(5, telephoneNumber);
+			preparedStatement.setString(6, street);
+			preparedStatement.setString(7, postalCode);
+			preparedStatement.setString(8, password);
+			preparedStatement.setInt(9, idUser);
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			throw new SQLException(
+					"Problème lors de l'enregistrement des informations de l'utilisateur dans la base de données");
+		}
 
 	}
 
@@ -344,6 +383,34 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 		return userInformation;
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @param idUser -> Int correspondant à l'identifiant de l'utilisateur dans la
+	 *               base de données
+	 * 
+	 * @Commentaire Cette méthode permet de supprimer les données personnelles d'un
+	 *              utilisateur dans la base de données en les remplaçant par des
+	 *              valeurs par defaut
+	 */
+	@Override
+	public void removeUserProfil(int idUser) throws Exception {
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(REMOVE_USER_PROFIL)) {
+
+			preparedStatement.setInt(1, idUser);
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			throw new Exception("Erreur lors de l'ajout de l'utilisateur");
+
+		}
 
 	}
 

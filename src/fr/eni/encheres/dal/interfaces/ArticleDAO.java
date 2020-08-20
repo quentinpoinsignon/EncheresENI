@@ -9,4 +9,6 @@ public interface ArticleDAO {
 
 	public List<Article> selectAllArticle() throws SQLException, Exception;
 
+	List<Article> selectAllArticleInDatabase() throws Exception;
+
 }

@@ -15,7 +15,9 @@ public interface UtilisateurDAO {
 	public Utilisateur showUserProfil(String pseudo) throws Exception;
 
 	public void editUserProfil(String pseudo, String name, String firstName, String email, String telephoneNumber,
-			String street, String postalCode, String password);
+			String street, String postalCode, String password, int idUser) throws SQLException;
 
 	public Utilisateur getUserInformation(int idUser) throws Exception;
+
+	void removeUserProfil(int idUser) throws Exception;
 }
