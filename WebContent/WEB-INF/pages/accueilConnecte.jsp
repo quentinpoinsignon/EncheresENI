@@ -90,9 +90,10 @@
 </div>	
 </form>
 
+
 <!-- affichage de la liste des articles -->
 <%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
+<%! List<Article> listeArticles = aMger.selectAllArticles();%>
 <%! String formatDate = "dd/mm/yyyy"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeArticles != null) {%>
