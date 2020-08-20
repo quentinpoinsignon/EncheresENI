@@ -37,7 +37,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            de vérifier un utilisateur est enregistré dans la base de données
 	 *            à l'aide de son mail et de son mot de passe
 	 **/
-	private final String VERIF_EMAIL_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ? AND mot_de_passe = ?";;
+	private final String VERIF_EMAIL_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ?";;
 	/**
 	 * @Constante VERIF_PSEUDO_DATABASE -> String contenant la requête SQL
 	 *            permettant de vérifier un utilisateur est enregistré dans la base
@@ -100,6 +100,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "WHERE pseudo = ?";
 
 	/**
+	 * @Constante SELECT_CRYPTED_PASSWORD_BY_EMAIL -> Chaine de caratères contenant
+	 *            une requête SQL permettant de récupérer la version cryptée d'un
+	 *            mot de passe présent dans la base de données à partir de l'email
+	 */
+
+	private final String SELECT_CRYPTED_PASSWORD_BY_EMAIL = "SELECT mot_de_passe FROM UTILISATEURS\r\n"
+			+ "WHERE email = ?";
+
+	/**
 	 * @author jarrigon2020
 	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
 	 *                 l'utilisateur
@@ -119,38 +128,88 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		ResultSet MyResultset = null;
 		Utilisateur user = null;
 
-		try (Connection databaseConnection = JdbcTools.getConnection();
-				PreparedStatement preparedStatement = databaseConnection.prepareStatement(VERIF_EMAIL_DATABASE);) {
+		// On récupère la version cryptée du mot de passe
+		String hashedPassword = getUserCryptedPasswordByEmail(email);
 
-			preparedStatement.setString(1, email);
-			preparedStatement.setString(2, password);
+		// On vérifie si le mot de passe en clair correspond au mot de passe haché
+		if (BCrypt.checkpw(password, hashedPassword)) {
+
+			try (Connection databaseConnection = JdbcTools.getConnection();
+					PreparedStatement preparedStatement = databaseConnection.prepareStatement(VERIF_EMAIL_DATABASE);) {
+
+				preparedStatement.setString(1, email);
+
+				MyResultset = preparedStatement.executeQuery();
+
+				if (MyResultset.next()) {
+					int userId = MyResultset.getInt(1);
+					String pseudo = MyResultset.getString(2);
+					String nom = MyResultset.getString(3);
+					String prenom = MyResultset.getString(4);
+					String userEmail = MyResultset.getString(5);
+					String telephone = MyResultset.getString(6);
+					String rue = MyResultset.getString(7);
+					String codePostal = MyResultset.getString(8);
+					String ville = MyResultset.getString(9);
+					String motDePasse = MyResultset.getString(10);
+
+					user = new Utilisateur(userId, pseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
+							motDePasse);
+
+				}
+
+			} catch (SQLException e) {
+
+				throw new Exception("Erreur lors la tentative de connexion");
+
+			}
+		}
+		return user;
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @param pseudo -> Chaine de caractère contenant le pseudo à partir duquel on
+	 *               souhaite récupérer le mot de passe
+	 * 
+	 * @return hashedPassword -> Chaine de caractère contenant un mot de passe
+	 *         crypté dans la base de données
+	 * @throws Exception
+	 * @Commentaire Cette méthode permet de récupérer une version cryptée d'une mot
+	 *              de passe dans la base de données à partir du pseudo utilisateur
+	 * 
+	 */
+
+	private String getUserCryptedPasswordByPseudo(String pseudo) throws Exception {
+
+		ResultSet MyResultset = null;
+		String hashedPassword = null;
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection
+						.prepareStatement(SELECT_CRYPTED_PASSWORD_BY_PSEUDO);) {
+
+			preparedStatement.setString(1, pseudo);
 
 			MyResultset = preparedStatement.executeQuery();
 
 			if (MyResultset.next()) {
-				int userId = MyResultset.getInt(1);
-				String pseudo = MyResultset.getString(2);
-				String nom = MyResultset.getString(3);
-				String prenom = MyResultset.getString(4);
-				String userEmail = MyResultset.getString(5);
-				String telephone = MyResultset.getString(6);
-				String rue = MyResultset.getString(7);
-				String codePostal = MyResultset.getString(8);
-				String ville = MyResultset.getString(9);
-				String motDePasse = MyResultset.getString(10);
 
-				user = new Utilisateur(userId, pseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
-						motDePasse);
+				hashedPassword = MyResultset.getString(1);
 
 			}
 
+			MyResultset.close();
+
 		} catch (SQLException e) {
 
-			throw new Exception("Erreur lors la tentative de connexion");
+			throw new Exception("Erreur lors de la récupération du mot de passe");
 
 		}
 
-		return user;
+		return hashedPassword;
 
 	}
 
@@ -163,21 +222,22 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @return hashedPassword -> Chaine de caractère contenant un mot de passe
 	 *         crypté dans la base de données
 	 * @throws Exception
-	 * @Commentaire Cette méthode permet de récupérer une version cryptée d'une mot
-	 *              de passe dans la base de données
+	 * @Commentaire Cette méthode permet de récupérer une version cryptée d'un mot
+	 *              de passe dans la base de données à partir du mail de
+	 *              l'utilisateur
 	 * 
 	 */
 
-	private String getUserCryptedPassword(String pseudo) throws Exception {
+	private String getUserCryptedPasswordByEmail(String email) throws Exception {
 
 		ResultSet MyResultset = null;
 		String hashedPassword = null;
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = databaseConnection
-						.prepareStatement(SELECT_CRYPTED_PASSWORD_BY_PSEUDO);) {
+						.prepareStatement(SELECT_CRYPTED_PASSWORD_BY_EMAIL);) {
 
-			preparedStatement.setString(1, pseudo);
+			preparedStatement.setString(1, email);
 
 			MyResultset = preparedStatement.executeQuery();
 
@@ -221,11 +281,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		Utilisateur user = null;
 
 		// On récupère la version cryptée du mot de passe
-		String hashedPassword = getUserCryptedPassword(pseudo);
-
-		// Point de vérif
-
-		System.out.println("hashedPassword");
+		String hashedPassword = getUserCryptedPasswordByPseudo(pseudo);
 
 		// On vérifie si le mot de passe en clair correspond au mot de passe haché
 		if (BCrypt.checkpw(password, hashedPassword)) {
