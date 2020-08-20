@@ -90,7 +90,7 @@ public class inscriptionServlet extends HttpServlet {
         		HttpSession session = request.getSession();
     			session.setAttribute("connectedUser", utilisateur);
             }
-            //request.getRequestDispatcher("/WEB-INF/pages/inscriptions.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
         } else {
         	//sinon les mots de passe sont différents
         	//on affiche un message d'erreur à l'utilisateur
