@@ -18,4 +18,6 @@ public interface UtilisateurDAO {
 			String street, String postalCode, String password);
 
 	public Utilisateur getUserInformation(int idUser) throws Exception;
+
+	void removeUserProfil(int idUser) throws Exception;
 }
