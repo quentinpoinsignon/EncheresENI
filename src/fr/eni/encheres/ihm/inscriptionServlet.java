@@ -14,7 +14,8 @@ import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
- * Servlet implementation class inscriptionServlet
+ * @author rbonin2020
+ * servlet permettant l'inscription d'un nouvel utilisateur
  */
 @WebServlet("/inscription")
 public class inscriptionServlet extends HttpServlet {
