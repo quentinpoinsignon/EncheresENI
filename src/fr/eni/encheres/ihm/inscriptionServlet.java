@@ -28,7 +28,12 @@ public class inscriptionServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	   
+		
+		String messageErreurMdP = "";
+	    String messageErreurPseudo = "";
+	    String messageErreurEmail = "";
+
+	    
 		//récupération des données du formulaire
 		String pseudo = request.getParameter("pseudo");
 	    String nom = request.getParameter("nom");
@@ -41,26 +46,39 @@ public class inscriptionServlet extends HttpServlet {
         String motDePasse = request.getParameter("password");
         String confirmation = request.getParameter("confirmation");
         String creer = request.getParameter("creer");
-        String messageErreurMdP = "";
-        String messageErreurPseudo = "";
-        String messageErreurEmail = "";
-
        
+        System.out.println(uMger.getListPseudos());
+        System.out.println(pseudo);
+        //System.out.println(uMger.getListEmail());
+
         //vérification du pseudo unique
         
         for(String pseudoVerif:uMger.getListPseudos()) {
             if (pseudo.equals(pseudoVerif)) {
+            	System.out.println("pseudo deja existant");
             	messageErreurPseudo = "Pseudo déjà utilisé";
+            	request.setAttribute("erreurPseudo", messageErreurPseudo);
+            	request.setAttribute("nom", nom);
+        	    request.setAttribute("prenom", prenom);
+        	    request.setAttribute("email", email);
+        		request.setAttribute("telephone", telephone);
+        		request.setAttribute("rue", rue);
+                request.setAttribute("codepostal", codepostal);
+                request.setAttribute("ville", ville);
+            	request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+            	
+            	break;
             }
         }
+    
         
         //vérification du email unique
         
-        for(String emailVerif:uMger.getListEmail()) {
+       /*for(String emailVerif:uMger.getListEmail()) {
             if (pseudo.equals(emailVerif)) {
-            	messageErreurEmail = "Email déjà utilisé";
+            	messageErreurl = "Email déjà utilisé";
             }
-        }
+        }*/
         
         //vérification confirmation = mot de passe
         if (confirmation.equals(motDePasse)) {
@@ -71,9 +89,8 @@ public class inscriptionServlet extends HttpServlet {
             	uMger.addUtilisateur(utilisateur);
         		HttpSession session = request.getSession();
     			session.setAttribute("connectedUser", utilisateur);
-
             }
-            request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+            //request.getRequestDispatcher("/WEB-INF/pages/inscriptions.jsp").forward(request, response);
         } else {
         	//sinon les mots de passe sont différents
         	//on affiche un message d'erreur à l'utilisateur
@@ -90,7 +107,8 @@ public class inscriptionServlet extends HttpServlet {
 			request.setAttribute("codepostal", codepostal);
 			request.setAttribute("ville", ville);
 			
-	        request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+
+	        //request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 
         }
 
