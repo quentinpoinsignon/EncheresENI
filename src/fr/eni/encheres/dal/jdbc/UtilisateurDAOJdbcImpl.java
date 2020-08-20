@@ -152,9 +152,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					String codePostal = MyResultset.getString(8);
 					String ville = MyResultset.getString(9);
 					String motDePasse = MyResultset.getString(10);
+					int userCredit = MyResultset.getInt(11);
 
 					user = new Utilisateur(userId, pseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
-							motDePasse);
+							motDePasse, userCredit);
 
 				}
 
@@ -306,9 +307,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					String codePostal = MyResultset.getString(8);
 					String ville = MyResultset.getString(9);
 					String motDePasse = MyResultset.getString(10);
+					int userCredit = MyResultset.getInt(11);
 
 					user = new Utilisateur(userId, userPseudo, nom, prenom, userEmail, telephone, rue, codePostal,
-							ville, motDePasse);
+							ville, motDePasse, userCredit);
 
 				}
 
@@ -451,21 +453,20 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *              l'utilisateur dans la base de données
 	 */
 	@Override
-	public void editUserProfil(String pseudo, String name, String firstName, String email, String telephoneNumber,
-			String street, String postalCode, String password, int idUser) throws SQLException {
+	public void editUserProfil(Utilisateur user) throws SQLException {
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(EDIT_USER_PROFIL);) {
 
-			preparedStatement.setString(1, pseudo);
-			preparedStatement.setString(2, name);
-			preparedStatement.setString(3, firstName);
-			preparedStatement.setString(4, email);
-			preparedStatement.setString(5, telephoneNumber);
-			preparedStatement.setString(6, street);
-			preparedStatement.setString(7, postalCode);
-			preparedStatement.setString(8, password);
-			preparedStatement.setInt(9, idUser);
+			preparedStatement.setString(1, user.getPseudo());
+			preparedStatement.setString(2, user.getNom());
+			preparedStatement.setString(3, user.getPrenom());
+			preparedStatement.setString(4, user.getEmail());
+			preparedStatement.setString(5, user.getTelephone());
+			preparedStatement.setString(6, user.getRue());
+			preparedStatement.setString(7, user.getCodePostal());
+			preparedStatement.setString(8, user.getMotDePasse());
+			preparedStatement.setInt(9, user.getNoUtilisateur());
 
 			preparedStatement.executeUpdate();
 
@@ -512,10 +513,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				String rue = MyResultset.getString(6);
 				String codePostal = MyResultset.getString(7);
 				String ville = MyResultset.getString(8);
-				String motDePasse = MyResultset.getString(9);
 
-				userInformation = new Utilisateur(userPseudo, nom, prenom, userEmail, telephone, rue, codePostal, ville,
-						motDePasse);
+				userInformation = new Utilisateur(userPseudo, nom, prenom, userEmail, telephone, rue, codePostal,
+						ville);
 
 			}
 			MyResultset.close();

@@ -3,6 +3,7 @@ package fr.eni.encheres.bo;
 import java.sql.Date;
 
 public class Article {
+
 	private int noArticle;
 	String nomArticle;
 	String description;
