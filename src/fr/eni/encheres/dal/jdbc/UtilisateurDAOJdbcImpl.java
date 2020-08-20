@@ -80,7 +80,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            dans la base de données
 	 */
 
-	private final String SELECT_ALL_PSEUDO = "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo;";
+	private final String SELECT_ALL_PSEUDO = "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo";
+
+	/**
+	 * @Constante SELECT_ALL_EMAIL -> Chaine de caractères contenant une requête SQL
+	 *            permettant de récupérer l'ensemble des emails enregistrés dans la
+	 *            base de données
+	 */
+	private final String SELECT_ALL_EMAIL = "SELECT email FROM UTILISATEURS\\r\\n\" + \"ORDER BY email";
 
 	/**
 	 * @author jarrigon2020
@@ -429,7 +436,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @return listPseudo -> Objet de type ArrayList contenant des chaines de
 	 *         caractères contenant l'ensemble des pseudo enregistrés sur le site
 	 * 
-	 * @Commentaire Cette méthode permet de récupérer l'ensemble des pseudo
+	 * @Commentaire Cette méthode permet de récupérer l'ensemble des pseudos
 	 *              enregistrés dans la base de données
 	 */
 	@Override
@@ -459,6 +466,45 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 		return listPseudo;
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @return listEmail -> Objet de type ArrayList contenant des chaines de
+	 *         caractères contenant l'ensemble des emails enregistrés sur le site
+	 * 
+	 * @Commentaire Cette méthode permet de récupérer l'ensemble des emails
+	 *              enregistrés dans la base de données
+	 */
+	@Override
+	public List<String> selectAllEmail() throws Exception {
+
+		List<String> listEmail = new ArrayList<String>();
+		String email = null;
+		ResultSet MyResultset = null;
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(SELECT_ALL_EMAIL)) {
+
+			MyResultset = preparedStatement.executeQuery();
+
+			while (MyResultset.next()) {
+
+				email = MyResultset.getString(1);
+
+				listEmail.add(email);
+
+			}
+
+			MyResultset.close();
+
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+
+		return listEmail;
 
 	}
 

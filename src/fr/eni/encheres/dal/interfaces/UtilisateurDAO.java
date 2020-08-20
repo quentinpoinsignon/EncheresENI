@@ -23,4 +23,15 @@ public interface UtilisateurDAO {
 	void removeUserProfil(int idUser) throws Exception;
 
 	List<String> selectAllPseudo() throws Exception;
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @return listPseudo -> Objet de type ArrayList contenant des chaines de
+	 *         caractères contenant l'ensemble des pseudo enregistrés sur le site
+	 * 
+	 * @Commentaire Cette méthode permet de récupérer l'ensemble des pseudo
+	 *              enregistrés dans la base de données
+	 */
+	List<String> selectAllEmail() throws Exception;
 }
