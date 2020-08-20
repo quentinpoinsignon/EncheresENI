@@ -32,7 +32,6 @@ public class profilServlet extends HttpServlet {
 		String pseudoTemp = request.getParameter("user");
 		
 		Utilisateur utilisateur = uMger.getUserProfileByPseudo(pseudoTemp);
-		System.out.println(pseudoTemp);
 		//définition des paramètres à envoyer à la jsp profil
 		request.setAttribute("pseudo", utilisateur.getPseudo());
 		request.setAttribute("nom", utilisateur.getNom());
@@ -43,7 +42,6 @@ public class profilServlet extends HttpServlet {
 		request.setAttribute("codePostal", utilisateur.getCodePostal());
 		request.setAttribute("ville", utilisateur.getVille());
 		
-		System.out.println(utilisateur.getVille());
 	
 		request.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(request, response);
 	}
