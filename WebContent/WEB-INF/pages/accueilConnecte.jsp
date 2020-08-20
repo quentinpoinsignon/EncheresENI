@@ -43,7 +43,7 @@
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 	<label for="listCategories">Catégorie : </label>
 	<select id="listCategories" name="listCategories">
-			<option value="0" selected disabled hidden>Toutes</option>
+			<option value="0" selected>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
 			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
 			<%}%>
@@ -71,7 +71,7 @@
 <!--   </div> -->
 <!-- </div> -->
 
-
+<form action="${pageContext.request.contextPath}/accueilConnecte" method="get">
 <div>
 	<div>
 		<input type="radio" name="rdoSelectAchatsVentes" value="achats" name="rdoAchats" checked="checked">Achats<br>

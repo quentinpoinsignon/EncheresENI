@@ -34,7 +34,7 @@
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 	<label for="listCategories">Catégorie : </label>
 	<select id="listCategories" name="listCategories">
-			<option value="0" selected hidden default>Toutes</option>
+			<option value="0" selected>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
 			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
 			<%}%>
