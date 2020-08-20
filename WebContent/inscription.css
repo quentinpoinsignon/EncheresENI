@@ -1,0 +1,30 @@
+body{
+		background-color: #1aa3ff;
+		font-family: sans-serif;
+		color: blue;
+	
+}
+h2{
+	text-align: center;
+}
+
+label
+{
+	display: block;
+	width: 150px;
+	float: left;
+	margin-left: 50px;
+	margin: 10px;
+}
+
+.data{
+	margin-left: 150px;
+	margin-right: 150px;
+}
+
+input{
+	margin: 10px;
+}
+.bouttons{
+	text-align: center;
+}
