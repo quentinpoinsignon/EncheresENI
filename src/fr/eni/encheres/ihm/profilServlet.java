@@ -44,6 +44,10 @@ public class profilServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String retour = request.getParameter("btnRetour");
+		if (("1").equals(retour)) {
+			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+		}
 	}
 
 }

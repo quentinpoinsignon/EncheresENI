@@ -43,6 +43,9 @@
                      <div><label for="ville" > Ville : </label>
                         <input class="input" name="ville" id="ville" type="text"  value=${ville}>
                     </div>
+                    <div>
+                    	<button type="submit" name="btnRetour" id="btnRetour" value="1">Retour</button>
+                    </div>
                 </div>
 </form>
 </body>

@@ -32,10 +32,12 @@
  
 <h2>Liste des enchères</h2>
 </header>
-<form action="${pageContext.request.contextPath}/accueil">
+<form action="${pageContext.request.contextPath}/accueilConnecte" method="get">
 
 	<label for="txtSearch">Filtres : </label>
 	<input type="search" name="txtSearch" id="txtSearch"><br><br>
+</form>
+
 	
 <!-- affichage de la liste des catégories -->
 <%! CategorieManager cMger = new CategorieManager();%>
@@ -49,7 +51,7 @@
 	</select><br><br>
 
 	<button type= "submit" name="btnRechercher" id="btnRechercher" value="1">Rechercher</button><br><br>
-</form>
+
 
 <!-- affichage de la liste des articles -->
 <%! ArticleManager aMger = new ArticleManager();%>
