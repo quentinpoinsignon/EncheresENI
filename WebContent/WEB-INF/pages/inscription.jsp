@@ -60,7 +60,9 @@
 </form>
 </article>
 <p>${erreurPseudo}</p>
+<p>${erreurEmail}</p>
 <p>${erreurMotDePasse}</p>
+
 
 </body>
 </html>

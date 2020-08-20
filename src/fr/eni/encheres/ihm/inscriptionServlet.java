@@ -61,14 +61,14 @@ public class inscriptionServlet extends HttpServlet {
 				request.setAttribute("rue", rue);
 				request.setAttribute("codepostal", codepostal);
 				request.setAttribute("ville", ville);
-
-				request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+				//request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 			}
 		}
 
 		// vérification du email unique
 			// on boucle sur la liste des emails
 		 for(String emailVerif:uMger.getListEmail()) {
+			 System.out.println(uMger.getListEmail());
 			 // si le mail est déjà utilisé
 			 if (email.equals(emailVerif)){
 				// on affiche un message à l'utilisateur
@@ -77,16 +77,17 @@ public class inscriptionServlet extends HttpServlet {
 				//et on affiche de nouveau le formulaire en conservant les champs déjà saisis
 				request.setAttribute("nom", nom);
 				request.setAttribute("prenom", prenom);
-				request.setAttribute("email", email);
+				request.setAttribute("pseudo", pseudo);
 				request.setAttribute("telephone", telephone);
 				request.setAttribute("rue", rue);
 				request.setAttribute("codepostal", codepostal);
 				request.setAttribute("ville", ville);
-
-				request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+				//request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
 			 }
 		}
-		 
+		
+			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+ 
 
 		// vérification confirmation = mot de passe
 		if (confirmation.equals(motDePasse)) {
@@ -98,9 +99,11 @@ public class inscriptionServlet extends HttpServlet {
 				uMger.addUtilisateur(utilisateur);
 				HttpSession session = request.getSession();
 				session.setAttribute("connectedUser", utilisateur);
+				request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 
 			}
-			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+			//request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+			
 		} else {
 			// sinon les mots de passe sont différents
 			// on affiche un message d'erreur à l'utilisateur
@@ -118,7 +121,7 @@ public class inscriptionServlet extends HttpServlet {
 			request.setAttribute("ville", ville);
 
 			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
-
+			
 		}
 
 	}
