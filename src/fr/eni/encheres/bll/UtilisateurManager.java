@@ -95,7 +95,12 @@ public class UtilisateurManager {
 	}
 	
 	public void editUserPassword (Utilisateur utilisateur, String oldPassword, String newPassword) {
-		
+		try {
+			uDAO.editUserPassword(utilisateur, oldPassword, newPassword);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -30,10 +30,10 @@
                          <input class="input" name="codepostal" id="codepostal" type="text" value="${connectedUser.getCodePostal()}" pattern="[0-9]{5}" title="sur 5 chiffres" required>
                     </div>
                     <div><label for="oldPassword" > Mot de passe actuel: </label>
-                         <input class="input" name="password"  id="oldPassword" type="password" pattern="\w{8}" title="8 caractères" required>  
+                         <input class="input" name="oldPassword"  id="oldPassword" type="password" pattern="\w.{8,30}" title="8 caractères minimum, 30 maximum">  
                     </div>
                     <div><label for="newPassword" > Nouveau mot de passe : </label>
-                         <input class="input" name="newPassword"  id="newPassword" type="password" pattern="\w{8}" title="8 caractères" required>  
+                         <input class="input" name="newPassword"  id="newPassword" type="password" pattern="\w.{8,30}" title="8 caractères minimum, 30 maximum">  
                     </div>
                 </div>
                
@@ -52,20 +52,18 @@
                     </div>
                     <br>
                     <div><label for="newPasswordConfirm" > Confirmation :  </label>
-                        <input class="input" name="newPasswordConfirm" id="newPasswordConfirm" type="password" pattern="\w{8}" title="8 caractères" >
+                        <input class="input" name="newPasswordConfirm" id="newPasswordConfirm" type="password" pattern="\w.{8,30}" title="8 caractères minimum, 30 maximum" >
                     </div>
                     <div>
                     <p>Crédit : '${connectedUser.getCredit()}'</p><br><br>
                     </div>
                 </div>
 					<div id="btnActions">
-<%--                 	<form method="get" action="${pageContext.request.contextPath}/modifUtilisateur" id="btnActions"> --%>
 	                	<button type= "submit" name="btnAction" id="btnModifier" value="modifier">Modifier</button>
 	                	<button type= "submit" name="btnAction" id="btnSupprimer" value="supprimer">Supprimer</button>
 	                	${modifEffectuee ? '
 	                	<button type= "submit" name="btnAction" id="btnRetour" value="retour">Retour</button>':
 	                	'<button type= "submit" name="btnAction" id="btnAnnuler" value="annuler">Annuler</button>'}
-<!-- 					</form> -->
 					</div>
      			
 </form>

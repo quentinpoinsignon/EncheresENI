@@ -43,23 +43,21 @@ public class modifUtilisateurServlet extends HttpServlet {
 			connectedUser.setRue(request.getParameter("rue"));
 			connectedUser.setVille(request.getParameter("ville"));
 			connectedUser = uMger.editUserProfile(connectedUser);
-			message = "Modifications du profil effectuée";
-			request.setAttribute("msgModif", message);
-			request.setAttribute("modifEffectuee", true);
+			
 			//modification du mot de passe
 			String oldPassword = request.getParameter("oldPassword");
 			String newPassword = request.getParameter("newPassword");
 			String newPasswordConfirm = request.getParameter("newPasswordConfirm");
-			if(oldPassword != null && newPassword != null && newPasswordConfirm != null && newPassword == newPasswordConfirm) {
-			
-				
-				
+			System.out.println("ancien password : " + oldPassword);
+			System.out.println("nouveau password : " + newPassword);
+			if(oldPassword != null && newPassword != null && newPasswordConfirm != null && newPassword.equals(newPasswordConfirm)) {
+				uMger.editUserPassword(connectedUser, oldPassword, newPassword);
 			}
 			
-			
-			
-			
-			
+			//set des attributes pour la jsp
+			message = "Modifications du profil effectuée";
+			request.setAttribute("msgModif", message);
+			request.setAttribute("modifEffectuee", true);
 			
 			request.getRequestDispatcher("/WEB-INF/pages/modifUtilisateur.jsp").forward(request, response);
 			break;
