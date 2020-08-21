@@ -2,7 +2,6 @@ body{
 		background-color: #1aa3ff;
 		font-family: sans-serif;
 		color: blue;
-	
 }
 h2{
 	text-align: center;
@@ -18,13 +17,20 @@ label
 }
 
 .data{
-	margin-left: 150px;
+	margin-left: 250px;
 	margin-right: 150px;
 }
 
 input{
 	margin: 10px;
 }
-.bouttons{
+.boutons{
 	text-align: center;
 }
+
+p{
+	text-align: center;
+}
+
+h1,h2,h3{
+display: inline;

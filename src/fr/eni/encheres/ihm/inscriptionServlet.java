@@ -2,6 +2,7 @@ package fr.eni.encheres.ihm;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,9 +41,13 @@ public class inscriptionServlet extends HttpServlet {
 		String motDePasse = request.getParameter("password");
 		String confirmation = request.getParameter("confirmation");
 		String creer = request.getParameter("creer");
+		
 		String messageErreurMdP = "";
 		String messageErreurPseudo = "";
 		String messageErreurEmail = "";
+		RequestDispatcher rd = null;
+		Boolean bPseudo = false;
+		Boolean bEmail = false;
 
 		// vérification du pseudo unique
 			// on  boucle sur la liste des pseudos
@@ -51,8 +56,8 @@ public class inscriptionServlet extends HttpServlet {
 			if (pseudo.equals(pseudoVerif)) {
 				//on affiche un message à l'utilisateur
 				messageErreurPseudo = "Pseudo déjà utilisé";
-				request.setAttribute("erreurMotDePasse", messageErreurPseudo);
-
+				request.setAttribute("erreurPseudo", messageErreurPseudo);
+				bPseudo = true;
 				//et on affiche de nouveau le formulaire en conservant les champs déjà saisis
 				request.setAttribute("nom", nom);
 				request.setAttribute("prenom", prenom);
@@ -61,69 +66,67 @@ public class inscriptionServlet extends HttpServlet {
 				request.setAttribute("rue", rue);
 				request.setAttribute("codepostal", codepostal);
 				request.setAttribute("ville", ville);
-				//request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+				rd=request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp");
 			}
 		}
 
 		// vérification du email unique
+		// si le pseudo est unique
+		if(!bPseudo) { 
 			// on boucle sur la liste des emails
-		 for(String emailVerif:uMger.getListEmail()) {
-			 System.out.println(uMger.getListEmail());
+			for(String emailVerif:uMger.getListEmail()) {
 			 // si le mail est déjà utilisé
-			 if (email.equals(emailVerif)){
-				// on affiche un message à l'utilisateur
-				messageErreurEmail = "Email déjà utilisé";
-				request.setAttribute("erreurEmail", messageErreurEmail);
-				//et on affiche de nouveau le formulaire en conservant les champs déjà saisis
+				if (email.equals(emailVerif)){
+					// on affiche un message à l'utilisateur
+					messageErreurEmail = "Email déjà utilisé";
+					request.setAttribute("erreurEmail", messageErreurEmail);
+					bEmail=true;
+					//et on affiche de nouveau le formulaire en conservant les champs déjà saisis
+					request.setAttribute("nom", nom);
+					request.setAttribute("prenom", prenom);
+					request.setAttribute("pseudo", pseudo);
+					request.setAttribute("telephone", telephone);
+					request.setAttribute("rue", rue);
+					request.setAttribute("codepostal", codepostal);
+					request.setAttribute("ville", ville);
+					rd=request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp");
+				}
+			}
+		}
+
+		// vérification confirmation = mot de passe
+		// si le pseudo et le mail sont uniques
+		if(!bPseudo && !bEmail) {
+			if (confirmation.equals(motDePasse)) {
+				// si ok, création du nouvel utilisateur
+				Utilisateur utilisateur = null;
+				if (("1").equals(creer)) {
+					utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, motDePasse);
+					uMger.addUtilisateur(utilisateur);
+					HttpSession session = request.getSession();
+					session.setAttribute("connectedUser", utilisateur);
+				}
+				rd=request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp");
+			
+			} else {
+				// sinon les mots de passe sont différents
+				// on affiche un message d'erreur à l'utilisateur
+				messageErreurMdP = "Les mots de passe sont différents!";
+				request.setAttribute("erreurMotDePasse", messageErreurMdP);
+				// et on renvoye les champs corrects deja saisis
+				request.setAttribute("pseudo", pseudo);
 				request.setAttribute("nom", nom);
 				request.setAttribute("prenom", prenom);
-				request.setAttribute("pseudo", pseudo);
+				request.setAttribute("email", email);
 				request.setAttribute("telephone", telephone);
 				request.setAttribute("rue", rue);
 				request.setAttribute("codepostal", codepostal);
 				request.setAttribute("ville", ville);
-				//request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
-			 }
-		}
-		
-			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
- 
 
-		// vérification confirmation = mot de passe
-		if (confirmation.equals(motDePasse)) {
-			// si ok, création du nouvel utilisateur
-			Utilisateur utilisateur = null;
-			if (("1").equals(creer)) {
-				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville,
-						motDePasse);
-				uMger.addUtilisateur(utilisateur);
-				HttpSession session = request.getSession();
-				session.setAttribute("connectedUser", utilisateur);
-				request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
-
+				rd=request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp");
 			}
-			//request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
-			
-		} else {
-			// sinon les mots de passe sont différents
-			// on affiche un message d'erreur à l'utilisateur
-			System.out.println("mots de passe différents!");
-			messageErreurMdP = "Les mots de passe sont différents!";
-			request.setAttribute("erreurMotDePasse", messageErreurMdP);
-			// et on renvoye les champs corrects deja saisis
-			request.setAttribute("pseudo", pseudo);
-			request.setAttribute("nom", nom);
-			request.setAttribute("prenom", prenom);
-			request.setAttribute("email", email);
-			request.setAttribute("telephone", telephone);
-			request.setAttribute("rue", rue);
-			request.setAttribute("codepostal", codepostal);
-			request.setAttribute("ville", ville);
-
-			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
-			
 		}
-
+		//en fonction des situations, on redirige l'utilisateur sur la page correspondante
+		rd.forward(request, response);
 	}
-
 }
