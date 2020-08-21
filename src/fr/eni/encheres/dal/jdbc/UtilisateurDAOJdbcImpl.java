@@ -56,7 +56,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            données. On sélectionne l'utilisateur grâce à l'id utilisateur
 	 */
 	private final String EDIT_USER_PROFIL = "UPDATE UTILISATEURS\r\n"
-			+ "SET pseudo = '? ' , nom  = '?', prenom = '?', email = '?',telephone = '?',rue='?', code_postal='?', ville='?', mot_de_passe='?'\r\n"
+			+ "SET pseudo = ?  , nom  = ?, prenom = ?, email = ?,telephone = ?,rue=?, code_postal=?, ville=?, mot_de_passe=?\r\n"
 			+ "WHERE no_utilisateur =  ?";
 
 	/**
@@ -114,15 +114,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            editUserInformation() permettant de récupérer les informations de
 	 *            l'utilisateur après modifications
 	 */
-	private final String SELECT_USER_INFORMATION_AFTER_EDIT = "pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit FROM UTILISATEURS\r\n"
+	private final String SELECT_USER_INFORMATION_AFTER_EDIT = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit FROM UTILISATEURS\r\n"
 			+ "WHERE no_utilisateur = ?";
 
 	/**
 	 * @Constante UPDATE_USER_PASSWORD -> Chaine de caractère contenant une requête
 	 *            SQL permettant de modifier le mot de passe de l'utilisateur
 	 */
-	private final String UPDATE_USER_PASSWORD = "UPDATE UTILISATEURS\r\n" + "SET mot_de_passe ='?'\r\n"
-			+ "WHERE pseudo = '?'";
+	private final String UPDATE_USER_PASSWORD = "UPDATE UTILISATEURS\r\n" + "SET mot_de_passe = ? \r\n"
+			+ "WHERE pseudo = ?";
 
 	/**
 	 * @author jarrigon2020
@@ -475,7 +475,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			preparedStatement.setString(9, user.getMotDePasse());
 			preparedStatement.setInt(10, idUser);
 
+			System.out.println("Avant la requête 2");
+
 			preparedStatement.executeUpdate();
+
+			System.out.println("Après la requête 2");
 
 			// Il faut récupérer les infos misent à jour dans la base de données
 
@@ -484,7 +488,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 			newPreparedStatement.setInt(1, idUser);
 
+			System.out.println("Avant la requête 2");
 			myResultSet = newPreparedStatement.executeQuery();
+			System.out.println("Après la requête 2");
 
 			while (myResultSet.next()) {
 
@@ -505,9 +511,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		} catch (SQLException e) {
 
-			throw new SQLException(
-					"Problème lors de l'enregistrement des informations de l'utilisateur dans la base de données");
+			throw new SQLException(e.getMessage());
 		}
+		System.out.println(userEdit);
 		return userEdit;
 
 	}
