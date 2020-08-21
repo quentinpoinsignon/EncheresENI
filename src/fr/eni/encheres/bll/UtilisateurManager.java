@@ -58,8 +58,6 @@ public class UtilisateurManager {
 		}
 		return userBDD;
 	}
-	
-
 
 	public Utilisateur connectionByPseudo(String pseudo, String password) {
 		Utilisateur userBDD = null;
@@ -101,6 +99,16 @@ public class UtilisateurManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void removeUserProfile (int idUser) {
+		try {
+			uDAO.removeUserProfil(idUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

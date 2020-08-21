@@ -48,21 +48,32 @@ public class modifUtilisateurServlet extends HttpServlet {
 			String oldPassword = request.getParameter("oldPassword");
 			String newPassword = request.getParameter("newPassword");
 			String newPasswordConfirm = request.getParameter("newPasswordConfirm");
-			System.out.println("ancien password : " + oldPassword);
-			System.out.println("nouveau password : " + newPassword);
-			if(oldPassword != null && newPassword != null && newPasswordConfirm != null && newPassword.equals(newPasswordConfirm)) {
-				uMger.editUserPassword(connectedUser, oldPassword, newPassword);
+			
+			if(oldPassword != null && newPassword != null && newPasswordConfirm != null) {
+				if(!newPassword.equals(newPasswordConfirm)) {
+					message = "Les champs Nouveau mot de passe et Confirmation ne correspondent pas";
+					request.setAttribute("modifEffectuee", false);
+					}
+				else if(oldPassword.equals(newPassword)) {
+					message = "Le nouveau mot de passe doit être différent de l'ancien";
+					request.setAttribute("modifEffectuee", false);
+				}
+				else if(newPassword.equals(newPasswordConfirm)) {
+					uMger.editUserPassword(connectedUser, oldPassword, newPassword);
+					message = "Modifications du profil effectuée";
+					request.setAttribute("modifEffectuee", true);
+				}
 			}
 			
 			//set des attributes pour la jsp
-			message = "Modifications du profil effectuée";
-			request.setAttribute("msgModif", message);
-			request.setAttribute("modifEffectuee", true);
 			
+			request.setAttribute("msgModif", message);
 			request.getRequestDispatcher("/WEB-INF/pages/modifUtilisateur.jsp").forward(request, response);
 			break;
 		case "supprimer":
-			
+			uMger.removeUserProfile(connectedUser.getNoUtilisateur());
+			session.removeAttribute("connectedUser");
+			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 			break;
 		case "annuler":
 			System.out.println("case annuler");

@@ -45,7 +45,7 @@
 
 <!-- affichage de la liste des articles -->
 <%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectAllArticles();%>
+<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
 <%! String formatDate = "dd/mm/yyyy"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeArticles != null) {%>
