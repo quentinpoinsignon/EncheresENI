@@ -33,14 +33,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 *            ayant mis en vente et la catégorie à laquelle ils appartiennent
 	 * 
 	 * @value "SELECT TOP 3
-	 *        utl.pseudo,ctgr.libelle,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente
+	 *        utl.pseudo,ctgr.libelle,ctgr.no_categorie,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente
 	 *        FROM ARTICLES_VENDUS artvd\r\n" + "INNER JOIN UTILISATEURS utl ON
 	 *        utl.no_utilisateur = artvd.no_utilisateur\r\n" + "INNER JOIN
 	 *        CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n" +
 	 *        "WHERE vente_effectuee = 0\r\n" + "ORDER BY date_debut_encheres DESC";
 	 */
 
-	private final String SELECT_ALL_ARTICLE_TOP3 = "SELECT TOP 3 utl.pseudo,ctgr.libelle,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM ARTICLES_VENDUS artvd\r\n"
+	private final String SELECT_ALL_ARTICLE_TOP3 = "SELECT TOP 3 utl.pseudo,ctgr.libelle,ctgr.no_categorie,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM ARTICLES_VENDUS artvd\r\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\r\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n"
 			+ "WHERE vente_effectuee = 0\r\n" + "ORDER BY date_debut_encheres DESC";
@@ -169,16 +169,17 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				// Catégorie
 				String categorieLibelle = myResultset.getString(2);
+				int idCategorie = myResultset.getInt(3);
 
-				categorie = new Categorie(categorieLibelle);
+				categorie = new Categorie(idCategorie, categorieLibelle);
 
 				// Articles
-				String articleName = myResultset.getString(3);
-				String desription = myResultset.getString(4);
-				Date dateDebut = myResultset.getDate(5);
-				Date dateFin = myResultset.getDate(6);
-				int prixInitial = myResultset.getInt(7);
-				int prixVente = myResultset.getInt(8);
+				String articleName = myResultset.getString(4);
+				String desription = myResultset.getString(5);
+				Date dateDebut = myResultset.getDate(6);
+				Date dateFin = myResultset.getDate(7);
+				int prixInitial = myResultset.getInt(8);
+				int prixVente = myResultset.getInt(9);
 
 				article = new Article(articleName, desription, dateDebut, dateFin, prixInitial, prixVente, user,
 						categorie);
