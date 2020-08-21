@@ -46,6 +46,12 @@ public class encheresServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("btnRechercher");
+		if(("1").equals(action)) {
+			String categorie = request.getParameter("selectedCategorie");
+			System.out.println(categorie);
+		}
+		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 	}
 
 	}

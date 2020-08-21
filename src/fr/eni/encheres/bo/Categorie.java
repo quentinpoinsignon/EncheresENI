@@ -1,5 +1,12 @@
 package fr.eni.encheres.bo;
 
+/**
+ * @author qpoinsig2020
+ * @Commentaire BO Categorie 
+ * @param noCategorie généré automatiquement par le SGBD en Identity
+ * @param libelle nom de la catégorie
+ * 
+ */
 public class Categorie {
 	private int noCategorie;
 	String libelle;
@@ -8,6 +15,7 @@ public class Categorie {
 		this.libelle = libelle;
 	}
 
+	
 	public int getNoCategorie() {
 		return noCategorie;
 	}

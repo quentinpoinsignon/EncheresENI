@@ -29,20 +29,24 @@
 	<input type="search" name="txtSearch" id="txtSearch"><br><br>
 	
 	
+
+</form>
+
+<form action="${pageContext.request.contextPath}/accueil" method="post">
+
 <!-- affichage de la liste des catégories -->
 <%! CategorieManager cMger = new CategorieManager();%>
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 	<label for="listCategories">Catégorie : </label>
-	<select id="listCategories" name="listCategories">
+	<select id="listCategories" name="selectedCategorie">
 			<option value="0" selected>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
+			<%System.out.println(cat.getNoCategorie()); %>
 			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
 			<%}%>
 	</select><br><br>
-
 	<button type= "submit" name="btnRechercher" id="btnRechercher" value="1">Rechercher</button><br><br>
-</form>
-
+	
 <!-- affichage de la liste des articles -->
 <%! ArticleManager aMger = new ArticleManager();%>
 <%! List<Article> listeArticles = aMger.selectAllArticles();%>
@@ -59,6 +63,7 @@
 		<br><br>
 		 <%}%>
 <%}%>
+</form>
 
 </body>
 </html>
