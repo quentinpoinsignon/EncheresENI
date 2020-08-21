@@ -7,6 +7,7 @@
 <%@page import="fr.eni.encheres.bll.CategorieManager"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
 <%@page import="fr.eni.encheres.bo.Categorie"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +42,6 @@
 	<select id="listCategories" name="selectedCategorie">
 			<option value="0" selected>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
-			<%System.out.println(cat.getNoCategorie());%>
 			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
 			<%}%>
 	</select><br><br>
@@ -53,14 +53,18 @@
 <%! String formatDate = "dd/mm/yyyy"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeArticles != null) {%>
+<% String selectedCategorie = (String)request.getAttribute("selectedCategorie");%>
 <%for (Article article : listeArticles) {%>
+<%if(selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0")) {%>
 		<div id=listArticles>
+			<p><%=article.getCategorie().getNoCategorie()%></p><br>
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
 			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
 			<p>Vendeur : <%=article.getUtilisateur().getPseudo()%></p><br>
 		</div>
 		<br><br>
+		<%}%>
 		 <%}%>
 <%}%>
 </form>

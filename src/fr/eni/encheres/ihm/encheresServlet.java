@@ -1,7 +1,6 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,8 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bo.Categorie;
 
@@ -23,9 +22,11 @@ import fr.eni.encheres.bo.Categorie;
 @WebServlet({"/encheres", "/accueil"})
 public class encheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static List<Categorie> listeCategories = null;
 	
-       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("selectedCategorie", "0");
+
 		//redirection avec boutons inscrire et connecter 
 		String action = request.getParameter("action");
 		if(action!=null) {
@@ -49,8 +50,9 @@ public class encheresServlet extends HttpServlet {
 		String action = request.getParameter("btnRechercher");
 		if(("1").equals(action)) {
 			String categorie = request.getParameter("selectedCategorie");
-			System.out.println(categorie);
+			request.setAttribute("selectedCategorie", categorie);
 		}
+		else request.setAttribute("selectedCategorie", "0");
 		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 	}
 
