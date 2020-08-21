@@ -574,7 +574,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception {
 
 		String pseudo = user.getPseudo();
-		int idUser = user.getNoUtilisateur();
 
 		// On récupère l'ancien mot de passe grâce au pseudo
 		String hashedPassword = getUserCryptedPasswordByPseudo(pseudo);
@@ -589,7 +588,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					PreparedStatement preparedStatement = databaseConnection.prepareStatement(UPDATE_USER_PASSWORD);) {
 
 				preparedStatement.setString(1, newhashedPassword);
-				preparedStatement.setInt(2, idUser);
+				preparedStatement.setString(2, pseudo);
 
 				preparedStatement.executeUpdate();
 

@@ -27,7 +27,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	 *            dans la base de données
 	 */
 
-	private final String ALL_CATEGORIE_REQUEST = "SELECT libelle FROM CATEGORIES;";
+	private final String ALL_CATEGORIE_REQUEST = "SELECT no_categorie, libelle FROM CATEGORIES;";
 
 	/**
 	 * @author jarrigon2020
@@ -54,9 +54,10 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 			while (myResultset.next()) {
 
-				String libelle = myResultset.getString(1);
+				int idCategorie = myResultset.getInt(1);
+				String libelle = myResultset.getString(2);
 
-				categorie = new Categorie(libelle);
+				categorie = new Categorie(idCategorie, libelle);
 
 				listCategorie.add(categorie);
 

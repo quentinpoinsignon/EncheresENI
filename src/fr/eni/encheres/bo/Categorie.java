@@ -8,6 +8,12 @@ public class Categorie {
 		this.libelle = libelle;
 	}
 
+	public Categorie(int idCategorie, String libelle) {
+		this.noCategorie = idCategorie;
+		this.libelle = libelle;
+
+	}
+
 	public int getNoCategorie() {
 		return noCategorie;
 	}

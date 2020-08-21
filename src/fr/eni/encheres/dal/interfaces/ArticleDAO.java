@@ -11,4 +11,6 @@ public interface ArticleDAO {
 
 	List<Article> selectAllArticleInDatabase() throws Exception;
 
+	void insertNewArticle(Article article) throws Exception;
+
 }

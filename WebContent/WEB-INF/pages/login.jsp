@@ -20,6 +20,7 @@
 	<a href="${pageContext.request.contextPath}/encheres?action=inscription">Mot de passe oublié ?</a><br><br>
 <!-- 	<button type="submit" name="creercompte" id="creercompte" value="1">Créer un compte ?</button> -->
   	<button type= "submit" name="creercompte" id="creercompte" value="1">Créer un compte ?</button><br><br>
+  	<a href="encheres"> <input type="button" style="width:130px; height:30px" value="Annuler"> </a>
 </form>
 <%--   	<%String messageErreur = (String) request.getAttribute("erreurMessage");%> --%>
 	<p>${erreurLogin}</p>  	
