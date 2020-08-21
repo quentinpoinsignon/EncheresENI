@@ -38,9 +38,10 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	 * 
 	 * @Commentaire Cette fonction permet d'enregistrer un nouveau point de retrait
 	 *              dans la base de données. Elle est appelée au sein de la méthode
-	 *              insertNewArticle
+	 *              insertNewArticle dans la classe ArticleDAOJdbcImpl
 	 * 
 	 */
+	@Override
 	public void insertWithdrawalPoint(Article newArticle) throws Exception {
 
 		int noArticle = newArticle.getNoArticle();
@@ -53,9 +54,9 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(INSERT_WITHDRAWAL_POINT)) {
 
 			preparedStatement.setInt(1, noArticle);
-			preparedStatement.setString(2, newArticle.getDescription());
-
-			preparedStatement.setInt(6, 0);
+			preparedStatement.setString(2, street);
+			preparedStatement.setString(3, town);
+			preparedStatement.setString(4, postalCode);
 
 			preparedStatement.executeUpdate();
 

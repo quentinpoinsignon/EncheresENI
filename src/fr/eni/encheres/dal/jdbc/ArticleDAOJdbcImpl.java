@@ -11,7 +11,9 @@ import java.util.List;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.interfaces.ArticleDAO;
+import fr.eni.encheres.dal.interfaces.RetraitDAO;
 
 /**
  * 
@@ -71,16 +73,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 */
 	private final String INSERT_NEW_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie,vente_effectuee) \r\n"
 			+ "VALUES (?,?,?,?,?,?,?,?,?)";
-
-	/**
-	 * @Constante INSERT_WITHDRAWAL_POINT -> Chaine de caractères contenant une
-	 *            requête SQL permettant d'enregister un nouveau point de retrait
-	 *            dans la base de données dans la base de données
-	 * 
-	 * @value "INSERT INTO RETRAITS(no_article,rue,code_postal,ville)
-	 *        VALUE(?,?,?,?)";
-	 */
-	private final String INSERT_WITHDRAWAL_POINT = "INSERT INTO RETRAITS(no_article,rue,code_postal,ville) VALUE(?,?,?,?)";
 
 	/**
 	 * @author jarrigon2020
@@ -209,45 +201,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param newArticle -> Objet de type Article qui va nous permettre de récupérer
-	 *                   les informations liées au point de retrait de l'article
-	 * @throws Exception
-	 * 
-	 * @Commentaire Cette fonction permet d'enregistrer un nouveau point de retrait
-	 *              dans la base de données. Elle est appelée au sein de la méthode
-	 *              insertNewArticle
-	 * 
-	 */
-	private void insertWithdrawalPoint(Article newArticle) throws Exception {
-
-		int no_article = newArticle.getNoArticle();
-		String street = newArticle.getPointRetrait().getRue();
-		String town = newArticle.getPointRetrait().getVille();
-		String postalCode = newArticle.getPointRetrait().getCodePostal();
-
-		try (Connection databaseConnection = JdbcTools.getConnection();
-				PreparedStatement preparedStatement = databaseConnection.prepareStatement(INSERT_WITHDRAWAL_POINT)) {
-
-			preparedStatement.setString(1, newArticle.getNomArticle());
-			preparedStatement.setString(2, newArticle.getDescription());
-
-			preparedStatement.setInt(6, 0);
-
-			preparedStatement.executeUpdate();
-
-		}
-
-		catch (SQLException e) {
-
-			throw new Exception(e.getMessage());
-
-		}
-
-	}
-
-	/**
-	 * @author jarrigon2020
-	 * 
 	 * @param newArticle -> Objet de type Article
 	 * @throws Exception
 	 * 
@@ -256,6 +209,14 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 */
 	@Override
 	public void insertNewArticle(Article newArticle) throws Exception {
+
+		// On commence par appeler une fonction permettant d'enregistrer les
+		// informations liées aux point de retrait de l'article dans la table RETRAITS
+
+		RetraitDAO DAORetrait = DAOFactory.getRetraitDAO();
+		DAORetrait.insertWithdrawalPoint(newArticle);
+
+		// On enregistre ensuite le nouvel article dans la base de données
 
 		int idUserOfArticle = newArticle.getUtilisateur().getNoUtilisateur();
 		int idCategorieOfArticle = newArticle.getCategorie().getNoCategorie();
@@ -268,7 +229,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			preparedStatement.setDate(3, newArticle.getDateDebutEncheres());
 			preparedStatement.setDate(4, newArticle.getDateFinEncheres());
 			preparedStatement.setInt(5, newArticle.getPrixInitial());
-			preparedStatement.setInt(6, 0);
+			preparedStatement.setInt(6, 0); // Le 0 correspond à la valeur par default du prix de vente car aucune
+											// enchère n'a encore pu être effectuée pour cet article.
 			preparedStatement.setInt(7, idUserOfArticle);
 			preparedStatement.setInt(7, idCategorieOfArticle);
 			preparedStatement.setBoolean(7, newArticle.getVenteEffectuee());
