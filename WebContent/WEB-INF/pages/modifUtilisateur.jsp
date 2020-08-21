@@ -24,13 +24,16 @@
                         <input  class="input" name="prenom" id="prenom" type="text" value="${connectedUser.getPrenom()}" required>
                     </div>
                     <div><label for="telephone"> Téléphone : </label>
-                        <input  class="input" name="telephone" id="telelphone" type="text" value="${connectedUser.getTelephone()}" pattern="[0-9]{10}" title="sur 10 chiffres" required>
+                        <input  class="input" name="telephone" id="telephone" type="text" value="${connectedUser.getTelephone()}" pattern="[0-9]{10}" title="sur 10 chiffres" required>
                     </div>
                     <div><label for="codepostal" > Code postal: </label>
                          <input class="input" name="codepostal" id="codepostal" type="text" value="${connectedUser.getCodePostal()}" pattern="[0-9]{5}" title="sur 5 chiffres" required>
                     </div>
-                    <div><label for="password" > Mot de passe: </label>
-                         <input class="input" name="password"  id="password" type="password" pattern="\w{8}" title="8 caractères" required>  
+                    <div><label for="password" > Mot de passe actuel: </label>
+                         <input class="input" name="password"  id="oldPassword" type="password" pattern="\w{8}" title="8 caractères" required>  
+                    </div>
+                    <div><label for="password" > Nouveau mot de passe : </label>
+                         <input class="input" name="newPassword"  id="newPassword" type="password" pattern="\w{8}" title="8 caractères" required>  
                     </div>
                 </div>
                
@@ -47,23 +50,26 @@
                      <div><label for="ville" > Ville : </label>
                         <input class="input" name="ville" id="ville" type="text" value="${connectedUser.getVille()}" required>
                     </div>
+                    <br>
                     <div><label for="confirmation" > Confirmation :  </label>
                         <input class="input" name="confirmation" id="confirmation" type="password" pattern="\w{8}" title="8 caractères" required>
                     </div>
                     <div>
-                    <p>Crédit : ${connectedUser.getCredit()}</p><br><br>
+                    <p>Crédit : '${connectedUser.getCredit()}'</p><br><br>
                     </div>
                 </div>
      			
-                	<div>
-           </div>
 </form>
-                	<form method="get" action="${pageContext.request.contextPath}/modifUtilisateurServlet">
-                	<button type= "submit" name="btnAction" id="btnModifier" value="modifier">Modifier</button><br>
-                	<button type= "submit" name="btnAction" id="btnSupprimer" value="supprimer">Supprimer</button><br>
-                	<button type= "submit" name="btnAction" id="btnAnnuler" value="annuler">Annuler</button><br>
-					</div>
+
+					<div id="btnActions">
+                	<form method="get" action="${pageContext.request.contextPath}/accueilConnecte" id="btnActions">
+	                	<button type= "submit" name="btnAction" id="btnModifier" value="modifier">Modifier</button>
+	                	<button type= "submit" name="btnAction" id="btnSupprimer" value="supprimer">Supprimer</button>
+	                	<button type= "submit" name="btnAction" id="btnAnnuler" value="annuler">Annuler</button>
 					</form>
+					</div>
+					
+</div>
 </article>
 <p>${erreurPseudo}</p>
 <p>${erreurMotDePasse}</p>

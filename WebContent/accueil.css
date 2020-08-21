@@ -35,6 +35,11 @@ float:left;
 	border : solid 1px grey;
 }
 
+button {
+	display : inline-block;
+}
+
+
 p {
 	text_align : center;
 }
