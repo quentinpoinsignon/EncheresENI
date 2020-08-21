@@ -55,7 +55,7 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 			while (myResultset.next()) {
 
 				int idCategorie = myResultset.getInt(1);
-				String libelle = myResultset.getNString(2);
+				String libelle = myResultset.getString(2);
 
 				categorie = new Categorie(idCategorie, libelle);
 

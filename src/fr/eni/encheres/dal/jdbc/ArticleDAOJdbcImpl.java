@@ -73,6 +73,16 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "VALUES (?,?,?,?,?,?,?,?,?)";
 
 	/**
+	 * @Constante INSERT_WITHDRAWAL_POINT -> Chaine de caractères contenant une
+	 *            requête SQL permettant d'enregister un nouveau point de retrait
+	 *            dans la base de données dans la base de données
+	 * 
+	 * @value "INSERT INTO RETRAITS(no_article,rue,code_postal,ville)
+	 *        VALUE(?,?,?,?)";
+	 */
+	private final String INSERT_WITHDRAWAL_POINT = "INSERT INTO RETRAITS(no_article,rue,code_postal,ville) VALUE(?,?,?,?)";
+
+	/**
 	 * @author jarrigon2020
 	 * @return listeArticles -> Objet de type List contenant des Objets de type
 	 *         Article
@@ -193,6 +203,45 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		}
 		return listeArticles;
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @param newArticle -> Objet de type Article qui va nous permettre de récupérer
+	 *                   les informations liées au point de retrait de l'article
+	 * @throws Exception
+	 * 
+	 * @Commentaire Cette fonction permet d'enregistrer un nouveau point de retrait
+	 *              dans la base de données. Elle est appelée au sein de la méthode
+	 *              insertNewArticle
+	 * 
+	 */
+	private void insertWithdrawalPoint(Article newArticle) throws Exception {
+
+		int no_article = newArticle.getNoArticle();
+		String street = newArticle.getPointRetrait().getRue();
+		String town = newArticle.getPointRetrait().getVille();
+		String postalCode = newArticle.getPointRetrait().getCodePostal();
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(INSERT_WITHDRAWAL_POINT)) {
+
+			preparedStatement.setString(1, newArticle.getNomArticle());
+			preparedStatement.setString(2, newArticle.getDescription());
+
+			preparedStatement.setInt(6, 0);
+
+			preparedStatement.executeUpdate();
+
+		}
+
+		catch (SQLException e) {
+
+			throw new Exception(e.getMessage());
+
+		}
 
 	}
 

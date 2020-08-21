@@ -29,6 +29,14 @@ public class Article {
 		this.venteEffectuee = venteEffectuee;
 	}
 
+	public Retrait getPointRetrait() {
+		return pointRetrait;
+	}
+
+	public void setPointRetrait(Retrait pointRetrait) {
+		this.pointRetrait = pointRetrait;
+	}
+
 	public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial,
 			int prixVente, Utilisateur utilisateur, Categorie categorie) {
 
