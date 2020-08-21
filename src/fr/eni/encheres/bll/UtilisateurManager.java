@@ -93,4 +93,9 @@ public class UtilisateurManager {
 		}
 		return updatedUser;
 	}
+	
+	public void editUserPassword (Utilisateur utilisateur, String oldPassword, String newPassword) {
+		
+	}
+	
 }
