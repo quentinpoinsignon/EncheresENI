@@ -589,7 +589,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					PreparedStatement preparedStatement = databaseConnection.prepareStatement(UPDATE_USER_PASSWORD);) {
 
 				preparedStatement.setString(1, newhashedPassword);
-				preparedStatement.setInt(2, idUser);
+				preparedStatement.setString(2, pseudo);
 
 				preparedStatement.executeUpdate();
 
