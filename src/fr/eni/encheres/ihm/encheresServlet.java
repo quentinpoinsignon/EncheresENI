@@ -28,15 +28,21 @@ public class encheresServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//redirection avec boutons inscrire et connecter 
 		String action = request.getParameter("action");
-		if(("inscription").equals(action)) {
-			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+		if(action!=null) {
+			switch (action) {
+			case "inscription":
+				request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+				break;
+			case "login":
+				request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+				break;
+			default:
+				request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+				break;
+			}
 		}
-		if(("login").equals(action)) {
-			request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
-		}
-		if((action) == null) {
-			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-		}
+		else request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+			
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
