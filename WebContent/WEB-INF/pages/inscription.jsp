@@ -25,7 +25,7 @@
                         <input  class="input" name="prenom" id="prenom" type="text" value='${prenom}' size="30" required> <br>
                     </div>
                     <div><label for="telephone"> Téléphone : </label>
-                        <input  class="input" name="telephone" id="telelphone" type="text" value='${telephone}' pattern="[0-9]{10}"
+                        <input  class="input" name="telephone" id="telephone" type="text" value='${telephone}' pattern="[0-9]{10}"
                         title="sur 10 chiffres" placeholder="sur 10 chiffres" size="30" required> <br>
                     </div>
                     <div><label for="codepostal" > Code postal: </label>
@@ -33,7 +33,7 @@
                          pattern="[0-9]{5}" title="sur 5 chiffres" placeholder="sur 5 chiffres" size="30" required> <br>
                     </div>
                     <div><label for="password" > Mot de passe: </label>
-                         <input class="input" name="password"  id="password" type="password" pattern="\w{8}"
+                         <input class="input" name="password"  id="password" type="password" value="" pattern="\w{8}"
                          title="8 caractères" placeholder="sur 8 caractères" size="31" required>  <br>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         <input class="input" name="ville" id="ville" type="text" value='${ville}' size="30" required>
                     </div>
                     <div><label for="confirmation" > Confirmation :  </label>
-                        <input class="input" name="confirmation" id="confirmation" type="password" pattern="\w{8}" title="8 caractères"
+                        <input class="input" name="confirmation" id="confirmation" type="password" value="" pattern="\w{8}" title="8 caractères"
                         placeholder="sur 8 caractères" size="31" required>
                     </div>
                 </div>

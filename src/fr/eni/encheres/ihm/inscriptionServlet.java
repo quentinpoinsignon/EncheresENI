@@ -29,7 +29,7 @@ public class inscriptionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// rÈcupÈration des donnÈes du formulaire
+		// r√©cup√©ration des donn√©es du formulaire
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -49,16 +49,16 @@ public class inscriptionServlet extends HttpServlet {
 		Boolean bPseudo = false;
 		Boolean bEmail = false;
 
-		// vÈrification du pseudo unique
+		// v√©rification du pseudo unique
 			// on  boucle sur la liste des pseudos
 		for (String pseudoVerif : uMger.getListPseudos()) {
-			// si le pseudo est dÈj‡ utilisÈ
+			// si le pseudo est d√©j√† utilis√©
 			if (pseudo.equals(pseudoVerif)) {
-				//on affiche un message ‡ l'utilisateur
-				messageErreurPseudo = "Pseudo dÈj‡ utilisÈ";
+				//on affiche un message ÔøΩ l'utilisateur
+				messageErreurPseudo = "Pseudo d√©j√† utilis√©";
 				request.setAttribute("erreurPseudo", messageErreurPseudo);
 				bPseudo = true;
-				//et on affiche de nouveau le formulaire en conservant les champs dÈj‡ saisis
+				//et on affiche de nouveau le formulaire en conservant les champs d√©j√† saisis
 				request.setAttribute("nom", nom);
 				request.setAttribute("prenom", prenom);
 				request.setAttribute("email", email);
@@ -70,18 +70,18 @@ public class inscriptionServlet extends HttpServlet {
 			}
 		}
 
-		// vÈrification du email unique
+		// v√©rification du email unique
 		// si le pseudo est unique
 		if(!bPseudo) { 
 			// on boucle sur la liste des emails
 			for(String emailVerif:uMger.getListEmail()) {
-			 // si le mail est dÈj‡ utilisÈ
+			 // si le mail est d√©j√† utilis√©
 				if (email.equals(emailVerif)){
-					// on affiche un message ‡ l'utilisateur
-					messageErreurEmail = "Email dÈj‡ utilisÈ";
+					// on affiche un message √† l'utilisateur
+					messageErreurEmail = "Email d√©j√† utilis√©";
 					request.setAttribute("erreurEmail", messageErreurEmail);
 					bEmail=true;
-					//et on affiche de nouveau le formulaire en conservant les champs dÈj‡ saisis
+					//et on affiche de nouveau le formulaire en conservant les champs d√©j√† saisis
 					request.setAttribute("nom", nom);
 					request.setAttribute("prenom", prenom);
 					request.setAttribute("pseudo", pseudo);
@@ -94,11 +94,11 @@ public class inscriptionServlet extends HttpServlet {
 			}
 		}
 
-		// vÈrification confirmation = mot de passe
+		// v√©rification confirmation = mot de passe
 		// si le pseudo et le mail sont uniques
 		if(!bPseudo && !bEmail) {
 			if (confirmation.equals(motDePasse)) {
-				// si ok, crÈation du nouvel utilisateur
+				// si ok, cr√©ation du nouvel utilisateur
 				Utilisateur utilisateur = null;
 				if (("1").equals(creer)) {
 					utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, motDePasse);
@@ -109,11 +109,11 @@ public class inscriptionServlet extends HttpServlet {
 				rd=request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp");
 			
 			} else {
-				// sinon les mots de passe sont diffÈrents
-				// on affiche un message d'erreur ‡ l'utilisateur
-				messageErreurMdP = "Les mots de passe sont diffÈrents!";
+				// sinon les mots de passe sont diff√©rents
+				// on affiche un message d'erreur √† l'utilisateur
+				messageErreurMdP = "Les mots de passe sont diff√©rents!";
 				request.setAttribute("erreurMotDePasse", messageErreurMdP);
-				// et on renvoye les champs corrects deja saisis
+				// et on renvoye les champs corrects d√©j√† saisis
 				request.setAttribute("pseudo", pseudo);
 				request.setAttribute("nom", nom);
 				request.setAttribute("prenom", prenom);

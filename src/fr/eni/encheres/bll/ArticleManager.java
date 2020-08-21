@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.interfaces.ArticleDAO;
 
@@ -17,6 +18,14 @@ public class ArticleManager {
 	
 	public ArticleManager () {
 		aDAO = DAOFactory.getArticleDAO();
+	}
+	
+	public void addArticle(Article article) {
+		try {
+			aDAO.articleInsert(article);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public List<Article> selectTop3Articles() {

@@ -25,6 +25,10 @@ public class accueilConnecteServlet extends HttpServlet {
 			request.getSession().removeAttribute("connectedUser");
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		}
+		if(("nouvelleVente").equals(action)) {
+			request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
+
+		}
 		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
 

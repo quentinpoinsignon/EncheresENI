@@ -27,7 +27,7 @@
 
 
 <a href="${pageContext.request.contextPath}/accueilConnecte?action=encheres">Enchères    </a>
-<a href="${pageContext.request.contextPath}/accueilConnecte?action=vendre">Vendre un article    </a>
+<a href="${pageContext.request.contextPath}/accueilConnecte?action=nouvelleVente">Vendre un article    </a>
 <a href="${pageContext.request.contextPath}/profil?user=${connectedUser.getPseudo()}">Mon profil    </a>
 <a href="${pageContext.request.contextPath}/accueilConnecte?action=deconnexion">Déconnexion    </a>
 

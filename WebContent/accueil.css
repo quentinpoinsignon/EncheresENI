@@ -17,18 +17,27 @@ body, h2 {
 	background-color: #1aa3ff;
 
 }
-.label{
-display:block;
-width:150px;
-float:left;
+label{
+	margin-left: 250px;
+	vertical-align: top;
+	
+	width:150px;
+	float:left;
+	display: block;
+	margin: 10px;
 
 }
 
-.input{
+input{
+	
+	margin-right: 50px;
 	text-align: center;
     justify-content: space-between;
     width: 200px;
     margin: 10px;
+}
+.class{
+	margin-left: 300px;
 }
 
 #listArticles {
@@ -39,9 +48,11 @@ button {
 	display : inline-block;
 }
 
-
 p {
-	text_align : center;
+	text-align : center;
 }
 
-
+fieldset{
+	margin-left: 450px;
+	margin-right: 450px;
+}
