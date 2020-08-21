@@ -574,7 +574,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception {
 
 		String pseudo = user.getPseudo();
-		int idUser = user.getNoUtilisateur();
 
 		// On récupère l'ancien mot de passe grâce au pseudo
 		String hashedPassword = getUserCryptedPasswordByPseudo(pseudo);

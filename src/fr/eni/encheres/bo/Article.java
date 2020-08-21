@@ -2,20 +2,6 @@ package fr.eni.encheres.bo;
 
 import java.sql.Date;
 
-/**
- * @author qpoinsig2020
- * @Commentaire BO Article
- * @param noArticle généré automatiquement par le SGBD en Identity,
-	nomArticle, 
-	description,
-	dateDebutEncheres,
-	dateFinEncheres,
-	prixInitial,
-	prixVente,
-	Utilisateur attribut BO Utilisateur,
-	Categorie categorie attribut BO Categorie,
-	Boolean venteEffectuee
- */
 public class Article {
 
 	private int noArticle;
@@ -28,9 +14,10 @@ public class Article {
 	Utilisateur utilisateur;
 	Categorie categorie;
 	Boolean venteEffectuee;
+	Retrait pointRetrait;
 
 	public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial,
-			int prixVente, Utilisateur utilisateur, Categorie categorie, Boolean venteEffectuee) {
+			int prixVente, Utilisateur utilisateur, Categorie categorie, Boolean venteEffectuee, Retrait pointRetrait) {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;

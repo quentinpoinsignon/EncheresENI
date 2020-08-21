@@ -41,7 +41,7 @@
 	<select id="listCategories" name="selectedCategorie">
 			<option value="0" selected>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
-			<%System.out.println(cat.getNoCategorie()); %>
+			<%System.out.println(cat.getNoCategorie());%>
 			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
 			<%}%>
 	</select><br><br>
