@@ -15,7 +15,7 @@ public interface UtilisateurDAO {
 
 	public Utilisateur showUserProfil(String pseudo) throws Exception;
 
-	public void editUserProfil(Utilisateur user) throws SQLException;
+	public Utilisateur editUserProfil(Utilisateur user) throws SQLException;
 
 	public Utilisateur getUserInformation(int idUser) throws Exception;
 

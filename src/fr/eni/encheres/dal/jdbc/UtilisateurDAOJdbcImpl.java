@@ -109,6 +109,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "WHERE email = ?";
 
 	/**
+	 * @Constante SELECT_USER_INFORMATION_AFTER_EDIT -> Chaine de caractère
+	 *            contenant une requête SQL utilisés dans la fonction
+	 *            editUserInformation() permettant de récupérer les informations de
+	 *            l'utilisateur après modifications
+	 */
+	private final String SELECT_USER_INFORMATION_AFTER_EDIT = "pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit FROM UTILISATEURS\r\n"
+			+ "WHERE no_utilisateur = ?";
+
+	/**
 	 * @author jarrigon2020
 	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
 	 *                 l'utilisateur
@@ -425,35 +434,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param pseudo          -> Chaine de caractère correspondant au pseudo de
-	 *                        l'utilisateur
-	 * @param name            -> Chaine de caractère correspondant au nom de
-	 *                        l'utilisateur
-	 * @param firstName       -> Chaine de caractère correspondant au prénom de
-	 *                        l'utilisateur
-	 * @param email           -> Chaine de caractère correspondant à l'email de
-	 *                        l'utilisateur
-	 * @param telephoneNumber -> Chaine de caractère correspondant au numéro de
-	 *                        téléphone de l'utilisateur
-	 * @param street          -> Chaine de caractère correspondant à la rue de
-	 *                        l'utilisateur
-	 * @param postalCode      -> Chaine de caractère correspondant au code postal de
-	 *                        l'utilisateur
-	 * @param password        -> Chaine de caractère correspondant au mot de passe
-	 *                        de l'utilisateur
-	 * @param idUser          ->int correspondant à l'indentifiant de l'utilisateur
-	 *                        dans la base de données. Il permet de cibler
-	 *                        précisément l'utilisateur dont on souhaite modifier
-	 *                        les données
+	 * @param user -> Objet de type Utilisateur. Il permet de récupérer les
+	 *             informations
+	 * 
+	 * @return userEdit -> Objet de type Utilisateur
+	 * 
 	 * @throws SQLException
 	 * 
 	 * @commentaire
 	 * 
 	 *              Cette méthode permet de modifier les informations de
-	 *              l'utilisateur dans la base de données
+	 *              l'utilisateur dans la base de données et de récupérer un nouvel
+	 *              objet de type Utilisateur avec les informations misent à jour
 	 */
 	@Override
-	public void editUserProfil(Utilisateur user) throws SQLException {
+	public Utilisateur editUserProfil(Utilisateur user) throws SQLException {
+
+		Utilisateur userEdit = null;
+		ResultSet myResultSet = null;
+		int idUser = user.getNoUtilisateur();
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(EDIT_USER_PROFIL);) {
@@ -465,16 +464,60 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			preparedStatement.setString(5, user.getTelephone());
 			preparedStatement.setString(6, user.getRue());
 			preparedStatement.setString(7, user.getCodePostal());
-			preparedStatement.setString(8, user.getMotDePasse());
-			preparedStatement.setInt(9, user.getNoUtilisateur());
+			preparedStatement.setString(8, user.getVille());
+			preparedStatement.setString(9, user.getMotDePasse());
 
 			preparedStatement.executeUpdate();
+
+			// Il faut récupérer les infos misent à jour dans la base de données
+
+			PreparedStatement newPreparedStatement = databaseConnection
+					.prepareStatement(SELECT_USER_INFORMATION_AFTER_EDIT);
+
+			newPreparedStatement.setInt(1, idUser);
+
+			myResultSet = newPreparedStatement.executeQuery();
+
+			while (myResultSet.next()) {
+
+				String pseudo = myResultSet.getString(1);
+				String name = myResultSet.getString(2);
+				String firstName = myResultSet.getString(3);
+				String email = myResultSet.getString(4);
+				String telephone = myResultSet.getString(5);
+				String street = myResultSet.getString(6);
+				String postalCode = myResultSet.getString(7);
+				String town = myResultSet.getString(8);
+				String password = myResultSet.getString(9);
+				int credit = myResultSet.getInt(10);
+
+				userEdit = new Utilisateur(idUser, pseudo, name, firstName, email, telephone, street, postalCode, town,
+						password, credit);
+			}
 
 		} catch (SQLException e) {
 
 			throw new SQLException(
 					"Problème lors de l'enregistrement des informations de l'utilisateur dans la base de données");
 		}
+		return userEdit;
+
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @param user        -> Objet de type Utilisateur. Permet de récupérer l'ancien
+	 *                    mot de passe enregistré dans la base de données
+	 * @param newPassword -> Chaine de caractères correspondant au nouveau mot de
+	 *                    passe fourni par l'utilisateur
+	 * 
+	 * @throws SQLException
+	 * 
+	 * @Commentaire Cette fonction permet de modifier le mot de passe d'un
+	 *              utilisateur dans la base de données
+	 */
+	public void editUserPassword(Utilisateur user, String newPassword) throws SQLException {
 
 	}
 
