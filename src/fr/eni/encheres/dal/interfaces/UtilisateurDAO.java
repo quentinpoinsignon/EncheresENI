@@ -25,4 +25,6 @@ public interface UtilisateurDAO {
 
 	List<String> selectAllEmail() throws Exception;
 
+	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception;
+
 }

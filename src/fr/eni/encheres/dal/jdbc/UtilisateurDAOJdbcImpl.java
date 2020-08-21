@@ -29,6 +29,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante USER_INSERT -> String contenant la requête SQL permettant
 	 *            d'enregistrer un nouvel utilisateur dans la base de données
 	 * 
+	 * @value "INSERT INTO
+	 *        UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe)
+	 *        VALUES(?,?,?,?,?,?,?,?,?)";
+	 * 
 	 **/
 	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
 
@@ -36,24 +40,40 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante VERIF_EMAIL_DATABASE -> String contenant la requête SQL permettant
 	 *            de vérifier un utilisateur est enregistré dans la base de données
 	 *            à l'aide de son mail et de son mot de passe
+	 * 
+	 * @value "SELECT no_utilisateur,
+	 *        pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur
+	 *        FROM UTILISATEURS where email= ?";
 	 **/
-	private final String VERIF_EMAIL_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ?";;
+	private final String VERIF_EMAIL_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ?";
 	/**
 	 * @Constante VERIF_PSEUDO_DATABASE -> String contenant la requête SQL
 	 *            permettant de vérifier un utilisateur est enregistré dans la base
 	 *            de données à l'aide de son pseudo et de son mot de passe
+	 * 
+	 * @value "SELECT no_utilisateur,
+	 *        pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur
+	 *        FROM UTILISATEURS where pseudo= ?";
 	 */
 	private final String VERIF_PSEUDO_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where pseudo= ?";
 	/**
 	 * @Constante USER_PROFIL_REQUEST_BY_PSEUDO -> String contenant la requête sql
 	 *            permettant de rechercher un utilisateur grâce à son pseudo et
 	 *            d'afficher son profil
+	 * 
+	 * @value "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM
+	 *        UTILISATEURS WHERE pseudo = ?";
 	 */
 	private final String USER_PROFIL_REQUEST_BY_PSEUDO = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE pseudo = ?";
 	/**
 	 * @Constante EDIT_USER_PROFIL -> String contenant la requête sql permettant de
 	 *            modifier les informations d'un utilisateur dans la base de
 	 *            données. On sélectionne l'utilisateur grâce à l'id utilisateur
+	 * 
+	 * @value "UPDATE UTILISATEURS\r\n" + "SET pseudo = ? , nom = ?, prenom = ?,
+	 *        email = ?,telephone = ?,rue=?, code_postal=?, ville=?,
+	 *        mot_de_passe=?\r\n" + "WHERE no_utilisateur = ?";
+	 * 
 	 */
 	private final String EDIT_USER_PROFIL = "UPDATE UTILISATEURS\r\n"
 			+ "SET pseudo = ?  , nom  = ?, prenom = ?, email = ?,telephone = ?,rue=?, code_postal=?, ville=?, mot_de_passe=?\r\n"
@@ -63,6 +83,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante USER_PROFIL_REQUEST_BY_ID -> String contenant la requête SQL
 	 *            permettant de récupérer les informations d'un utilisateur grâce à
 	 *            son identifiant
+	 * 
+	 * @value "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM
+	 *        UTILISATEURS WHERE no_utilisateur = ?";
 	 */
 	private final String USER_PROFIL_REQUEST_BY_ID = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE no_utilisateur = ?";
 
@@ -72,6 +95,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            de supprimer toutes ses informations personelles en les remplaçant
 	 *            par des valeurs par défaut.
 	 * 
+	 * @value "UPDATE UTILISATEURS\r\n" + "SET nom = 'Utilisateur désinscrit',
+	 *        prenom = 'Utilisateur désinscrit', email = 'XXXX@email.com',telephone
+	 *        = 'XXXXXXXXXX',rue='XXXXXXX',code_postal='XXXXX' ,ville='XXXXX',
+	 *        mot_de_passe='MNy5jH3we6SjA44UeJ7A68vn5DcrD2'\r\n" + "WHERE
+	 *        no_utilisateur = ?";
+	 * 
 	 */
 	private final String REMOVE_USER_PROFIL = "UPDATE UTILISATEURS\r\n"
 			+ "SET nom  = 'Utilisateur désinscrit', prenom = 'Utilisateur désinscrit', email = 'XXXX@email.com',telephone = 'XXXXXXXXXX',rue='XXXXXXX',code_postal='XXXXX' ,ville='XXXXX', mot_de_passe='MNy5jH3we6SjA44UeJ7A68vn5DcrD2'\r\n"
@@ -80,6 +109,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante SELECT_ALL_PSEUDO -> Chaine de caractères contenant une requête
 	 *            sql permettant de récupérer l'ensemble des pseudos enregistrés
 	 *            dans la base de données
+	 * 
+	 * @value "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo";
 	 */
 
 	private final String SELECT_ALL_PSEUDO = "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo";
@@ -88,6 +119,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante SELECT_ALL_EMAIL -> Chaine de caractères contenant une requête SQL
 	 *            permettant de récupérer l'ensemble des emails enregistrés dans la
 	 *            base de données
+	 * 
+	 * @value "SELECT email FROM UTILISATEURS\r\n\" + \"ORDER BY email";
 	 */
 	private final String SELECT_ALL_EMAIL = "SELECT email FROM UTILISATEURS\r\n\" + \"ORDER BY email";
 
@@ -95,6 +128,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante SELECT_CRYPTED_PASSWORD -> Chaine de caratères contenant une
 	 *            requête SQL permettant de récupérer la version cryptée d'un mot de
 	 *            passe présent dans la base de données à partir du pseudo
+	 * 
+	 * @value "SELECT mot_de_passe FROM UTILISATEURS\r\n" + "WHERE pseudo = ?";
 	 */
 	private final String SELECT_CRYPTED_PASSWORD_BY_PSEUDO = "SELECT mot_de_passe FROM UTILISATEURS\r\n"
 			+ "WHERE pseudo = ?";
@@ -103,6 +138,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Constante SELECT_CRYPTED_PASSWORD_BY_EMAIL -> Chaine de caratères contenant
 	 *            une requête SQL permettant de récupérer la version cryptée d'un
 	 *            mot de passe présent dans la base de données à partir de l'email
+	 * 
+	 * @value "SELECT mot_de_passe FROM UTILISATEURS\r\n" + "WHERE email = ?";
 	 */
 
 	private final String SELECT_CRYPTED_PASSWORD_BY_EMAIL = "SELECT mot_de_passe FROM UTILISATEURS\r\n"
@@ -113,6 +150,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 *            contenant une requête SQL utilisés dans la fonction
 	 *            editUserInformation() permettant de récupérer les informations de
 	 *            l'utilisateur après modifications
+	 * 
+	 * @value "SELECT
+	 *        pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit
+	 *        FROM UTILISATEURS\r\n" + "WHERE no_utilisateur = ?";
 	 */
 	private final String SELECT_USER_INFORMATION_AFTER_EDIT = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit FROM UTILISATEURS\r\n"
 			+ "WHERE no_utilisateur = ?";
@@ -120,6 +161,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @Constante UPDATE_USER_PASSWORD -> Chaine de caractère contenant une requête
 	 *            SQL permettant de modifier le mot de passe de l'utilisateur
+	 * 
+	 * @value "UPDATE UTILISATEURS\r\n" + "SET mot_de_passe = ? \r\n" + "WHERE
+	 *        pseudo = ?";
 	 */
 	private final String UPDATE_USER_PASSWORD = "UPDATE UTILISATEURS\r\n" + "SET mot_de_passe = ? \r\n"
 			+ "WHERE pseudo = ?";
@@ -475,11 +519,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			preparedStatement.setString(9, user.getMotDePasse());
 			preparedStatement.setInt(10, idUser);
 
-			System.out.println("Avant la requête 2");
-
 			preparedStatement.executeUpdate();
-
-			System.out.println("Après la requête 2");
 
 			// Il faut récupérer les infos misent à jour dans la base de données
 
@@ -488,9 +528,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 			newPreparedStatement.setInt(1, idUser);
 
-			System.out.println("Avant la requête 2");
 			myResultSet = newPreparedStatement.executeQuery();
-			System.out.println("Après la requête 2");
 
 			while (myResultSet.next()) {
 
@@ -532,6 +570,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @Commentaire Cette fonction permet de modifier le mot de passe d'un
 	 *              utilisateur dans la base de données
 	 */
+	@Override
 	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception {
 
 		String pseudo = user.getPseudo();
