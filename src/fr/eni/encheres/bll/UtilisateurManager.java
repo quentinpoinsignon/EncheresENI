@@ -1,5 +1,6 @@
 package fr.eni.encheres.bll;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.encheres.bo.Article;
@@ -82,6 +83,14 @@ public class UtilisateurManager {
 		return userBDD;
 	}
 	
-	public void editUserProfile() {
+	public Utilisateur editUserProfile(Utilisateur utilisateur) {
+		Utilisateur updatedUser = null;
+		try {
+			updatedUser = uDAO.editUserProfil(utilisateur);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return updatedUser;
 	}
 }

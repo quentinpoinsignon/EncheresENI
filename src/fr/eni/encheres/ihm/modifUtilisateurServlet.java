@@ -18,39 +18,41 @@ public class modifUtilisateurServlet extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	String action = request.getParameter("btnAction");
-	HttpSession session = request.getSession();
-	Utilisateur connectedUser = (Utilisateur)session.getAttribute("connectedUser");
-	String message = "";
-	
-	switch (action) {
-	case "modifier":
-		connectedUser.setPseudo(request.getParameter("pseudo"));
-		connectedUser.setPrenom(request.getParameter("prenom"));
-		connectedUser.setTelephone(request.getParameter("telephone"));
-		connectedUser.setCodePostal(request.getParameter("codepostal"));
-		connectedUser.setNom(request.getParameter("nom"));
-		connectedUser.setEmail(request.getParameter("email"));
-		connectedUser.setRue(request.getParameter("rue"));
-		connectedUser.setVille(request.getParameter("ville"));
-		uMger.editUserProfile();
-		
-		
-		break;
-	case "supprimer":
-		
-		break;
-	case "annuler":
-		System.out.println("case annuler");
-		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
-		break;
-	default:
-		break;
-	}
-	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("btnAction");
+		HttpSession session = request.getSession();
+		Utilisateur connectedUser = (Utilisateur)session.getAttribute("connectedUser");
+		Utilisateur crashTest = null;
+		String message = "";
+		
+		switch (action) {
+		case "modifier":
+			connectedUser.setPseudo(request.getParameter("pseudo"));
+			connectedUser.setPrenom(request.getParameter("prenom"));
+			connectedUser.setTelephone(request.getParameter("telephone"));
+			connectedUser.setCodePostal(request.getParameter("codepostal"));
+			connectedUser.setNom(request.getParameter("nom"));
+			connectedUser.setEmail(request.getParameter("email"));
+			connectedUser.setRue(request.getParameter("rue"));
+			connectedUser.setVille(request.getParameter("ville"));
+			connectedUser = uMger.editUserProfile(connectedUser);
+			message = "Modifications du profil effectuée";
+			request.setAttribute("msgModif", message);
+			request.getRequestDispatcher("/WEB-INF/pages/modifUtilisateur.jsp").forward(request, response);
+			break;
+		case "supprimer":
+			
+			break;
+		case "annuler":
+			System.out.println("case annuler");
+			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+			break;
+		default:
+			break;
+		}
+		
 	}
 
 }

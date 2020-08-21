@@ -32,10 +32,4 @@ public class ihmUtils {
 		else if (ihmUtils.isEmail(s)) return "email";
 		else return null;
 	}
-	
-	
-//	public static void main(String[] args) {
-//		String pseudo = "Jéjé";
-//		System.out.println(natureIdentifiant(pseudo));
-//	}
 }
