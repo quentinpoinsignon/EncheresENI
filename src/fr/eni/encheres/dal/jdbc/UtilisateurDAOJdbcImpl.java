@@ -118,6 +118,13 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "WHERE no_utilisateur = ?";
 
 	/**
+	 * @Constante UPDATE_USER_PASSWORD -> Chaine de caractère contenant une requête
+	 *            SQL permettant de modifier le mot de passe de l'utilisateur
+	 */
+	private final String UPDATE_USER_PASSWORD = "UPDATE UTILISATEURS\r\n" + "SET mot_de_passe ='?'\r\n"
+			+ "WHERE pseudo = '?'";
+
+	/**
 	 * @author jarrigon2020
 	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
 	 *                 l'utilisateur
@@ -466,6 +473,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			preparedStatement.setString(7, user.getCodePostal());
 			preparedStatement.setString(8, user.getVille());
 			preparedStatement.setString(9, user.getMotDePasse());
+			preparedStatement.setInt(10, idUser);
 
 			preparedStatement.executeUpdate();
 
@@ -509,15 +517,44 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * 
 	 * @param user        -> Objet de type Utilisateur. Permet de récupérer l'ancien
 	 *                    mot de passe enregistré dans la base de données
+	 * @param oldPassword -> Chaine de caractères correspondant à l'ancien mot de
+	 *                    passe fourni par l'utilisateur
 	 * @param newPassword -> Chaine de caractères correspondant au nouveau mot de
 	 *                    passe fourni par l'utilisateur
-	 * 
-	 * @throws SQLException
+	 * @throws Exception
 	 * 
 	 * @Commentaire Cette fonction permet de modifier le mot de passe d'un
 	 *              utilisateur dans la base de données
 	 */
-	public void editUserPassword(Utilisateur user, String newPassword) throws SQLException {
+	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception {
+
+		String pseudo = user.getPseudo();
+		int idUser = user.getNoUtilisateur();
+
+		// On récupère l'ancien mot de passe grâce au pseudo
+		String hashedPassword = getUserCryptedPasswordByPseudo(pseudo);
+
+		// On vérifie si le mot de passe chiffré correspond avec oldPassword
+		if (BCrypt.checkpw(oldPassword, hashedPassword)) {
+
+			// On chiffre le nouveau mot de passe
+			String newhashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+
+			try (Connection databaseConnection = JdbcTools.getConnection();
+					PreparedStatement preparedStatement = databaseConnection.prepareStatement(UPDATE_USER_PASSWORD);) {
+
+				preparedStatement.setString(1, newhashedPassword);
+				preparedStatement.setInt(2, idUser);
+
+				preparedStatement.executeUpdate();
+
+			} catch (SQLException e) {
+
+				throw new Exception("Une erreur est survenue pendant la mise à jour du mot de passe");
+
+			}
+
+		}
 
 	}
 
