@@ -10,7 +10,7 @@ html {
 .liens {
 	padding-bottom: 3px;
 	position: relative;
-	left: 50px;
+	left: 10px;
 }
 
 input[type=text], input[type=password] {

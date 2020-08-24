@@ -24,9 +24,8 @@ public class encheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static List<Categorie> listeCategories = null;
 	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("selectedCategorie", "0");
-
 		//redirection avec boutons inscrire et connecter 
 		String action = request.getParameter("action");
 		if(action!=null) {
@@ -51,9 +50,7 @@ public class encheresServlet extends HttpServlet {
 			String categorie = request.getParameter("selectedCategorie");
 			request.setAttribute("selectedCategorie", categorie);
 		}
-		
 		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-		
 	}
 
 	}

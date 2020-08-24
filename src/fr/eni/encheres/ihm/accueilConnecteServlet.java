@@ -22,6 +22,7 @@ public class accueilConnecteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		if(("deconnexion").equals(action)) {
+			
 			request.getSession().removeAttribute("connectedUser");
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		}
