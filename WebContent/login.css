@@ -32,7 +32,10 @@ button {
 	padding: 12px 20px;
 	margin: 5px 0px;
 	width: 150px;
+}
 
+#btnAnnuler:hover {
+	background-color: IndianRed;
 }
 
 button:hover {

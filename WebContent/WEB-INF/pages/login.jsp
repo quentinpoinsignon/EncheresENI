@@ -33,7 +33,7 @@
 		
 		<button type= "submit" name="action" value="creerCompte">Créer un compte ?</button>
 		
-		<button type="submit" name="action" value="annuler">Annuler</button>
+		<button type="submit" name="action" id="btnAnnuler" value="annuler">Annuler</button>
 		<br>
 	</form>
  

@@ -24,6 +24,7 @@ public class inscriptionServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +41,7 @@ public class inscriptionServlet extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String motDePasse = request.getParameter("password");
 		String confirmation = request.getParameter("confirmation");
-		String creer = request.getParameter("creer");
+		String action = request.getParameter("action");
 		
 		String messageErreurMdP = "";
 		String messageErreurPseudo = "";
@@ -49,6 +50,8 @@ public class inscriptionServlet extends HttpServlet {
 		Boolean bPseudo = false;
 		Boolean bEmail = false;
 
+		
+		
 		// vérification du pseudo unique
 			// on  boucle sur la liste des pseudos
 		for (String pseudoVerif : uMger.getListPseudos()) {
@@ -100,7 +103,7 @@ public class inscriptionServlet extends HttpServlet {
 			if (confirmation.equals(motDePasse)) {
 				// si ok, création du nouvel utilisateur
 				Utilisateur utilisateur = null;
-				if (("1").equals(creer)) {
+				if (("creer").equals(action)) {
 					utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codepostal, ville, motDePasse);
 					uMger.addUtilisateur(utilisateur);
 					HttpSession session = request.getSession();

@@ -56,8 +56,8 @@ button:hover {
 }
 
 #btnActions {
-	margin: 0 auto;
-	width: 75%;
+	margin: auto;
+	width: 100%;
 }
 
 a:hover {

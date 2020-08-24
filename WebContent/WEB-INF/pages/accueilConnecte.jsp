@@ -82,7 +82,7 @@
 <div class="article">
 <%! ArticleManager aMger = new ArticleManager();%>
 <%! List<Article> listeArticles = aMger.selectTop3Articles();%>
-<%! String formatDate = "dd/mm/yyyy"; %>
+<%! String formatDate = "dd/mm/yyyy H:m"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeArticles != null) {%>
 <%for (Article article : listeArticles) {%>

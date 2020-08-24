@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
+
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="fr.eni.encheres.bll.ArticleManager"%>
 <%@page import="fr.eni.encheres.bll.CategorieManager"%>
@@ -57,7 +58,7 @@
 <div class="article">
 <%! ArticleManager aMger = new ArticleManager();%>
 <%! List<Article> listeArticles = aMger.selectTop3Articles();%>
-<%! String formatDate = "dd/mm/yyyy"; %>
+<%! String formatDate = "dd/mm/yyyy HH:mm"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeArticles != null) {%>
 <%for (Article article : listeArticles) {%>
@@ -65,7 +66,7 @@
 		<div id=listArticles>
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
-			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
+			<p>Fin de l'enchère : <%=article.getDateFinEncheres()%></p><br>
 			<p>Vendeur : <%=article.getUtilisateur().getPseudo()%></p><br>
 		</div>
 		<%}%>

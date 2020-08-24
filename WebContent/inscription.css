@@ -26,8 +26,6 @@ input {
 	box-sizing: border-box;
 	border : 1px solid CornflowerBlue;
 	border-radius : 5px;
-	
-	
 }
 
 input:focus {
@@ -46,11 +44,36 @@ button {
 	padding: 12px 20px;
 	margin: 5px 0px;
 	width: 150px;
+}
 
+input[type="button"] {
+	background-color: CornflowerBlue;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	padding: 12px 20px;
+	margin: 5px 0px;
+	width: 150px;
+	text-decoration: none;
+}
+
+input[type="button"]:hover {
+	background-color: IndianRed;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	padding: 12px 20px;
+	margin: 5px 0px;
+	width: 150px;
+	text-decoration: none;
 }
 
 button:hover {
 	background-color: rgb(19, 74, 128);
+}
+
+a {
+	text-decoration : none;
 }
 
 a:hover {
@@ -64,6 +87,9 @@ form {
 	border-radius: 10px;
 	margin: 0px Opx;
 	padding : 10px 10px 20px 20px;
-
 }
 
+.btnActions {
+	margin: 0 auto;
+	width: 50%;
+}

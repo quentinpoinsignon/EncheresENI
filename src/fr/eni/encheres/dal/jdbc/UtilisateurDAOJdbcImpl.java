@@ -16,18 +16,18 @@ import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 /**
  * @author jarrigon2020
  * 
- * @Commentaire Classe implémentant l'interface UtilisateurDAO et contenant les
- *              différentes méthodes permettant de gérer les requêtes SQL liées
+ * @Commentaire Classe implï¿½mentant l'interface UtilisateurDAO et contenant les
+ *              diffï¿½rentes mï¿½thodes permettant de gï¿½rer les requï¿½tes SQL liï¿½es
  *              aux utilisateurs
  */
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
-	 * Déclaration des variables de classes
+	 * Dï¿½claration des variables de classes
 	 * 
-	 * @Constante USER_INSERT -> String contenant la requête SQL permettant
-	 *            d'enregistrer un nouvel utilisateur dans la base de données
+	 * @Constante USER_INSERT -> String contenant la requï¿½te SQL permettant
+	 *            d'enregistrer un nouvel utilisateur dans la base de donnï¿½es
 	 * 
 	 * @value "INSERT INTO
 	 *        UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe)
@@ -37,9 +37,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private final String USER_INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe) VALUES(?,?,?,?,?,?,?,?,?)";
 
 	/**
-	 * @Constante VERIF_EMAIL_DATABASE -> String contenant la requête SQL permettant
-	 *            de vérifier un utilisateur est enregistré dans la base de données
-	 *            à l'aide de son mail et de son mot de passe
+	 * @Constante VERIF_EMAIL_DATABASE -> String contenant la requï¿½te SQL permettant
+	 *            de vï¿½rifier un utilisateur est enregistrï¿½ dans la base de donnï¿½es
+	 *            ï¿½ l'aide de son mail et de son mot de passe
 	 * 
 	 * @value "SELECT no_utilisateur,
 	 *        pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur
@@ -47,9 +47,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 **/
 	private final String VERIF_EMAIL_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where email= ?";
 	/**
-	 * @Constante VERIF_PSEUDO_DATABASE -> String contenant la requête SQL
-	 *            permettant de vérifier un utilisateur est enregistré dans la base
-	 *            de données à l'aide de son pseudo et de son mot de passe
+	 * @Constante VERIF_PSEUDO_DATABASE -> String contenant la requï¿½te SQL
+	 *            permettant de vï¿½rifier un utilisateur est enregistrï¿½ dans la base
+	 *            de donnï¿½es ï¿½ l'aide de son pseudo et de son mot de passe
 	 * 
 	 * @value "SELECT no_utilisateur,
 	 *        pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur
@@ -57,8 +57,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 */
 	private final String VERIF_PSEUDO_DATABASE = "SELECT no_utilisateur, pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS where pseudo= ?";
 	/**
-	 * @Constante USER_PROFIL_REQUEST_BY_PSEUDO -> String contenant la requête sql
-	 *            permettant de rechercher un utilisateur grâce à son pseudo et
+	 * @Constante USER_PROFIL_REQUEST_BY_PSEUDO -> String contenant la requï¿½te sql
+	 *            permettant de rechercher un utilisateur grï¿½ce ï¿½ son pseudo et
 	 *            d'afficher son profil
 	 * 
 	 * @value "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM
@@ -66,9 +66,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 */
 	private final String USER_PROFIL_REQUEST_BY_PSEUDO = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE pseudo = ?";
 	/**
-	 * @Constante EDIT_USER_PROFIL -> String contenant la requête sql permettant de
+	 * @Constante EDIT_USER_PROFIL -> String contenant la requï¿½te sql permettant de
 	 *            modifier les informations d'un utilisateur dans la base de
-	 *            données. On sélectionne l'utilisateur grâce à l'id utilisateur
+	 *            donnï¿½es. On sï¿½lectionne l'utilisateur grï¿½ce ï¿½ l'id utilisateur
 	 * 
 	 * @value "UPDATE UTILISATEURS\r\n" + "SET pseudo = ? , nom = ?, prenom = ?,
 	 *        email = ?,telephone = ?,rue=?, code_postal=?, ville=?,
@@ -80,8 +80,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "WHERE no_utilisateur =  ?";
 
 	/**
-	 * @Constante USER_PROFIL_REQUEST_BY_ID -> String contenant la requête SQL
-	 *            permettant de récupérer les informations d'un utilisateur grâce à
+	 * @Constante USER_PROFIL_REQUEST_BY_ID -> String contenant la requï¿½te SQL
+	 *            permettant de rï¿½cupï¿½rer les informations d'un utilisateur grï¿½ce ï¿½
 	 *            son identifiant
 	 * 
 	 * @value "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM
@@ -90,25 +90,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private final String USER_PROFIL_REQUEST_BY_ID = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	/**
-	 * @Constante REMOVE_USER_PROFIL -> Chaine de caractère contenant une requête
+	 * @Constante REMOVE_USER_PROFIL -> Chaine de caractï¿½re contenant une requï¿½te
 	 *            SQL permettant de modifier les informations d'un utilisateur afin
-	 *            de supprimer toutes ses informations personelles en les remplaçant
-	 *            par des valeurs par défaut.
+	 *            de supprimer toutes ses informations personelles en les remplaï¿½ant
+	 *            par des valeurs par dï¿½faut.
 	 * 
-	 * @value "UPDATE UTILISATEURS\r\n" + "SET nom = 'Utilisateur désinscrit',
-	 *        prenom = 'Utilisateur désinscrit', email = 'XXXX@email.com',telephone
+	 * @value "UPDATE UTILISATEURS\r\n" + "SET nom = 'Utilisateur dÃ©sinscrit',
+	 *        prenom = 'Utilisateur dÃ©sinscrit', email = 'XXXX@email.com',telephone
 	 *        = 'XXXXXXXXXX',rue='XXXXXXX',code_postal='XXXXX' ,ville='XXXXX',
 	 *        mot_de_passe='MNy5jH3we6SjA44UeJ7A68vn5DcrD2'\r\n" + "WHERE
 	 *        no_utilisateur = ?";
 	 * 
 	 */
 	private final String REMOVE_USER_PROFIL = "UPDATE UTILISATEURS\r\n"
-			+ "SET nom  = 'Utilisateur désinscrit', prenom = 'Utilisateur désinscrit', email = 'XXXX@email.com',telephone = 'XXXXXXXXXX',rue='XXXXXXX',code_postal='XXXXX' ,ville='XXXXX', mot_de_passe='MNy5jH3we6SjA44UeJ7A68vn5DcrD2'\r\n"
+			+ "SET nom  = 'Utilisateur dï¿½sinscrit', prenom = 'Utilisateur dï¿½sinscrit', email = 'XXXX@email.com',telephone = 'XXXXXXXXXX',rue='XXXXXXX',code_postal='XXXXX' ,ville='XXXXX', mot_de_passe='MNy5jH3we6SjA44UeJ7A68vn5DcrD2'\r\n"
 			+ "WHERE no_utilisateur =  ?";
 	/**
-	 * @Constante SELECT_ALL_PSEUDO -> Chaine de caractères contenant une requête
-	 *            sql permettant de récupérer l'ensemble des pseudos enregistrés
-	 *            dans la base de données
+	 * @Constante SELECT_ALL_PSEUDO -> Chaine de caractï¿½res contenant une requï¿½te
+	 *            sql permettant de rï¿½cupï¿½rer l'ensemble des pseudos enregistrï¿½s
+	 *            dans la base de donnï¿½es
 	 * 
 	 * @value "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo";
 	 */
@@ -116,18 +116,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private final String SELECT_ALL_PSEUDO = "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo";
 
 	/**
-	 * @Constante SELECT_ALL_EMAIL -> Chaine de caractères contenant une requête SQL
-	 *            permettant de récupérer l'ensemble des emails enregistrés dans la
-	 *            base de données
+	 * @Constante SELECT_ALL_EMAIL -> Chaine de caractï¿½res contenant une requï¿½te SQL
+	 *            permettant de rï¿½cupï¿½rer l'ensemble des emails enregistrï¿½s dans la
+	 *            base de donnï¿½es
 	 * 
 	 * @value "SELECT email FROM UTILISATEURS\r\n\" + \"ORDER BY email";
 	 */
 	private final String SELECT_ALL_EMAIL = "SELECT email FROM UTILISATEURS\r\n\" + \"ORDER BY email";
 
 	/**
-	 * @Constante SELECT_CRYPTED_PASSWORD -> Chaine de caratères contenant une
-	 *            requête SQL permettant de récupérer la version cryptée d'un mot de
-	 *            passe présent dans la base de données à partir du pseudo
+	 * @Constante SELECT_CRYPTED_PASSWORD -> Chaine de caratï¿½res contenant une
+	 *            requï¿½te SQL permettant de rï¿½cupï¿½rer la version cryptï¿½e d'un mot de
+	 *            passe prï¿½sent dans la base de donnï¿½es ï¿½ partir du pseudo
 	 * 
 	 * @value "SELECT mot_de_passe FROM UTILISATEURS\r\n" + "WHERE pseudo = ?";
 	 */
@@ -135,9 +135,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "WHERE pseudo = ?";
 
 	/**
-	 * @Constante SELECT_CRYPTED_PASSWORD_BY_EMAIL -> Chaine de caratères contenant
-	 *            une requête SQL permettant de récupérer la version cryptée d'un
-	 *            mot de passe présent dans la base de données à partir de l'email
+	 * @Constante SELECT_CRYPTED_PASSWORD_BY_EMAIL -> Chaine de caratï¿½res contenant
+	 *            une requï¿½te SQL permettant de rï¿½cupï¿½rer la version cryptï¿½e d'un
+	 *            mot de passe prï¿½sent dans la base de donnï¿½es ï¿½ partir de l'email
 	 * 
 	 * @value "SELECT mot_de_passe FROM UTILISATEURS\r\n" + "WHERE email = ?";
 	 */
@@ -146,10 +146,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "WHERE email = ?";
 
 	/**
-	 * @Constante SELECT_USER_INFORMATION_AFTER_EDIT -> Chaine de caractère
-	 *            contenant une requête SQL utilisés dans la fonction
-	 *            editUserInformation() permettant de récupérer les informations de
-	 *            l'utilisateur après modifications
+	 * @Constante SELECT_USER_INFORMATION_AFTER_EDIT -> Chaine de caractï¿½re
+	 *            contenant une requï¿½te SQL utilisï¿½s dans la fonction
+	 *            editUserInformation() permettant de rï¿½cupï¿½rer les informations de
+	 *            l'utilisateur aprï¿½s modifications
 	 * 
 	 * @value "SELECT
 	 *        pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit
@@ -159,7 +159,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "WHERE no_utilisateur = ?";
 
 	/**
-	 * @Constante UPDATE_USER_PASSWORD -> Chaine de caractère contenant une requête
+	 * @Constante UPDATE_USER_PASSWORD -> Chaine de caractï¿½re contenant une requï¿½te
 	 *            SQL permettant de modifier le mot de passe de l'utilisateur
 	 * 
 	 * @value "UPDATE UTILISATEURS\r\n" + "SET mot_de_passe = ? \r\n" + "WHERE
@@ -170,17 +170,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
 	 * @author jarrigon2020
-	 * @param email    -> Chaine de caractère qui correspond à l'email fourni par
+	 * @param email    -> Chaine de caractï¿½re qui correspond ï¿½ l'email fourni par
 	 *                 l'utilisateur
-	 * @param password -> Chaine de caractère correspondant au mot de passe fourni
+	 * @param password -> Chaine de caractï¿½re correspondant au mot de passe fourni
 	 *                 par l'utilisateur
 	 * @return user -> Objet de type Utilisateur
 	 * 
 	 * @commentaire
 	 * 
-	 *              Cette méthode permet de vérifier si l'email et le mot de passe
-	 *              fourni par l'utilisateur sont bien présents dans la base de
-	 *              données et correspondent entre eux.
+	 *              Cette mï¿½thode permet de vï¿½rifier si l'email et le mot de passe
+	 *              fourni par l'utilisateur sont bien prï¿½sents dans la base de
+	 *              donnï¿½es et correspondent entre eux.
 	 */
 	@Override
 	public Utilisateur userConnection(String email, String password) throws Exception {
@@ -188,10 +188,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		ResultSet MyResultset = null;
 		Utilisateur user = null;
 
-		// On récupère la version cryptée du mot de passe
+		// On rï¿½cupï¿½re la version cryptï¿½e du mot de passe
 		String hashedPassword = getUserCryptedPasswordByEmail(email);
 
-		// On vérifie si le mot de passe en clair correspond au mot de passe haché
+		// On vï¿½rifie si le mot de passe en clair correspond au mot de passe hachï¿½
 		if (BCrypt.checkpw(password, hashedPassword)) {
 
 			try (Connection databaseConnection = JdbcTools.getConnection();
@@ -232,14 +232,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param pseudo -> Chaine de caractère contenant le pseudo à partir duquel on
-	 *               souhaite récupérer le mot de passe
+	 * @param pseudo -> Chaine de caractï¿½re contenant le pseudo ï¿½ partir duquel on
+	 *               souhaite rï¿½cupï¿½rer le mot de passe
 	 * 
-	 * @return hashedPassword -> Chaine de caractère contenant un mot de passe
-	 *         crypté dans la base de données
+	 * @return hashedPassword -> Chaine de caractï¿½re contenant un mot de passe
+	 *         cryptï¿½ dans la base de donnï¿½es
 	 * @throws Exception
-	 * @Commentaire Cette méthode permet de récupérer une version cryptée d'une mot
-	 *              de passe dans la base de données à partir du pseudo utilisateur
+	 * @Commentaire Cette mï¿½thode permet de rï¿½cupï¿½rer une version cryptï¿½e d'une mot
+	 *              de passe dans la base de donnï¿½es ï¿½ partir du pseudo utilisateur
 	 * 
 	 */
 
@@ -266,7 +266,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		} catch (SQLException e) {
 
-			throw new Exception("Erreur lors de la récupération du mot de passe");
+			throw new Exception("Erreur lors de la rï¿½cupï¿½ration du mot de passe");
 
 		}
 
@@ -277,14 +277,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param email -> Chaine de caractère contenant l'email à partir duquel on
-	 *              souhaite récupérer le mot de passe
+	 * @param email -> Chaine de caractï¿½re contenant l'email ï¿½ partir duquel on
+	 *              souhaite rï¿½cupï¿½rer le mot de passe
 	 * 
-	 * @return hashedPassword -> Chaine de caractère contenant un mot de passe
-	 *         crypté dans la base de données
+	 * @return hashedPassword -> Chaine de caractï¿½re contenant un mot de passe
+	 *         cryptï¿½ dans la base de donnï¿½es
 	 * @throws Exception
-	 * @Commentaire Cette méthode permet de récupérer une version cryptée d'un mot
-	 *              de passe dans la base de données à partir du mail de
+	 * @Commentaire Cette mï¿½thode permet de rï¿½cupï¿½rer une version cryptï¿½e d'un mot
+	 *              de passe dans la base de donnï¿½es ï¿½ partir du mail de
 	 *              l'utilisateur
 	 * 
 	 */
@@ -312,7 +312,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		} catch (SQLException e) {
 
-			throw new Exception("Erreur lors de la récupération du mot de passe");
+			throw new Exception("Erreur lors de la rï¿½cupï¿½ration du mot de passe");
 
 		}
 
@@ -322,17 +322,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
 	 * @author jarrigon2020
-	 * @param pseudo   -> Chaine de caractère qui correspond au pseudo fourni par
+	 * @param pseudo   -> Chaine de caractï¿½re qui correspond au pseudo fourni par
 	 *                 l'utilisateur
-	 * @param password -> Chaine de caractère correspondant au mot de passe fourni
+	 * @param password -> Chaine de caractï¿½re correspondant au mot de passe fourni
 	 *                 par l'utilisateur
 	 * @return user -> Objet de type Utilisateur
 	 * 
 	 * @commentaire
 	 * 
-	 *              Cette méthode permet de vérifier si le pseudo et le mot de passe
-	 *              fourni par l'utilisateur sont bien présents dans la base de
-	 *              données et correspondent entre eux.
+	 *              Cette mï¿½thode permet de vï¿½rifier si le pseudo et le mot de passe
+	 *              fourni par l'utilisateur sont bien prï¿½sents dans la base de
+	 *              donnï¿½es et correspondent entre eux.
 	 */
 
 	@Override
@@ -341,10 +341,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		ResultSet MyResultset = null;
 		Utilisateur user = null;
 
-		// On récupère la version cryptée du mot de passe
+		// On rï¿½cupï¿½re la version cryptï¿½e du mot de passe
 		String hashedPassword = getUserCryptedPasswordByPseudo(pseudo);
 
-		// On vérifie si le mot de passe en clair correspond au mot de passe haché
+		// On vï¿½rifie si le mot de passe en clair correspond au mot de passe hachï¿½
 		if (BCrypt.checkpw(password, hashedPassword)) {
 
 			try (Connection databaseConnection = JdbcTools.getConnection();
@@ -393,7 +393,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @commentaire
 	 * 
 	 *              Cette fonction permet d'enregistrer un nouvel utilisateur dans
-	 *              la base de données. Le mot de passe est crypté grâce à
+	 *              la base de donnï¿½es. Le mot de passe est cryptï¿½ grï¿½ce ï¿½
 	 *              l'utilisation de la classe BCrypt
 	 */
 	@Override
@@ -403,7 +403,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(USER_INSERT,
 						Statement.RETURN_GENERATED_KEYS)) {
 
-			// Cryptage du mot de passe avant l'insertion dans la base de données
+			// Cryptage du mot de passe avant l'insertion dans la base de donnï¿½es
 
 			String passwordHash = BCrypt.hashpw(user.getMotDePasse(), BCrypt.gensalt());
 
@@ -432,14 +432,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param pseudo -> Chaine de caractère correspondant au pseudo fourni
+	 * @param pseudo -> Chaine de caractï¿½re correspondant au pseudo fourni
 	 * 
 	 * @return userProfil -> Objet de type Utilisateur
 	 * @throws Exception
 	 * 
 	 * @Commentaire
 	 * 
-	 *              Permet de rechercher le profil d'un utilisateur à partir de son
+	 *              Permet de rechercher le profil d'un utilisateur ï¿½ partir de son
 	 *              pseudo et d'afficher l'ensemble de ses informations
 	 */
 	@Override
@@ -474,7 +474,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		} catch (SQLException e) {
 
-			throw new Exception("L'utilisateur demandé n'existe pas");
+			throw new Exception("L'utilisateur demandï¿½ n'existe pas");
 
 		}
 
@@ -485,7 +485,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param user -> Objet de type Utilisateur. Il permet de récupérer les
+	 * @param user -> Objet de type Utilisateur. Il permet de rï¿½cupï¿½rer les
 	 *             informations
 	 * 
 	 * @return userEdit -> Objet de type Utilisateur
@@ -494,9 +494,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * 
 	 * @commentaire
 	 * 
-	 *              Cette méthode permet de modifier les informations de
-	 *              l'utilisateur dans la base de données et de récupérer un nouvel
-	 *              objet de type Utilisateur avec les informations misent à jour
+	 *              Cette mï¿½thode permet de modifier les informations de
+	 *              l'utilisateur dans la base de donnï¿½es et de rï¿½cupï¿½rer un nouvel
+	 *              objet de type Utilisateur avec les informations misent ï¿½ jour
 	 */
 	@Override
 	public Utilisateur editUserProfil(Utilisateur user) throws SQLException {
@@ -521,7 +521,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 			preparedStatement.executeUpdate();
 
-			// Il faut récupérer les infos misent à jour dans la base de données
+			// Il faut rï¿½cupï¿½rer les infos misent ï¿½ jour dans la base de donnï¿½es
 
 			PreparedStatement newPreparedStatement = databaseConnection
 					.prepareStatement(SELECT_USER_INFORMATION_AFTER_EDIT);
@@ -559,26 +559,26 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param user        -> Objet de type Utilisateur. Permet de récupérer l'ancien
-	 *                    mot de passe enregistré dans la base de données
-	 * @param oldPassword -> Chaine de caractères correspondant à l'ancien mot de
+	 * @param user        -> Objet de type Utilisateur. Permet de rï¿½cupï¿½rer l'ancien
+	 *                    mot de passe enregistrï¿½ dans la base de donnï¿½es
+	 * @param oldPassword -> Chaine de caractï¿½res correspondant ï¿½ l'ancien mot de
 	 *                    passe fourni par l'utilisateur
-	 * @param newPassword -> Chaine de caractères correspondant au nouveau mot de
+	 * @param newPassword -> Chaine de caractï¿½res correspondant au nouveau mot de
 	 *                    passe fourni par l'utilisateur
 	 * @throws Exception
 	 * 
 	 * @Commentaire Cette fonction permet de modifier le mot de passe d'un
-	 *              utilisateur dans la base de données
+	 *              utilisateur dans la base de donnï¿½es
 	 */
 	@Override
 	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception {
 
 		String pseudo = user.getPseudo();
 
-		// On récupère l'ancien mot de passe grâce au pseudo
+		// On rï¿½cupï¿½re l'ancien mot de passe grï¿½ce au pseudo
 		String hashedPassword = getUserCryptedPasswordByPseudo(pseudo);
 
-		// On vérifie si le mot de passe chiffré correspond avec oldPassword
+		// On vï¿½rifie si le mot de passe chiffrï¿½ correspond avec oldPassword
 		if (BCrypt.checkpw(oldPassword, hashedPassword)) {
 
 			// On chiffre le nouveau mot de passe
@@ -594,7 +594,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 			} catch (SQLException e) {
 
-				throw new Exception("Une erreur est survenue pendant la mise à jour du mot de passe");
+				throw new Exception("Une erreur est survenue pendant la mise ï¿½ jour du mot de passe");
 
 			}
 
@@ -604,14 +604,14 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	/**
 	 * @author jarrigon2020
-	 * @param idUser -> int Correspond à l'identifiant de l'utilisateur dans la base
-	 *               de données
+	 * @param idUser -> int Correspond ï¿½ l'identifiant de l'utilisateur dans la base
+	 *               de donnï¿½es
 	 * 
 	 * @return userInformation -> Objet de type utilisateur
 	 * @throws Exception
 	 * 
-	 * @Commentaire Cette méthode permet de récupérer les informations d'un
-	 *              utilisateur grâce à son identifiant
+	 * @Commentaire Cette mï¿½thode permet de rï¿½cupï¿½rer les informations d'un
+	 *              utilisateur grï¿½ce ï¿½ son identifiant
 	 * 
 	 */
 	@Override
@@ -645,7 +645,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			MyResultset.close();
 		} catch (SQLException e) {
 
-			throw new Exception("Problème lors de la récupération des informations de l'utilisateur");
+			throw new Exception("Problï¿½me lors de la rï¿½cupï¿½ration des informations de l'utilisateur");
 
 		}
 
@@ -656,11 +656,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param idUser -> Int correspondant à l'identifiant de l'utilisateur dans la
-	 *               base de données
+	 * @param idUser -> Int correspondant ï¿½ l'identifiant de l'utilisateur dans la
+	 *               base de donnï¿½es
 	 * 
-	 * @Commentaire Cette méthode permet de supprimer les données personnelles d'un
-	 *              utilisateur dans la base de données en les remplaçant par des
+	 * @Commentaire Cette mï¿½thode permet de supprimer les donnï¿½es personnelles d'un
+	 *              utilisateur dans la base de donnï¿½es en les remplaï¿½ant par des
 	 *              valeurs par defaut
 	 */
 	@Override
@@ -685,10 +685,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @author jarrigon2020
 	 * 
 	 * @return listPseudo -> Objet de type ArrayList contenant des chaines de
-	 *         caractères contenant l'ensemble des pseudo enregistrés sur le site
+	 *         caractï¿½res contenant l'ensemble des pseudo enregistrï¿½s sur le site
 	 * 
-	 * @Commentaire Cette méthode permet de récupérer l'ensemble des pseudos
-	 *              enregistrés dans la base de données
+	 * @Commentaire Cette mï¿½thode permet de rï¿½cupï¿½rer l'ensemble des pseudos
+	 *              enregistrï¿½s dans la base de donnï¿½es
 	 */
 	@Override
 	public List<String> selectAllPseudo() throws Exception {
@@ -724,10 +724,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @author jarrigon2020
 	 * 
 	 * @return listEmail -> Objet de type ArrayList contenant des chaines de
-	 *         caractères contenant l'ensemble des emails enregistrés sur le site
+	 *         caractï¿½res contenant l'ensemble des emails enregistrï¿½s sur le site
 	 * 
-	 * @Commentaire Cette méthode permet de récupérer l'ensemble des emails
-	 *              enregistrés dans la base de données
+	 * @Commentaire Cette mï¿½thode permet de rï¿½cupï¿½rer l'ensemble des emails
+	 *              enregistrï¿½s dans la base de donnï¿½es
 	 */
 	@Override
 	public List<String> selectAllEmail() throws Exception {
