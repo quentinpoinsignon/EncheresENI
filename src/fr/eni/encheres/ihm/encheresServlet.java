@@ -51,6 +51,7 @@ public class encheresServlet extends HttpServlet {
 			String categorie = request.getParameter("selectedCategorie");
 			request.setAttribute("selectedCategorie", categorie);
 		}
+		
 		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		
 	}
