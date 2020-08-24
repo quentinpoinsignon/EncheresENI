@@ -13,7 +13,7 @@ html {
 	left: 50px;
 }
 
-input[type=text], input[type=password] {
+input {
 	width: 300px;
 	padding: 6px 10px;
 	margin: 5px 0px;
@@ -22,7 +22,7 @@ input[type=text], input[type=password] {
 	border-radius : 5px;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=number]:focus {
 	border : 2px solid rgb(19, 74, 128);
 }
 
@@ -45,6 +45,23 @@ button:hover {
 	background-color: rgb(19, 74, 128);
 }
 
+input[type="button"]:hover {
+	background-color: rgb(19, 74, 128);
+}
+input[type="button"] {
+	background-color: CornflowerBlue;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	padding: 12px 20px;
+	margin: 5px 0px;
+	width: 150px;
+	text-decoration: none;
+}
+
+a {
+	text-decoration:none;
+}
 a:hover {
 	color: rgb(19, 74, 128);
 }

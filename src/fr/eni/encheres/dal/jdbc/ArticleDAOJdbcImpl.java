@@ -19,18 +19,18 @@ import fr.eni.encheres.dal.interfaces.RetraitDAO;
  * 
  * @author jarrigon2020
  * 
- * @commentaire Cette classe contient les différentes méthodes permettant de
- *              réaliser les requête sql concernant lees articles vendus sur
+ * @commentaire Cette classe contient les diffï¿½rentes mï¿½thodes permettant de
+ *              rï¿½aliser les requï¿½te sql concernant lees articles vendus sur
  *              l'application
  */
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	/**
-	 * @Constante SELECT_ALL_ARTICLE_TOP3 -> Chaine de caractères contenant une
-	 *            requête SQL permettant de récupérer les trois derniers articles
-	 *            enregistrés dans la base de données ainsi que l'utilisateur les
-	 *            ayant mis en vente et la catégorie à laquelle ils appartiennent
+	 * @Constante SELECT_ALL_ARTICLE_TOP3 -> Chaine de caractï¿½res contenant une
+	 *            requï¿½te SQL permettant de rï¿½cupï¿½rer les trois derniers articles
+	 *            enregistrï¿½s dans la base de donnï¿½es ainsi que l'utilisateur les
+	 *            ayant mis en vente et la catï¿½gorie ï¿½ laquelle ils appartiennent
 	 * 
 	 * @value "SELECT TOP 3
 	 *        utl.pseudo,ctgr.libelle,ctgr.no_categorie,artvd.nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente
@@ -46,10 +46,10 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "WHERE vente_effectuee = 0\r\n" + "ORDER BY date_debut_encheres DESC";
 
 	/**
-	 * @Constante SELECT_ALL_ARTICLE -> Chaine de caractères contenant une requête
-	 *            SQL permettant de récupérer l'ensemble des articles enregistrés
-	 *            dans la base de données ainsi que l'utilisateur les ayant mis en
-	 *            vente et la catégorie à laquelle ils appartiennent
+	 * @Constante SELECT_ALL_ARTICLE -> Chaine de caractï¿½res contenant une requï¿½te
+	 *            SQL permettant de rï¿½cupï¿½rer l'ensemble des articles enregistrï¿½s
+	 *            dans la base de donnï¿½es ainsi que l'utilisateur les ayant mis en
+	 *            vente et la catï¿½gorie ï¿½ laquelle ils appartiennent
 	 * 
 	 * @value "SELECT utl.pseudo, ctg.libelle, nom_article, description,
 	 *        date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM
@@ -62,9 +62,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "INNER JOIN CATEGORIES ctg ON artvd.no_categorie = ctg.no_categorie";
 
 	/**
-	 * @Constante INSERT_NEW_ARTICLE -> Chaine de caractères contenant une requête
+	 * @Constante INSERT_NEW_ARTICLE -> Chaine de caractï¿½res contenant une requï¿½te
 	 *            SQL permettant d'enregister un nouvel article dans la base de
-	 *            données
+	 *            donnï¿½es
 	 * 
 	 * @value "INSERT INTO
 	 *        ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie,vente_effectuee)
@@ -81,8 +81,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 * @return listeArticles -> Objet de type List contenant des Objets de type
 	 *         Article
 	 * 
-	 * @Commentaire Cette méthode permet de récupérer l'ensemble des articles
-	 *              présents dans la base de données
+	 * @Commentaire Cette mï¿½thode permet de rï¿½cupï¿½rer l'ensemble des articles
+	 *              prï¿½sents dans la base de donnï¿½es
 	 * 
 	 */
 
@@ -108,7 +108,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				user = new Utilisateur(userPseudo);
 
-				// Catégorie
+				// Catï¿½gorie
 				String categorieLibelle = myResultset.getString(2);
 				int idCategorie = myResultset.getInt(3);
 
@@ -144,9 +144,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 * @return listeArticles -> Objet de type List contenant des Objets de type
 	 *         Article
 	 * 
-	 * @Commentaire Cette méthode permet de récupérer l'ensemble des articles
-	 *              présents dans la base de données et limite le résultat aux trois
-	 *              derniers enregistrés
+	 * @Commentaire Cette mï¿½thode permet de rï¿½cupï¿½rer l'ensemble des articles
+	 *              prï¿½sents dans la base de donnï¿½es et limite le rï¿½sultat aux trois
+	 *              derniers enregistrï¿½s
 	 * 
 	 */
 	@Override
@@ -170,7 +170,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				user = new Utilisateur(userPseudo);
 
-				// Catégorie
+				// Catï¿½gorie
 				String categorieLibelle = myResultset.getString(2);
 				int idCategorie = myResultset.getInt(3);
 
@@ -208,19 +208,19 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 * @param newArticle -> Objet de type Article
 	 * @throws Exception
 	 * 
-	 * @Commentaire Cette méthode permet d'enregistrer un nouvel article dans la
-	 *              base de données
+	 * @Commentaire Cette mï¿½thode permet d'enregistrer un nouvel article dans la
+	 *              base de donnï¿½es
 	 */
 	@Override
 	public void insertNewArticle(Article newArticle) throws Exception {
 
 		// On commence par appeler une fonction permettant d'enregistrer les
-		// informations liées aux point de retrait de l'article dans la table RETRAITS
+		// informations liï¿½es aux point de retrait de l'article dans la table RETRAITS
 
 		RetraitDAO DAORetrait = DAOFactory.getRetraitDAO();
 		DAORetrait.insertWithdrawalPoint(newArticle);
 
-		// On enregistre ensuite le nouvel article dans la base de données
+		// On enregistre ensuite le nouvel article dans la base de donnï¿½es
 
 		int idUserOfArticle = newArticle.getUtilisateur().getNoUtilisateur();
 		int idCategorieOfArticle = newArticle.getCategorie().getNoCategorie();
@@ -233,8 +233,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			preparedStatement.setDate(3, newArticle.getDateDebutEncheres());
 			preparedStatement.setDate(4, newArticle.getDateFinEncheres());
 			preparedStatement.setInt(5, newArticle.getPrixInitial());
-			preparedStatement.setInt(6, 0); // Le 0 correspond à la valeur par default du prix de vente car aucune
-											// enchère n'a encore pu être effectuée pour cet article.
+			preparedStatement.setInt(6, 0); // Le 0 correspond ï¿½ la valeur par default du prix de vente car aucune
+											// enchï¿½re n'a encore pu ï¿½tre effectuï¿½e pour cet article.
 			preparedStatement.setInt(7, idUserOfArticle);
 			preparedStatement.setInt(7, idCategorieOfArticle);
 			preparedStatement.setBoolean(7, newArticle.getVenteEffectuee());
