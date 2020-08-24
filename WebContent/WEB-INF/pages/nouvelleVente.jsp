@@ -11,18 +11,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/accueil.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/nouvelleVente.css">
 
 <title>Nouvelle Vente</title>
 </head>
 <body>
+<div class="divPage">
 <header>
+<img src="${pageContext.request.contextPath}/resources/logo-eni.png" alt="logo-eni">
 <h1>ENI-Enchères </h1>
-<h2>Nouvelle vente</h2>
+<br><br><br>
 </header>
 
 <form method="post" name="nouvelleVente" action="${pageContext.request.contextPath}/nouvelleVente">
-	
+		<h2>Nouvelle vente</h2>
 		
 		<label for="nomArticle">Article:</label>
 		<input class="input" name="nomArticle" id="nomArticle" type="text" value='${nom}' autofocus title="libellé article" size="30" required><br><br>
@@ -67,11 +69,13 @@
 			<input class="input" name="ville" id="ville" type="text" value='${ville}' size="30" required>
 		</fieldset><br><br>
 		
-		<div class="boutons"><button type= "submit" name="enregistrer" id="enregistrer" style="width:130px; height:30px" value="1">Enregistrer</button>
-        <a href="accueil"> <input type="button" name="Annuler" style="width:130px; height:30px" value="Annuler"> </a>
+		<div class="boutons">
+		<button type= "submit" name="enregistrer" id="enregistrer" value="1">Enregistrer</button>
+        <a href="accueil"> <input type="button" name="Annuler" value="Annuler"> </a>
 		</div>
       	
 	
 </form>
+</div>
 </body>
 </html>

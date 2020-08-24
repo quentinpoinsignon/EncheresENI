@@ -4,33 +4,25 @@ html {
 
 .divPage {
 	 margin: 0 auto;
-     width: 650px; 
+     width: 400px; 
 }
 
-
-.column {
-  float: left;
-  width: 50%;
+.liens {
+	padding-bottom: 3px;
+	position: relative;
+	left: 50px;
 }
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-input {
+input[type=text], input[type=password] {
 	width: 300px;
 	padding: 6px 10px;
 	margin: 5px 0px;
 	box-sizing: border-box;
 	border : 1px solid CornflowerBlue;
 	border-radius : 5px;
-	
-	
 }
 
-input:focus {
+input[type=text]:focus, input[type=password]:focus {
 	border : 2px solid rgb(19, 74, 128);
 }
 
@@ -53,22 +45,24 @@ button:hover {
 	background-color: rgb(19, 74, 128);
 }
 
-#btnSupprimer {
-	background-color: IndianRed;
-	margin-left: 170px;
-}
-
 a:hover {
 	color: rgb(19, 74, 128);
 }
 
 form {
-	width: 650px;
+	width: 320px;
 	background-color: WhiteSmoke;
 	border : none;
 	border-radius: 10px;
 	margin: 0px Opx;
 	padding : 10px 10px 20px 20px;
-
 }
 
+.article {
+	width: 320px;
+	background-color: WhiteSmoke;
+	border : 2px solid rgb(19, 74, 128);
+	border-radius: 10px;
+	margin: 0px Opx;
+	padding : 10px 10px 20px 20px;
+}

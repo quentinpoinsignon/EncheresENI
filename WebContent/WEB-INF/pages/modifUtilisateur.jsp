@@ -60,12 +60,13 @@
                     </div>
                 </div>
 				</div>
+				<br>
 				<div id="btnActions">
 					<button type= "submit" name="btnAction" id="btnModifier" value="modifier">Modifier</button>
-					<button type= "submit" name="btnAction" id="btnSupprimer" value="supprimer">Supprimer</button>
 					${modifEffectuee ? '
 					<button type= "submit" name="btnAction" id="btnRetour" value="retour">Retour</button>':
 					'<button type= "submit" name="btnAction" id="btnAnnuler" value="annuler">Annuler</button>'}
+					<button type= "submit" name="btnAction" id="btnSupprimer" value="supprimer">Supprimer</button>
 				</div>
      			
 </form>
