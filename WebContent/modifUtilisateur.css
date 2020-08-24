@@ -4,8 +4,9 @@ html {
 
 .divPage {
 	 margin: 0 auto;
-     width: 500px; 
+     width: 650px; 
 }
+
 
 .column {
   float: left;
@@ -25,11 +26,8 @@ input {
 	box-sizing: border-box;
 	border : 1px solid CornflowerBlue;
 	border-radius : 5px;
-}
-
-label {
-	display:inline-block;
-	width: 100px;
+	
+	
 }
 
 input:focus {
@@ -55,17 +53,12 @@ button:hover {
 	background-color: rgb(19, 74, 128);
 }
 
-#btnActions {
-	margin: 0 auto;
-	width: 75%;
-}
-
 a:hover {
 	color: rgb(19, 74, 128);
 }
 
 form {
-	width: 500px;
+	width: 650px;
 	background-color: WhiteSmoke;
 	border : none;
 	border-radius: 10px;

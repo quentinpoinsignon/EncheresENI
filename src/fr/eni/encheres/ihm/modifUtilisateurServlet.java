@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.corba.se.impl.ior.OldPOAObjectKeyTemplate;
+
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 
@@ -49,12 +51,13 @@ public class modifUtilisateurServlet extends HttpServlet {
 			String newPassword = request.getParameter("newPassword");
 			String newPasswordConfirm = request.getParameter("newPasswordConfirm");
 			
+			
 			if(oldPassword != null && newPassword != null && newPasswordConfirm != null) {
 				if(!newPassword.equals(newPasswordConfirm)) {
 					message = "Les champs Nouveau mot de passe et Confirmation ne correspondent pas";
 					request.setAttribute("modifEffectuee", false);
 					}
-				else if(oldPassword.equals(newPassword)) {
+				else if(!oldPassword.equals("") & !newPassword.equals("") && oldPassword.equals(newPassword)) {
 					message = "Le nouveau mot de passe doit être différent de l'ancien";
 					request.setAttribute("modifEffectuee", false);
 				}

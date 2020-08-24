@@ -48,11 +48,11 @@ public class profilServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String btnSubmitProfil = request.getParameter("btnRetour");
-		if (("retour").equals(btnSubmitProfil)) {
+		String action = request.getParameter("action");
+		if (("retour").equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 		}
-		if (("modifier").equals(btnSubmitProfil)) {
+		if (("modifier").equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/pages/modifUtilisateur.jsp").forward(request, response);
 		}
 	}
