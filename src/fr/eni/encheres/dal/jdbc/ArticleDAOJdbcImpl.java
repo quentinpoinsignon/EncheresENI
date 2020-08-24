@@ -74,24 +74,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private final String INSERT_NEW_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,no_utilisateur,no_categorie,vente_effectuee) \r\n"
 			+ "VALUES (?,?,?,?,?,?,?,?,?)";
 
-	/**
-	 * @Constante ARTICLE_SEARCH_BY_TEXT -> Chaine de caractères contenant une
-	 *            requête SQL permettant de rechercher dans la table Article_Vendus
-	 *            tous les articles commençant par une chaine de caractères en
-	 *            particulier
-	 * 
-	 * @value "utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article,
-	 *        description,date_debut_encheres,date_fin_encheres, prix_initial,
-	 *        prix_vente FROM ARTICLES_VENDUS artvd\r\n" + "INNER JOIN UTILISATEURS
-	 *        utl ON utl.no_utilisateur = artvd.no_utilisateur\r\n" + "INNER JOIN
-	 *        CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n" +
-	 *        "WHERE nom_article LIKE 'Poire%' AND vente_effectuee = 0";
-	 * 
-	 */
-	private final String ARTICLE_SEARCH_BY_TEXT = "utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente FROM ARTICLES_VENDUS artvd\r\n"
-			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\r\n"
-			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n"
-			+ "WHERE nom_article LIKE '?%' AND vente_effectuee = 0";
+	
 
 	/**
 	 * @author jarrigon2020
@@ -268,73 +251,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	}
 
-	/**
-	 * @author jarrigon2020
-	 * 
-	 * @param research -> Chaine de caractères correspondant au texte rentré dans le
-	 *                 champs de recherche de la page accueil par l'utilisateur
-	 * 
-	 * @return searchResult -> Objet de type ArrayList contenant des objets de type
-	 *         Article
-	 * 
-	 * @Commentaire Cette méthode permet d'effectuer une recherche dans la base de
-	 *              données de récupérer des articles par rapport à la chaine de
-	 *              caractère rentrée par un utilisateur dans le champs "Recherche"
-	 *              de la page d'accueil.
-	 * 
-	 */
-	@Override
-	public List<Article> articleSearchByText(String research) throws Exception {
-
-		ResultSet myResultset = null;
-		Utilisateur user = null;
-		Article article = null;
-		Categorie categorie = null;
-		List<Article> searchResult = new ArrayList<Article>();
-
-		try (Connection databaseConnection = JdbcTools.getConnection();
-				PreparedStatement preparedStatement = databaseConnection.prepareStatement(ARTICLE_SEARCH_BY_TEXT)) {
-
-			preparedStatement.setString(1, research);
-
-			myResultset = preparedStatement.executeQuery();
-
-			while (myResultset.next()) {
-
-				// Utilisateur
-				String userPseudo = myResultset.getString(1);
-
-				user = new Utilisateur(userPseudo);
-
-				// Catégorie
-				int idCategorie = myResultset.getInt(2);
-				String categorieLibelle = myResultset.getString(3);
-
-				categorie = new Categorie(idCategorie, categorieLibelle);
-
-				// Articles
-				String articleName = myResultset.getString(4);
-				String desription = myResultset.getString(5);
-				Date dateDebut = myResultset.getDate(6);
-				Date dateFin = myResultset.getDate(7);
-				int prixInitial = myResultset.getInt(8);
-				int prixVente = myResultset.getInt(9);
-
-				article = new Article(articleName, desription, dateDebut, dateFin, prixInitial, prixVente, user,
-						categorie);
-
-				searchResult.add(article);
-
-			}
-
-			myResultset.close();
-
-		} catch (SQLException e) {
-
-			throw new Exception(e.getMessage());
-
-		}
-		return searchResult;
-	}
+	
 
 }

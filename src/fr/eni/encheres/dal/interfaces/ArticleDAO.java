@@ -13,6 +13,4 @@ public interface ArticleDAO {
 
 	void insertNewArticle(Article article) throws Exception;
 
-	List<Article> articleSearchByText(String Research) throws Exception;
-
 }
