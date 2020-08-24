@@ -7,6 +7,7 @@
 <%@page import="fr.eni.encheres.bll.CategorieManager"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
 <%@page import="fr.eni.encheres.bo.Categorie"%>
+<%@page session="true"%>
 
 <!DOCTYPE html>
 <html>
@@ -17,10 +18,14 @@
 </head>
 <body>
 <header>
-<h1>ENI Enchères</h1>
+	<img src="${pageContext.request.contextPath}/resources/logo-eni.png" alt="logo-eni">
+	<h1>ENI-Enchères</h1>
+	<div class="liens">
+	<a href="${pageContext.request.contextPath}/encheres?action=inscription">S'inscrire - </a>
+	<a href="${pageContext.request.contextPath}/encheres?action=login">Se connecter</a>
+	</div>
+	</header>
 
-<a href="${pageContext.request.contextPath}/encheres?action=inscription">S'inscrire - </a>
-<a href="${pageContext.request.contextPath}/encheres?action=login">Se connecter</a>
  
 <h2>Liste des enchères</h2>
 </header>
@@ -55,9 +60,9 @@
 <% if (listeArticles != null) {%>
 <% String selectedCategorie = (String)request.getAttribute("selectedCategorie");%>
 <%for (Article article : listeArticles) {%>
+<%System.out.println(article.getCategorie());%>
 <%if(selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0")) {%>
 		<div id=listArticles>
-			<p><%=article.getCategorie().getNoCategorie()%></p><br>
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
 			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
