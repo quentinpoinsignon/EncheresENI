@@ -3,23 +3,20 @@ package fr.eni.encheres.bll;
 import java.sql.SQLException;
 import java.util.List;
 
-import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 /**
- * @author qpoinsig2020
- * Classe de la bll gerant les utilisateurs
+ * @author qpoinsig2020 Classe de la bll gerant les utilisateurs
  */
 public class UtilisateurManager {
 	private UtilisateurDAO uDAO;
-	
-	
+
 	public UtilisateurManager() {
 		uDAO = DAOFactory.getUtilisateurDAO();
 	}
-	
+
 	public void addUtilisateur(Utilisateur utilisateur) {
 		try {
 			uDAO.userInsert(utilisateur);
@@ -27,7 +24,7 @@ public class UtilisateurManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public List<String> getListPseudos() {
 		List<String> listPseudos = null;
 		try {
@@ -37,7 +34,7 @@ public class UtilisateurManager {
 		}
 		return listPseudos;
 	}
-	
+
 	public List<String> getListEmail() {
 		List<String> listEmail = null;
 		try {
@@ -47,7 +44,7 @@ public class UtilisateurManager {
 		}
 		return listEmail;
 	}
-	
+
 	public Utilisateur connectionByEmail(String email, String password) {
 		Utilisateur userBDD = null;
 		try {
@@ -58,8 +55,6 @@ public class UtilisateurManager {
 		}
 		return userBDD;
 	}
-	
-
 
 	public Utilisateur connectionByPseudo(String pseudo, String password) {
 		Utilisateur userBDD = null;
@@ -71,7 +66,7 @@ public class UtilisateurManager {
 		}
 		return userBDD;
 	}
-	
+
 	public Utilisateur getUserProfileByPseudo(String pseudo) {
 		Utilisateur userBDD = null;
 		try {
@@ -82,7 +77,7 @@ public class UtilisateurManager {
 		}
 		return userBDD;
 	}
-	
+
 	public Utilisateur editUserProfile(Utilisateur utilisateur) {
 		Utilisateur updatedUser = null;
 		try {
@@ -93,4 +88,27 @@ public class UtilisateurManager {
 		}
 		return updatedUser;
 	}
+
+	public void removeUserProfile(int idUser) throws Exception {
+
+		try {
+			uDAO.removeUserProfil(idUser);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception {
+
+		try {
+			uDAO.editUserPassword(user, oldPassword, newPassword);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 }
