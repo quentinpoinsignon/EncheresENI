@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/accueil.css">
+<link rel="stylesheet" type="text/css" href="./accueil.css">
 <title>Accueil encheres</title>
 </head>
 <body>
@@ -39,12 +39,11 @@
 
 </form>
 
-<form action="${pageContext.request.contextPath}/accueil" method="post">
-
 <!-- affichage de la liste des catégories -->
+<form action="${pageContext.request.contextPath}/accueil" method="post">
 <%! CategorieManager cMger = new CategorieManager();%>
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
-<% String selectedCategorie = (String)request.getAttribute("selectedCategorie");%>
+<% String selectedCategorie = (String)request.getAttribute("selectedCategorie")==null?"0":(String)request.getAttribute("selectedCategorie");%>
 	<label for="listCategories">Catégorie : </label>
 	<select id="listCategories" name="selectedCategorie">
 			<option value="0" <%=("0").equals(selectedCategorie) ? "selected":""%> %>Toutes</option>
@@ -53,8 +52,8 @@
 			<%}%>
 	</select><br><br>
 	<button type= "submit" name="rechercher" id="btnRechercher" value="rechercher">Rechercher</button><br><br>
-	
 </form>
+
 <!-- affichage de la liste des articles -->
 <div class="article">
 <%! ArticleManager aMger = new ArticleManager();%>
@@ -73,6 +72,7 @@
 		<%}%>
 		 <%}%>
 <%}%>
+</div>
 </div>
 </body>
 </html>

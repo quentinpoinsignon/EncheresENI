@@ -56,7 +56,7 @@ public class loginServlet extends HttpServlet {
 					break;
 				}
 				if(connectedUser != null) {
-					HttpSession session = request.getSession();
+					HttpSession session = request.getSession(true);
 					session.setAttribute("connectedUser", connectedUser);
 					request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 				}
