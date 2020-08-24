@@ -43,17 +43,13 @@ public class encheresServlet extends HttpServlet {
 			}
 		}
 		else request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-			
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("btnRechercher");
-		if(("1").equals(action)) {
+		String action = request.getParameter("rechercher");
+		if(("rechercher").equals(action)) {
 			String categorie = request.getParameter("selectedCategorie");
 			request.setAttribute("selectedCategorie", categorie);
-		}
-		else {
-			request.setAttribute("selectedCategorie", "0");
 		}
 		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		
