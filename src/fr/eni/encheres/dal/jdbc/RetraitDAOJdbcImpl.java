@@ -46,9 +46,9 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 		int noArticle = newArticle.getNoArticle();
 
-		String street = newArticle.getPointRetrait().getRue();
-		String town = newArticle.getPointRetrait().getVille();
-		String postalCode = newArticle.getPointRetrait().getCodePostal();
+		String street = newArticle.getPointDeRetrait().getRue();
+		String town = newArticle.getPointDeRetrait().getVille();
+		String postalCode = newArticle.getPointDeRetrait().getCodePostal();
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(INSERT_WITHDRAWAL_POINT)) {
