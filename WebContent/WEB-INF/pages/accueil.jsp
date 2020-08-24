@@ -29,7 +29,6 @@
 </header>
 
  
-</header>
 <form action="${pageContext.request.contextPath}/accueil">
 	<h2>Liste des enchères</h2>
 	<label for="txtSearch">Filtres : </label>
@@ -47,7 +46,7 @@
 <% String selectedCategorie = (String)request.getAttribute("selectedCategorie");%>
 	<label for="listCategories">Catégorie : </label>
 	<select id="listCategories" name="selectedCategorie">
-			<option value="0" <%=("0").equals(selectedCategorie) ? "selected":""%> %>Toutes</option>
+			<option value="0" <%=("0").equals(selectedCategorie) ? "selected":""%>>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
 			<option value=<%=cat.getNoCategorie()%> <%=String.valueOf(cat.getNoCategorie()).equals(selectedCategorie) ? " selected":""%>><%=cat.getLibelle()%></option>
 			<%}%>
@@ -73,6 +72,7 @@
 		<%}%>
 		 <%}%>
 <%}%>
+</div>
 </div>
 </body>
 </html>
