@@ -132,6 +132,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 				enchere = new Enchere(auctionDate, auctionAmount, article, buyerUser);
 
+				searchResult.add(enchere);
+
 			}
 
 			myResultset.close();
