@@ -22,11 +22,12 @@ import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
 public class loginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager uMger = new UtilisateurManager();
+	private String messageErreur = "";
 
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		String messageErreur = "";
+	
 		//à recoder pour traiter le mot de passe oublié (remplacer accueil ci-dessous)
 		if(("accueil").equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
@@ -35,44 +36,45 @@ public class loginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
 		//récupération des attributs
-		String identifiant = request.getParameter("identifiant");
-		String password = request.getParameter("password");
-		String connexion = request.getParameter("connexion");
-		String rememberme = request.getParameter("rememberme");
-		String creercompte = request.getParameter("creercompte");
-		String messageErreur = "";
+		String action = request.getParameter("action");
 		
-		if (("1").equals(creercompte)) {
+		switch (action) {
+		case "connexion":
+			String identifiant = request.getParameter("identifiant");
+			String password = request.getParameter("password");
+			if(identifiant != null && password != null) {
+				Utilisateur connectedUser = null;
+				switch (ihmUtils.natureIdentifiant(identifiant)) {
+				case "pseudo":
+					connectedUser = uMger.connectionByPseudo(identifiant, password);
+					break;
+				case "email":
+					connectedUser = uMger.connectionByEmail(identifiant, password);
+					break;
+				default:
+					break;
+				}
+				if(connectedUser != null) {
+					HttpSession session = request.getSession();
+					session.setAttribute("connectedUser", connectedUser);
+					request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+				}
+				else {
+					messageErreur = "Login ou mot de passe incorrect";
+					request.setAttribute("erreurLogin", messageErreur);
+					request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+				}
+			}
+			break;
+		case "creerCompte" :
 			request.getRequestDispatcher("/WEB-INF/pages/inscription.jsp").forward(request, response);
+			break;
+		case "annuler" :
+			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
+			break;
+		default:
+			break;
 		}
-		
-		if (("1").equals(connexion) && identifiant != null && password != null) {
-			Utilisateur connectedUser = null;
-			switch (ihmUtils.natureIdentifiant(identifiant)) {
-			case "pseudo":
-				connectedUser = uMger.connectionByPseudo(identifiant, password);
-				break;
-			case "email":
-				connectedUser = uMger.connectionByEmail(identifiant, password);
-				break;
-			default:
-				break;
-			}
-			if(connectedUser != null) {
-				session.setAttribute("connectedUser", connectedUser);
-				request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
-			}
-			else {
-				messageErreur = "Login ou mot de passe incorrect";
-				request.setAttribute("erreurLogin", messageErreur);
-				request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
-			}
-			
-			
-
 	}
-
-}
 }
