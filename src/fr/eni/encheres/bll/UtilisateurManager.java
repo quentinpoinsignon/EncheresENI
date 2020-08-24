@@ -89,25 +89,24 @@ public class UtilisateurManager {
 		return updatedUser;
 	}
 
-	public void removeUserProfile(int idUser) throws Exception {
-
+	public void removeUserProfile(int idUser) {
 		try {
 			uDAO.removeUserProfil(idUser);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) throws Exception {
-
+	public void editUserPassword(Utilisateur user, String oldPassword, String newPassword) {
 		try {
 			uDAO.editUserPassword(user, oldPassword, newPassword);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 
 	}
 
