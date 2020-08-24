@@ -28,12 +28,17 @@ public class accueilConnecteServlet extends HttpServlet {
 		}
 		if(("nouvelleVente").equals(action)) {
 			request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
-
 		}
 		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("rechercher");
+		if(("rechercher").equals(action)) {
+			String categorie = request.getParameter("selectedCategorie");
+			request.setAttribute("selectedCategorie", categorie);
+		}
+		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
 
 }

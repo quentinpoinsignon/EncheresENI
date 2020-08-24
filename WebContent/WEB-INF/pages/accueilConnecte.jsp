@@ -35,12 +35,12 @@
 
 <form action="${pageContext.request.contextPath}/accueilConnecte" method="get">
 	<h2>Liste des enchères</h2>
-
 	<label for="txtSearch">Filtres : </label>
 	<input type="search" name="txtSearch" id="txtSearch"><br><br>
+</form>
 
 <!-- affichage de la liste des catégories -->
-<form action="${pageContext.request.contextPath}/accueil" method="post">
+<form action="${pageContext.request.contextPath}/accueilConnecte" method="post">
 <%! CategorieManager cMger = new CategorieManager();%>
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 <% String selectedCategorie = (String)request.getAttribute("selectedCategorie")==null?"0":(String)request.getAttribute("selectedCategorie");%>
@@ -77,7 +77,6 @@
 <!-- 		</div> -->
 
 
-</form>
 
 <!-- affichage de la liste des articles -->
 <div class="article">

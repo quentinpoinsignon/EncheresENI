@@ -1,36 +1,69 @@
-body{
-		background-color: #1aa3ff;
-		font-family: sans-serif;
-		color: blue;
-}
-h2{
-	text-align: center;
+html {
+	margin : 0px 20px 20px 20px;
 }
 
-label
-{
-	display: block;
-	width: 150px;
+.divPage {
+	 margin: 0 auto;
+     width: 650px; 
+}
+
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+input {
+	width: 300px;
+	padding: 6px 10px;
+	margin: 5px 0px;
+	box-sizing: border-box;
+	border : 1px solid CornflowerBlue;
+	border-radius : 5px;
+	
+	
+}
+
+input:focus {
+	border : 2px solid rgb(19, 74, 128);
+}
+
+img {
 	float: left;
-	margin-left: 50px;
-	margin: 10px;
 }
 
-.data{
-	margin-left: 250px;
-	margin-right: 150px;
+button {
+	background-color: CornflowerBlue;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	padding: 12px 20px;
+	margin: 5px 0px;
+	width: 150px;
+
 }
 
-input{
-	margin: 10px;
-}
-.boutons{
-	text-align: center;
+button:hover {
+	background-color: rgb(19, 74, 128);
 }
 
-p{
-	text-align: center;
+a:hover {
+	color: rgb(19, 74, 128);
 }
 
-h1,h2,h3{
-display: inline;
+form {
+	width: 650px;
+	background-color: WhiteSmoke;
+	border : none;
+	border-radius: 10px;
+	margin: 0px Opx;
+	padding : 10px 10px 20px 20px;
+
+}
+
