@@ -57,7 +57,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	 *        artvd.no_utilisateur = utl.no_utilisateur\r\n" + "INNER JOIN
 	 *        CATEGORIES ctg ON artvd.no_categorie = ctg.no_categorie";
 	 */
-	private final String SELECT_ALL_ARTICLE = "SELECT utl.pseudo, ctg.libelle, nom_article, description, date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM ARTICLES_VENDUS artvd\r\n"
+	private final String SELECT_ALL_ARTICLE = "SELECT utl.pseudo, ctg.libelle, ctg.no_categorie, nom_article, description, date_debut_encheres,date_fin_encheres,prix_initial,prix_vente FROM ARTICLES_VENDUS artvd\r\n"
 			+ "INNER JOIN UTILISATEURS utl ON artvd.no_utilisateur = utl.no_utilisateur\r\n"
 			+ "INNER JOIN CATEGORIES ctg ON artvd.no_categorie = ctg.no_categorie";
 
@@ -108,16 +108,17 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				// Catégorie
 				String categorieLibelle = myResultset.getString(2);
+				int idCategorie = myResultset.getInt(3);
 
-				categorie = new Categorie(categorieLibelle);
+				categorie = new Categorie(idCategorie, categorieLibelle);
 
 				// Articles
-				String articleName = myResultset.getString(3);
-				String desription = myResultset.getString(4);
-				Date dateDebut = myResultset.getDate(5);
-				Date dateFin = myResultset.getDate(6);
-				int prixInitial = myResultset.getInt(7);
-				int prixVente = myResultset.getInt(8);
+				String articleName = myResultset.getString(4);
+				String desription = myResultset.getString(5);
+				Date dateDebut = myResultset.getDate(6);
+				Date dateFin = myResultset.getDate(7);
+				int prixInitial = myResultset.getInt(8);
+				int prixVente = myResultset.getInt(9);
 
 				article = new Article(articleName, desription, dateDebut, dateFin, prixInitial, prixVente, user,
 						categorie);
@@ -246,6 +247,27 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		}
 
+	}
+
+	/**
+	 * @author jarrigon2020
+	 * 
+	 * @param Research -> Chaine de caractères correspondant au texte rentré dans le
+	 *                 champs de recherche de la page accueil par l'utilisateur
+	 * 
+	 * @return searchResult -> Objet de type ArrayList contenant des objets de type
+	 *         Article
+	 * 
+	 * @Commentaire Cette méthode permet d'effectuer une recherche dans la base de
+	 *              données de récupérer des articles par rapport à la chaine de
+	 *              caractère rentrée par un utilisateur dans le champs "Recherche"
+	 *              de la page d'accueil.
+	 * 
+	 */
+	@Override
+	public List<Article> articleSearchByText(String Research) throws Exception {
+
+		return null;
 	}
 
 }

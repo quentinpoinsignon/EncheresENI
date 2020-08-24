@@ -68,7 +68,7 @@
 		</fieldset><br><br>
 		
 		<div class="boutons"><button type= "submit" name="enregistrer" id="enregistrer" style="width:130px; height:30px" value="1">Enregistrer</button>
-        <a href="accueil"> <input type="button" style="width:130px; height:30px" value="Annuler"> </a>
+        <a href="accueil"> <input type="button" name="Annuler" style="width:130px; height:30px" value="Annuler"> </a>
 		</div>
       	
 	
