@@ -7,10 +7,12 @@ import fr.eni.encheres.bo.Article;
 
 public interface ArticleDAO {
 
-	public List<Article> selectAllArticle() throws SQLException, Exception;
+	List<Article> selectAllArticle() throws SQLException, Exception;
 
 	List<Article> selectAllArticleInDatabase() throws Exception;
 
 	void insertNewArticle(Article article) throws Exception;
+
+	List<Article> articleSearchByText(String Research) throws Exception;
 
 }
