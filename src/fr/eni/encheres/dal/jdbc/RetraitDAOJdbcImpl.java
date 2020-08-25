@@ -10,33 +10,33 @@ import fr.eni.encheres.dal.interfaces.RetraitDAO;
  * 
  * @author jarrigon2020
  * 
- * @Commentaire Cette classe contient l'intégralité des méthodes permettant
- *              d'utiliser des requêtes SQL concernant la table RETRAITS dans la
- *              base de données
+ * @Commentaire Cette classe contient l'intï¿½gralitï¿½ des mï¿½thodes permettant
+ *              d'utiliser des requï¿½tes SQL concernant la table RETRAITS dans la
+ *              base de donnï¿½es
  *
  */
 
 public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 	/**
-	 * @Constante INSERT_WITHDRAWAL_POINT -> Chaine de caractères contenant une
-	 *            requête SQL permettant d'enregister un nouveau point de retrait
-	 *            dans la base de données dans la base de données
+	 * @Constante INSERT_WITHDRAWAL_POINT -> Chaine de caractï¿½res contenant une
+	 *            requï¿½te SQL permettant d'enregister un nouveau point de retrait
+	 *            dans la base de donnï¿½es dans la base de donnï¿½es
 	 * 
 	 * @value "INSERT INTO RETRAITS(no_article,rue,code_postal,ville)
 	 *        VALUE(?,?,?,?)";
 	 */
-	private final String INSERT_WITHDRAWAL_POINT = "INSERT INTO RETRAITS(no_article,rue,code_postal,ville) VALUE(?,?,?,?)";
+	private final String INSERT_WITHDRAWAL_POINT = "INSERT INTO RETRAITS(no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
 
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param newArticle -> Objet de type Article qui va nous permettre de récupérer
-	 *                   les informations liées au point de retrait de l'article
+	 * @param newArticle -> Objet de type Article qui va nous permettre de rï¿½cupï¿½rer
+	 *                   les informations liï¿½es au point de retrait de l'article
 	 * @throws Exception
 	 * 
 	 * @Commentaire Cette fonction permet d'enregistrer un nouveau point de retrait
-	 *              dans la base de données. Elle est appelée au sein de la méthode
+	 *              dans la base de donnï¿½es. Elle est appelï¿½e au sein de la mï¿½thode
 	 *              insertNewArticle dans la classe ArticleDAOJdbcImpl
 	 * 
 	 */

@@ -45,7 +45,7 @@ public class nouvelleVenteServlet extends HttpServlet {
 		int noCategorie = Integer.parseInt(request.getParameter("selectedCategorie"));
 		List<Categorie> listeCategories = cMger.selectAllCategories();
 		Categorie selectedCategorie = bllUtils.returnCategorieById(listeCategories, noCategorie);
-		int venteEffectuee;
+		
 		
 		
 		int prixDepart = Integer.parseInt(request.getParameter("prixDepart"));
@@ -71,7 +71,7 @@ public class nouvelleVenteServlet extends HttpServlet {
 		// création de l'article sans point de retrait
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
-		Article newArticle = new Article(nomArticle, description, dateDebut, dateFin, prixDepart, prixVente, utilisateur, selectedCategorie);
+		Article newArticle = new Article(nomArticle, description, dateDebut, dateFin, prixDepart, prixVente, utilisateur, selectedCategorie, 0);
 
 		
 		// création du point de retrait

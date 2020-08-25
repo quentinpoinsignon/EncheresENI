@@ -31,7 +31,6 @@ public class accueilConnecteServlet extends HttpServlet {
 		default:
 			break;
 		}
-		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -219,8 +219,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		String townRetrait = town;
 		String postalCodeRetrait = postalCode;
 
-		ResultSet generatedKey;
-		int idArticle;
+		ResultSet generatedKey = null;
+		int idArticle = 0;
 
 		// On enregistre le nouvel article dans la base de donn�es
 
@@ -239,23 +239,29 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			preparedStatement.setInt(6, 0); // Le 0 correspond � la valeur par default du prix de vente car aucune
 											// ench�re n'a encore pu �tre effectu�e pour cet article.
 			preparedStatement.setInt(7, idUserOfArticle);
-			preparedStatement.setInt(7, idCategorieOfArticle);
-			preparedStatement.setInt(7, newArticle.getVenteEffectuee());
+			preparedStatement.setInt(8, idCategorieOfArticle);
+			preparedStatement.setInt(9, newArticle.getVenteEffectuee());
 
-			preparedStatement.executeUpdate();
+			int nombreLigne = preparedStatement.executeUpdate();
+			if(nombreLigne == 1) {
+				System.out.println("dans le if nombre ligne ==1");
+				 generatedKey = preparedStatement.getGeneratedKeys();
+				 if(generatedKey.next() ) {
+					 idArticle = generatedKey.getInt(1);
+				 }
+			}
+			
+			
+			
+			System.out.println("idarticle : " + idArticle);
 
-			generatedKey = preparedStatement.getGeneratedKeys();
-
-			idArticle = generatedKey.getInt(1);
-
-			if (generatedKey != null) {
-
+				
 				// On appelle une fonction permettant d'enregistrer les
 				// informations li�es aux point de retrait de l'article dans la table RETRAITS
 
 				RetraitDAO DAORetrait = DAOFactory.getRetraitDAO();
 				DAORetrait.insertWithdrawalPoint(idArticle, streetRetrait, townRetrait, postalCodeRetrait);
-			}
+				System.out.println("fin de la fonction");
 
 		}
 
