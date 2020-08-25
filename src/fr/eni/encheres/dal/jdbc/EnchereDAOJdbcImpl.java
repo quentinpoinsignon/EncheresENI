@@ -33,25 +33,27 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 *            que l'utilisateur a rentré dans le champs de recherche ainsi que
 	 *            la catégorie qu'il a sélectionné
 	 * 
-	 * @value "SELECT utl.pseudo,ctgr.no_categorie, ctgr.libelle, nom_article,
-	 *        description,date_debut_encheres,date_fin_encheres, prix_initial,
-	 *        prix_vente,ench.date_enchere,ench.montant_enchere, utl.pseudo AS
+	 * @value "SELECT utl.pseudo as acheteur,ctgr.no_categorie, ctgr.libelle,
+	 *        nom_article, description,date_debut_encheres,date_fin_encheres,
+	 *        prix_initial,
+	 *        prix_vente,ench.date_enchere,ench.montant_enchere,utl2.pseudo as
 	 *        vendeur\n" + "FROM ENCHERES ench\n" + "INNER JOIN ARTICLES_VENDUS
 	 *        artvd ON artvd.no_article = ench.no_article\n" + "INNER JOIN
-	 *        UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n" +
-	 *        "INNER JOIN UTILISATEURS ON artvd.no_utilisateur = utl.no_utilisateur
-	 *        \n" + "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
-	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE '?%' AND
-	 *        vente_effectuee = 0 OR nom_article LIKE '?%' AND ctgr.no_categorie = ?
-	 *        AND vente_effectuee = 0 OR ctgr.no_categorie = ? AND vente_effectuee =
-	 *        0 \n" + "ORDER BY artvd.date_fin_encheres ASC";
+	 *        UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur \n" +
+	 *        "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur =
+	 *        artvd.no_utilisateur\n" + "INNER JOIN CATEGORIES ctgr ON
+	 *        ctgr.no_categorie = artvd.no_categorie\n" + "WHERE (nom_article LIKE
+	 *        '?%' AND vente_effectuee = 0) OR (nom_article LIKE '?%' AND
+	 *        ctgr.no_categorie = ? AND vente_effectuee = 0) OR (ctgr.no_categorie =
+	 *        ? AND vente_effectuee = 0 )\n" + "ORDER BY artvd.date_fin_encheres
+	 *        ASC";
 	 */
-	private final String ARTICLE_SEARCH_BY_USER_REQUEST = "SELECT utl.pseudo,ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,ench.date_enchere,ench.montant_enchere, utl.pseudo AS vendeur\n"
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST = "SELECT utl.pseudo as acheteur,ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,ench.date_enchere,ench.montant_enchere,utl2.pseudo as vendeur\n"
 			+ "FROM ENCHERES ench\n" + "INNER JOIN ARTICLES_VENDUS artvd ON artvd.no_article = ench.no_article\n"
-			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n"
-			+ "INNER JOIN UTILISATEURS ON artvd.no_utilisateur = utl.no_utilisateur \n"
+			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur \n"
+			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE '?%' AND vente_effectuee = 0 OR nom_article LIKE '?%' AND ctgr.no_categorie = ? AND vente_effectuee = 0 OR ctgr.no_categorie = ? AND vente_effectuee = 0 \n"
+			+ "WHERE (nom_article LIKE '?%' AND vente_effectuee = 0) OR (nom_article LIKE '?%' AND ctgr.no_categorie = ? AND vente_effectuee = 0) OR (ctgr.no_categorie = ? AND vente_effectuee = 0 )\n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
@@ -130,7 +132,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				Date auctionDate = myResultset.getDate(10);
 				int auctionAmount = myResultset.getInt(11);
 
-				enchere = new Enchere(auctionDate, auctionAmount, article, buyerUser);
+				enchere = new Enchere(auctionDate, auctionAmount, article, buyerUser, sellerUser);
 
 				searchResult.add(enchere);
 

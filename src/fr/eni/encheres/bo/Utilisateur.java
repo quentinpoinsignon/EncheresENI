@@ -44,6 +44,10 @@ public class Utilisateur {
 
 	}
 
+	public Utilisateur(int idUser) {
+		this.noUtilisateur = idUser;
+	}
+
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String codePostal, String ville, String motDePasse) {
 		this.pseudo = pseudo;

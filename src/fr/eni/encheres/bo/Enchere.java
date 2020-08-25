@@ -7,17 +7,27 @@ public class Enchere {
 	private Date dateEnchere;
 	private int montantEnchere;
 	private Article article;
-	private Utilisateur utilisateur;
+	private Utilisateur acheteur;
+	private Utilisateur vendeur;
 
-	public Enchere(Date dateEnchere, int montantEnchere, Article article, Utilisateur utilisateur) {
+	public Enchere(Date dateEnchere, int montantEnchere, Article article, Utilisateur acheteur, Utilisateur vendeur) {
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
 		this.article = article;
-		this.utilisateur = utilisateur;
+		this.acheteur = acheteur;
+		this.vendeur = vendeur;
 	}
 
 	public int getNoEnchere() {
 		return noEnchere;
+	}
+
+	public Utilisateur getVendeur() {
+		return vendeur;
+	}
+
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
 	}
 
 	public void setNoEnchere(int noEnchere) {
@@ -49,17 +59,17 @@ public class Enchere {
 	}
 
 	public Utilisateur getUtilisateur() {
-		return utilisateur;
+		return acheteur;
 	}
 
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
+	public void setUtilisateur(Utilisateur acheteur) {
+		this.acheteur = acheteur;
 	}
 
 	@Override
 	public String toString() {
 		return "Enchere [noEnchere=" + noEnchere + ", dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere
-				+ ", article=" + article + ", utilisateur=" + utilisateur + "]";
+				+ ", article=" + article + ", utilisateur=" + acheteur + "]";
 	}
 
 }
