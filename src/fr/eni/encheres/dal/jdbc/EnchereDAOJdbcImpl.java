@@ -33,27 +33,188 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 *            que l'utilisateur a rentré dans le champs de recherche ainsi que
 	 *            la catégorie qu'il a sélectionné
 	 * 
-	 * @value "SELECT utl.pseudo as acheteur,ctgr.no_categorie, ctgr.libelle,
-	 *        nom_article, description,date_debut_encheres,date_fin_encheres,
-	 *        prix_initial,
-	 *        prix_vente,ench.date_enchere,ench.montant_enchere,utl2.pseudo as
-	 *        vendeur\n" + "FROM ENCHERES ench\n" + "INNER JOIN ARTICLES_VENDUS
-	 *        artvd ON artvd.no_article = ench.no_article\n" + "INNER JOIN
-	 *        UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur \n" +
-	 *        "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur =
+	 * @value "SELECT ctgr.no_categorie, ctgr.libelle, nom_article,
+	 *        description,date_debut_encheres,date_fin_encheres, prix_initial,
+	 *        prix_vente,utl2.pseudo as vendeur\n" + "FROM ARTICLES_VENDUS artvd \n"
+	 *        + "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur =
 	 *        artvd.no_utilisateur\n" + "INNER JOIN CATEGORIES ctgr ON
-	 *        ctgr.no_categorie = artvd.no_categorie\n" + "WHERE (nom_article LIKE
-	 *        '?%' AND vente_effectuee = 0) OR (nom_article LIKE '?%' AND
-	 *        ctgr.no_categorie = ? AND vente_effectuee = 0) OR (ctgr.no_categorie =
-	 *        ? AND vente_effectuee = 0 )\n" + "ORDER BY artvd.date_fin_encheres
-	 *        ASC";
+	 *        ctgr.no_categorie = artvd.no_categorie\n" + "WHERE nom_article LIKE
+	 *        TRIM('%?%') \n" + "ORDER BY artvd.date_fin_encheres ASC;";
 	 */
-	private final String ARTICLE_SEARCH_BY_USER_REQUEST = "SELECT utl.pseudo as acheteur,ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,ench.date_enchere,ench.montant_enchere,utl2.pseudo as vendeur\n"
-			+ "FROM ENCHERES ench\n" + "INNER JOIN ARTICLES_VENDUS artvd ON artvd.no_article = ench.no_article\n"
-			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur \n"
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION = "SELECT ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,utl2.pseudo as vendeur\n"
+			+ "FROM ARTICLES_VENDUS artvd \n"
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE (nom_article LIKE '?%' AND vente_effectuee = 0) OR (nom_article LIKE '?%' AND ctgr.no_categorie = ? AND vente_effectuee = 0) OR (ctgr.no_categorie = ? AND vente_effectuee = 0 )\n"
+			+ "WHERE nom_article LIKE TRIM('%?%')  \n" + "ORDER BY artvd.date_fin_encheres ASC;";
+
+	/**
+	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION -> Chaine de
+	 *            caractères contenant une requête SQL effectuant une recherche dans
+	 *            la table ARTICLE_VENDUS permettant de récupérer une liste
+	 *            d'encheres correspondant à ce que l'utilisateur a rentré dans le
+	 *            champs de recherche, la catégorie qu'il a sélectionné, si le
+	 *            bouton radio achat est sélectionné et que seule la checkbox
+	 *            encheres ouvertes est cochée
+	 * 
+	 * @Value "SELECT ctgr.no_categorie, ctgr.libelle, nom_article,
+	 *        description,date_debut_encheres,date_fin_encheres, prix_initial,
+	 *        prix_vente,utl2.pseudo as vendeur\n" + "FROM ARTICLES_VENDUS artvd \n"
+	 *        + "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur =
+	 *        artvd.no_utilisateur\n" + "INNER JOIN CATEGORIES ctgr ON
+	 *        ctgr.no_categorie = artvd.no_categorie\n" + "WHERE nom_article LIKE
+	 *        TRIM('%?%') AND date_debut_encheres < GETDATE() And date_fin_encheres
+	 *        > GETDATE() AND vente_effectuee = 0\n" + "ORDER BY
+	 *        artvd.date_fin_encheres ASC";
+	 */
+
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION = "SELECT ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,utl2.pseudo as vendeur\n"
+			+ "FROM ARTICLES_VENDUS artvd \n"
+			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
+			+ "WHERE nom_article LIKE TRIM('%?%')  AND date_debut_encheres < GETDATE() And date_fin_encheres > GETDATE() AND vente_effectuee = 0\n"
+			+ "ORDER BY artvd.date_fin_encheres ASC";
+
+	/**
+	 * Constante ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION -> Chaine de caractères
+	 * contenant une requête SQL effectuant une recherche dans la table
+	 * ARTICLE_VENDUS permettant de récupérer une liste d'encheres correspondant à
+	 * ce que l'utilisateur a rentré dans le champs de recherche, la catégorie qu'il
+	 * a sélectionné, si le bouton radio achat est sélectionné et que seule la
+	 * checkbox mes encheres est cochée
+	 * 
+	 * @value "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle,
+	 *        nom_article, description,date_debut_encheres,date_fin_encheres,
+	 *        prix_initial, prix_vente,utl2.pseudo as vendeur,
+	 *        ench.montant_enchere,ench.date_enchere\n" + "FROM ENCHERES ench \n" +
+	 *        "INNER JOIN ARTICLES_VENDUS artvd ON ench.no_article =
+	 *        artvd.no_article\n" + "INNER JOIN UTILISATEURS utl2 ON
+	 *        utl2.no_utilisateur = artvd.no_utilisateur\n" + "INNER JOIN
+	 *        UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n" +
+	 *        "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
+	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE TRIM('%%') AND
+	 *        date_debut_encheres < GETDATE() And date_fin_encheres > GETDATE() AND
+	 *        vente_effectuee = 0 AND utl.pseudo = '?'\n" + "ORDER BY
+	 *        artvd.date_fin_encheres ASC";
+	 */
+
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION = "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,utl2.pseudo as vendeur, ench.montant_enchere,ench.date_enchere\n"
+			+ "FROM ENCHERES ench \n" + "INNER JOIN ARTICLES_VENDUS artvd ON ench.no_article = artvd.no_article\n"
+			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
+			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
+			+ "WHERE nom_article LIKE TRIM('%%')  AND date_debut_encheres < GETDATE() And date_fin_encheres > GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n"
+			+ "ORDER BY artvd.date_fin_encheres ASC";
+
+	/**
+	 * @Contante ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION -> Chaine de caractères
+	 *           contenant une requête SQL effectuant une recherche dans la table
+	 *           ARTICLE_VENDUS permettant de récupérer une liste d'encheres
+	 *           correspondant à ce que l'utilisateur a rentré dans le champs de
+	 *           recherche, la catégorie qu'il a sélectionné, si le bouton radio
+	 *           achat est sélectionné et que seule la checkbox mes encheres
+	 *           remportées est cochée
+	 * 
+	 * @value "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle,
+	 *        nom_article, description, prix_initial, prix_vente,utl2.pseudo as
+	 *        vendeur, ench.montant_enchere, MAX(ench.date_enchere)\n" + "FROM
+	 *        ENCHERES ench \n" + "INNER JOIN ARTICLES_VENDUS artvd ON
+	 *        ench.no_article = artvd.no_article\n" + "INNER JOIN UTILISATEURS utl2
+	 *        ON utl2.no_utilisateur = artvd.no_utilisateur\n" + "INNER JOIN
+	 *        UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n" +
+	 *        "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
+	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE TRIM('%?%') AND
+	 *        vente_effectuee = 1 AND utl.pseudo = '?'\n" + "GROUP BY
+	 *        utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article, description,
+	 *        prix_initial, prix_vente,utl2.pseudo, ench.montant_enchere,
+	 *        ench.date_enchere,artvd.date_fin_encheres \n" + "ORDER BY
+	 *        artvd.date_fin_encheres ASC";
+	 */
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION = "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle, nom_article, description, prix_initial, prix_vente,utl2.pseudo as vendeur, ench.montant_enchere, MAX(ench.date_enchere)\n"
+			+ "FROM ENCHERES ench \n" + "INNER JOIN ARTICLES_VENDUS artvd ON ench.no_article = artvd.no_article\n"
+			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
+			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
+			+ "WHERE nom_article LIKE TRIM('%?%')   AND vente_effectuee = 1 AND utl.pseudo = '?'\n"
+			+ "GROUP BY utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article, description, prix_initial, prix_vente,utl2.pseudo, ench.montant_enchere, ench.date_enchere,artvd.date_fin_encheres \n"
+			+ "ORDER BY artvd.date_fin_encheres ASC";
+
+	/**
+	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_CURRENT_SALES -> Chaine de
+	 *            caractères contenant une requête SQL effectuant une recherche dans
+	 *            la table ARTICLE_VENDUS permettant de récupérer une liste
+	 *            d'encheres correspondant à ce que l'utilisateur a rentré dans le
+	 *            champs de recherche, la catégorie qu'il a sélectionné, si le
+	 *            bouton radio achat est sélectionné et que seule le bouton radio
+	 *            mes ventes en cours est coché
+	 * 
+	 * @value "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article,
+	 *        description, prix_initial, prix_vente,artvd.date_debut_encheres,
+	 *        artvd.date_fin_encheres\n" + "FROM ARTICLES_VENDUS artvd\n" + "INNER
+	 *        JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
+	 *        + "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
+	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE TRIM('%?%') AND
+	 *        artvd.date_debut_encheres <= GETDATE() AND artvd.date_fin_encheres >
+	 *        GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n" + "ORDER BY
+	 *        artvd.date_fin_encheres ASC";
+	 */
+
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_CURRENT_SALES = "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article, description, prix_initial, prix_vente,artvd.date_debut_encheres, artvd.date_fin_encheres\n"
+			+ "FROM ARTICLES_VENDUS artvd\n"
+			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
+			+ "WHERE nom_article LIKE TRIM('%?%') AND artvd.date_debut_encheres <= GETDATE() AND artvd.date_fin_encheres > GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n"
+			+ "ORDER BY artvd.date_fin_encheres ASC";
+
+	/**
+	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_NOT_STARTED_SALES -> Chaine de
+	 *            caractères contenant une requête SQL effectuant une recherche dans
+	 *            la table ARTICLE_VENDUS permettant de récupérer une liste
+	 *            d'encheres correspondant à ce que l'utilisateur a rentré dans le
+	 *            champs de recherche, la catégorie qu'il a sélectionné, si le
+	 *            bouton radio achat est sélectionné et que seule le bouton radio
+	 *            mes ventes non débutées est coché
+	 * 
+	 * @value "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article,
+	 *        description, prix_initial, prix_vente,artvd.date_debut_encheres,
+	 *        artvd.date_fin_encheres\n" + "FROM ARTICLES_VENDUS artvd\n" + "INNER
+	 *        JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
+	 *        + "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
+	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE TRIM('%?%') AND
+	 *        artvd.date_debut_encheres >= GETDATE() AND vente_effectuee = 0 AND
+	 *        utl.pseudo = '?'\n" + "ORDER BY artvd.date_fin_encheres ASC";
+	 */
+
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_NOT_STARTED_SALES = "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article, description, prix_initial, prix_vente,artvd.date_debut_encheres, artvd.date_fin_encheres\n"
+			+ "FROM ARTICLES_VENDUS artvd\n"
+			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
+			+ "WHERE nom_article LIKE TRIM('%?%') AND artvd.date_debut_encheres >= GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n"
+			+ "ORDER BY artvd.date_fin_encheres ASC";
+
+	/**
+	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES -> Chaine de caractères
+	 *            contenant une requête SQL effectuant une recherche dans la table
+	 *            ARTICLE_VENDUS permettant de récupérer une liste d'encheres
+	 *            correspondant à ce que l'utilisateur a rentré dans le champs de
+	 *            recherche, la catégorie qu'il a sélectionné, si le bouton radio
+	 *            achat est sélectionné et que seule le bouton radio mes ventes
+	 *            terminées est coché
+	 * 
+	 * @value "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article,
+	 *        description, prix_initial, prix_vente,artvd.date_debut_encheres,
+	 *        artvd.date_fin_encheres\n" + "FROM ARTICLES_VENDUS artvd\n" + "INNER
+	 *        JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
+	 *        + "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
+	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE TRIM('%?%') AND
+	 *        artvd.date_fin_encheres <= GETDATE() AND utl.pseudo = '?'\n" + "ORDER
+	 *        BY artvd.date_fin_encheres ASC";
+	 */
+
+	private String ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES = "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article, description, prix_initial, prix_vente,artvd.date_debut_encheres, artvd.date_fin_encheres\n"
+			+ "FROM ARTICLES_VENDUS artvd\n"
+			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
+			+ "WHERE nom_article LIKE TRIM('%?%') AND artvd.date_fin_encheres <= GETDATE()  AND utl.pseudo = '?'\n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
@@ -61,6 +222,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * 
 	 * @param research        -> Chaine de caractères correspondant au texte rentré
 	 *                        dans le champs de recherche de la page accueil par
+	 *                        l'utilisateur
+	 * 
+	 * @param ->              Chaine de caractères correspondant au pseudo de
 	 *                        l'utilisateur
 	 * 
 	 * @param idCategorie     -> Identifiant de la categorie sélectionnée
@@ -101,12 +265,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * 
 	 */
 	@Override
-	public List<Enchere> articleSearchByUserRequest(String research, int idCategorie, Boolean shoppingChecked,
-			Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean mySales, Boolean myCurrentSales,
-			Boolean notSartedSales, Boolean endedSales) throws Exception {
+	public List<Enchere> articleSearchByUserRequest(String research, String userPseudo, int idCategorie,
+			Boolean shoppingChecked, Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean mySales,
+			Boolean myCurrentSales, Boolean notSartedSales, Boolean endedSales) throws Exception {
 
+		PreparedStatement preparedStatement;
 		ResultSet myResultset = null;
-		String SQLRequest = null;
 
 		Enchere enchere = null;
 		Utilisateur sellerUser = null;
@@ -124,47 +288,52 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			if (openAuction && !myAuction && !winAuction) { // OK / NotOK / NotOk
 
-				SQLRequest = "";
+				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
+
+				preparedStatement.setString(1, research);
+
 			} else if (!openAuction && myAuction && !winAuction) { // NotOK / OK / NotOk
 
-				SQLRequest = "";
+				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION);
+
+				preparedStatement.setString(1, research);
+				preparedStatement.setString(2, userPseudo);
+
 			} else if (!openAuction && !myAuction && winAuction) { // NotOK /NotOK / OK
 
-				SQLRequest = "";
-			} else if (openAuction && myAuction && !winAuction) { // OK / OK / NotOk
-				SQLRequest = "";
-			} else if (openAuction && !myAuction && winAuction) { // OK / NotOK / Ok
-				SQLRequest = "";
-			} else if (!openAuction && myAuction && winAuction) { // NotOK / OK / Ok
-				SQLRequest = "";
+				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION);
+
+				preparedStatement.setString(1, research);
+				preparedStatement.setString(2, userPseudo);
+
 			}
 		} else if (mySales) { // Si le boutons mes ventes est selectionné
 
 			if (myCurrentSales && !notSartedSales && !endedSales) { // OK / NotOK / NotOk
-				SQLRequest = "";
+
+				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_CURRENT_SALES);
+
+				preparedStatement.setString(1, research);
+				preparedStatement.setString(2, userPseudo);
+
 			} else if (!myCurrentSales && notSartedSales && !endedSales) { // NotOK / OK / NotOk
-				SQLRequest = "";
+
+				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_NOT_STARTED_SALES);
+
+				preparedStatement.setString(1, research);
+				preparedStatement.setString(2, userPseudo);
+
 			} else if (!myCurrentSales && !notSartedSales && endedSales) { // NotOK /NotOK / OK
-				SQLRequest = "";
-			} else if (myCurrentSales && notSartedSales && !endedSales) { // OK / OK / NotOk
-				SQLRequest = "";
-			} else if (myCurrentSales && !notSartedSales && endedSales) { // OK / NotOK / Ok
-				SQLRequest = "";
-			} else if (!myCurrentSales && notSartedSales && endedSales) { // NotOK / OK / Ok
-				SQLRequest = "";
+
+				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES);
+
+				preparedStatement.setString(1, research);
+				preparedStatement.setString(2, userPseudo);
+
+			} else {
+				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION);
+				preparedStatement.setString(1, research);
 			}
-
-		} else {
-			SQLRequest = ARTICLE_SEARCH_BY_USER_REQUEST;
-		}
-
-		try (Connection databaseConnection = JdbcTools.getConnection();
-				PreparedStatement preparedStatement = databaseConnection.prepareStatement(SQLRequest)) {
-
-			preparedStatement.setString(1, research);
-			preparedStatement.setString(2, research);
-			preparedStatement.setInt(3, idCategorie);
-			preparedStatement.setInt(4, idCategorie);
 
 			myResultset = preparedStatement.executeQuery();
 
@@ -210,12 +379,29 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			myResultset.close();
 
-		} catch (SQLException e) {
-
-			throw new Exception(e.getMessage());
-
 		}
 		return searchResult;
 	}
 
+	/**
+	 * 
+	 * @param SQLRequest -> Chaine de caractères contenant une requête SQL
+	 * 
+	 * @return preparedStatement -> Objet de type PreparedStatement
+	 * 
+	 * @throws SQLException
+	 * 
+	 * @Commentaire
+	 * 
+	 *              Cette méthode permet de créer une requête préparée. Elle est
+	 *              utilisée dans la méthode articleSearchByUserRequest
+	 */
+	private PreparedStatement getPreparedStatement(String SQLRequest) throws SQLException {
+
+		try (Connection databaseConnection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(SQLRequest)) {
+
+			return preparedStatement;
+		}
+	}
 }
