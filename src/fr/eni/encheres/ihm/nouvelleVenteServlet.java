@@ -24,8 +24,10 @@ import fr.eni.encheres.bo.Utilisateur;
 
 /**
  * @author rbonin2020
+ * @author qpoinsig2020
  * servlet permettant la création d'un nouvel article 
  */
+
 @WebServlet("/nouvelleVente")
 public class nouvelleVenteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,7 +36,14 @@ public class nouvelleVenteServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("in the doget");
+		// récup de l'utilisateur connecté
+		HttpSession session = request.getSession();
+		Utilisateur connectedUser = (Utilisateur)session.getAttribute("connectedUser");
+		//set des attributs du point de retrait avec l'adresse par défaut de l'utilisateur connecté
+		request.setAttribute("rue", connectedUser.getRue());
+		request.setAttribute("codepostal", connectedUser.getCodePostal());
+		request.setAttribute("ville", connectedUser.getVille());
+		request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,21 +54,17 @@ public class nouvelleVenteServlet extends HttpServlet {
 		int noCategorie = Integer.parseInt(request.getParameter("selectedCategorie"));
 		List<Categorie> listeCategories = cMger.selectAllCategories();
 		Categorie selectedCategorie = bllUtils.returnCategorieById(listeCategories, noCategorie);
-		
-		
-		
 		int prixDepart = Integer.parseInt(request.getParameter("prixDepart"));
 		int prixVente = 0;
+		String rue = request.getParameter("rue");
+		String ville = request.getParameter("ville");
+		String codepostal = request.getParameter("codepostal");
+		String msg = "";
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
 		
 		// formatage des dates
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.FRENCH);
-		java.sql.Date dateFin=null;
-		try {
-			dateFin = bllUtils.dateUtilToSql(formatter.parse(request.getParameter("dateFin")));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.FRENCH);
 		java.sql.Date dateDebut=null;
 		try {
 			dateDebut = bllUtils.dateUtilToSql(formatter.parse(request.getParameter("dateDebut")));
@@ -67,37 +72,40 @@ public class nouvelleVenteServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-				
-		// création de l'article sans point de retrait
-		HttpSession session = request.getSession();
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
-		Article newArticle = new Article(nomArticle, description, dateDebut, dateFin, prixDepart, prixVente, utilisateur, selectedCategorie, 0);
+		java.sql.Date dateFin=null;
+		try {
+			dateFin = bllUtils.dateUtilToSql(formatter.parse(request.getParameter("dateFin")));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		System.out.println(dateFin.after(dateDebut));
+		if(dateFin.after(dateDebut) && dateFin != null && dateDebut != null) {
+			// création de l'article sans point de retrait
+			// nouvelle vente à 0 par défaut à la création de la vente
+			Article newArticle = new Article(nomArticle, description, dateDebut, dateFin, prixDepart, prixVente, utilisateur, selectedCategorie, 0);
+			System.out.println(newArticle.getUtilisateur().getNoUtilisateur());
+			
+			// saisie de l'article dans la BDD
+			aMger.addArticle(newArticle, rue, ville, codepostal);
 
-		
-		// création du point de retrait
-		String rue = request.getParameter("rue");
-		String ville = request.getParameter("ville");
-		String codepostal = request.getParameter("codepostal");
-	
-		
-		// affectation du point de retrait à l'article
-		
-		// saisie de l'article dans la BDD
-		aMger.addArticle(newArticle, rue, ville, codepostal);;
-		
-		
-		request.setAttribute("nomArticle", nomArticle);
-		request.setAttribute("description", description);
-
-		request.setAttribute("prixDepart", prixDepart);
-		request.setAttribute("dateDebut", dateDebut);
-		request.setAttribute("dateFin", dateFin);
-
-		request.setAttribute("rue", rue);
-		request.setAttribute("codepostal", codepostal);
-		request.setAttribute("ville", ville);
-
-		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+			msg = "Article ajouté !";
+			request.setAttribute("rue", rue);
+			request.setAttribute("codepostal", codepostal);
+			request.setAttribute("ville", ville);
+		}
+		else {
+			msg = "Erreur lors de l'ajout de l'article : la date de fin doit être ultérieure à la date de début";
+			request.setAttribute("nomArticle", nomArticle);
+			request.setAttribute("description", description);
+			request.setAttribute("prixDepart", prixDepart);
+			request.setAttribute("rue", rue);
+			request.setAttribute("codepostal", codepostal);
+			request.setAttribute("ville", ville);
+		}
+		request.setAttribute("msg", msg);
+		request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
 	}
 
 }

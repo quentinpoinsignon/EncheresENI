@@ -55,7 +55,7 @@
 </form>
 
 <!-- affichage de la liste des articles -->
-<div class="article">
+
 <%! ArticleManager aMger = new ArticleManager();%>
 <%! List<Article> listeArticles = aMger.selectTop3Articles();%>
 <%! String formatDate = "dd/mm/yyyy HH:mm"; %>
@@ -63,7 +63,7 @@
 <% if (listeArticles != null) {%>
 <%for (Article article : listeArticles) {%>
 <%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
-		<div id=listArticles>
+		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
 			<p>Fin de l'enchère : <%=article.getDateFinEncheres()%></p><br>
@@ -72,7 +72,7 @@
 		<%}%>
 		 <%}%>
 <%}%>
-</div>
+
 </div>
 </body>
 </html>

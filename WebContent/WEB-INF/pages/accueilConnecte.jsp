@@ -26,7 +26,7 @@
 
 	<div class="liens">
 		<a href="${pageContext.request.contextPath}/accueilConnecte?action=encheres">Enchères    </a>
-		<a href="${pageContext.request.contextPath}/accueilConnecte?action=nouvelleVente">Vendre un article    </a>
+		<a href="${pageContext.request.contextPath}/nouvelleVente">Vendre un article    </a>
 		<a href="${pageContext.request.contextPath}/profil?user=${connectedUser.getPseudo()}">Mon profil    </a>
 		<a href="${pageContext.request.contextPath}/accueilConnecte?action=deconnexion">Déconnexion    </a>
 	</div>
@@ -79,7 +79,7 @@
 
 
 <!-- affichage de la liste des articles -->
-<div class="article">
+
 <%! ArticleManager aMger = new ArticleManager();%>
 <%! List<Article> listeArticles = aMger.selectTop3Articles();%>
 <%! String formatDate = "dd/mm/yyyy H:m"; %>
@@ -87,7 +87,7 @@
 <% if (listeArticles != null) {%>
 <%for (Article article : listeArticles) {%>
 <%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
-		<div id=listArticles>
+		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
 			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
@@ -96,7 +96,7 @@
 		<%}%>
 		 <%}%>
 <%}%>
-</div>
+
 </div>
 </body>
 </html>
