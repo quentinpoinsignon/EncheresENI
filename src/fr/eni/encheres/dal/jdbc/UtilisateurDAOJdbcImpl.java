@@ -551,7 +551,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 			throw new SQLException(e.getMessage());
 		}
-		System.out.println(userEdit);
 		return userEdit;
 
 	}

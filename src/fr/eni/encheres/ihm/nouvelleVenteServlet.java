@@ -1,6 +1,8 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
+import java.sql.Date;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -18,7 +20,6 @@ import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.bllUtils;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 
 /**
@@ -33,6 +34,7 @@ public class nouvelleVenteServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("in the doget");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,6 +45,8 @@ public class nouvelleVenteServlet extends HttpServlet {
 		int noCategorie = Integer.parseInt(request.getParameter("selectedCategorie"));
 		List<Categorie> listeCategories = cMger.selectAllCategories();
 		Categorie selectedCategorie = bllUtils.returnCategorieById(listeCategories, noCategorie);
+		int venteEffectuee;
+		
 		
 		int prixDepart = Integer.parseInt(request.getParameter("prixDepart"));
 		int prixVente = 0;
@@ -66,31 +70,32 @@ public class nouvelleVenteServlet extends HttpServlet {
 				
 		// création de l'article sans point de retrait
 		HttpSession session = request.getSession();
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("userConnected");
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
 		Article newArticle = new Article(nomArticle, description, dateDebut, dateFin, prixDepart, prixVente, utilisateur, selectedCategorie);
+
 		
 		// création du point de retrait
 		String rue = request.getParameter("rue");
-		String codepostal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
-		Retrait pointDeRetrait = new Retrait(newArticle, rue, codepostal, ville);
+		String codepostal = request.getParameter("codepostal");
+	
 		
 		// affectation du point de retrait à l'article
-		newArticle.setPointDeRetrait(pointDeRetrait);
+		
 		// saisie de l'article dans la BDD
-		aMger.addArticle(newArticle);
+		aMger.addArticle(newArticle, rue, ville, codepostal);;
 		
 		
-//		request.setAttribute("nomArticle", nomArticle);
-//		request.setAttribute("description", description);
-//
-//		request.setAttribute("prixDepart", prixDepart);
-//		request.setAttribute("dateDebut", dateDebut);
-//		request.setAttribute("dateFin", dateFin);
-//
-//		request.setAttribute("rue", rue);
-//		request.setAttribute("codepostal", codepostal);
-//		request.setAttribute("ville", ville);
+		request.setAttribute("nomArticle", nomArticle);
+		request.setAttribute("description", description);
+
+		request.setAttribute("prixDepart", prixDepart);
+		request.setAttribute("dateDebut", dateDebut);
+		request.setAttribute("dateFin", dateFin);
+
+		request.setAttribute("rue", rue);
+		request.setAttribute("codepostal", codepostal);
+		request.setAttribute("ville", ville);
 
 		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}

@@ -240,7 +240,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 											// enchï¿½re n'a encore pu ï¿½tre effectuï¿½e pour cet article.
 			preparedStatement.setInt(7, idUserOfArticle);
 			preparedStatement.setInt(7, idCategorieOfArticle);
-			preparedStatement.setBoolean(7, newArticle.getVenteEffectuee());
+			preparedStatement.setInt(7, newArticle.getVenteEffectuee());
 
 			preparedStatement.executeUpdate();
 
@@ -251,7 +251,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			if (generatedKey != null) {
 
 				// On appelle une fonction permettant d'enregistrer les
-				// informations liées aux point de retrait de l'article dans la table RETRAITS
+				// informations liï¿½es aux point de retrait de l'article dans la table RETRAITS
 
 				RetraitDAO DAORetrait = DAOFactory.getRetraitDAO();
 				DAORetrait.insertWithdrawalPoint(idArticle, streetRetrait, townRetrait, postalCodeRetrait);

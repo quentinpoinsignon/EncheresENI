@@ -30,14 +30,13 @@
 		<input class="input" name="nomArticle" id="nomArticle" type="text" value='${nom}' autofocus title="libellé article" size="30" required><br><br>
 		
 		<label for="description">Description:</label>
-		<textarea name="description" cols="30" rows="5" value='${description}' required>Description de l'article</textarea><br><br>
+		<textarea name="description" cols="30" rows="5" value='${description}' placeholder="description de l'article" required></textarea><br><br>
 		
 		<!-- affichage de la liste des catégories -->
 		<%! CategorieManager cMger = new CategorieManager();%>
 		<%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 		<label for="listCategories">Catégorie : </label>
 		<select id="listCategories" name="selectedCategorie">
-			<option value="0" selected>Toutes</option>
 			<%for(Categorie cat : listeCategories) {%>
 			<option value=<%=cat.getNoCategorie()%>><%=cat.getLibelle()%></option>
 			<%}%>

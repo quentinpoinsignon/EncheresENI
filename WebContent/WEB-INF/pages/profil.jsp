@@ -18,7 +18,6 @@
 <br><br><br>
 
 
-<% Boolean isConnectedUser = (Boolean)request.getAttribute("isConnectedUser");%>
 
 <form method="post" name="profil" action="${pageContext.request.contextPath}/profil">
 

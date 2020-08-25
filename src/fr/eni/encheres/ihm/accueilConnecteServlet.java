@@ -21,13 +21,15 @@ public class accueilConnecteServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		if(("deconnexion").equals(action)) {
-			
+		switch (action) {
+		case "deconnexion":
 			request.getSession().removeAttribute("connectedUser");
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-		}
-		if(("nouvelleVente").equals(action)) {
+			break;
+		case "nouvelleVente":
 			request.getRequestDispatcher("/WEB-INF/pages/nouvelleVente.jsp").forward(request, response);
+		default:
+			break;
 		}
 		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}

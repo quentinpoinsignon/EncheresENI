@@ -1,5 +1,7 @@
 package fr.eni.encheres.bll;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import fr.eni.encheres.bo.Categorie;
@@ -31,5 +33,9 @@ public class bllUtils {
 		return new java.sql.Date(utilDate.getTime());
 	}
 	
+	
+	public int compareToNow (Date date) {
+		return 0;
+	}
 	
 }

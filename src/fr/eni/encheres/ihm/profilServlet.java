@@ -43,8 +43,9 @@ public class profilServlet extends HttpServlet {
 		request.setAttribute("codePostal", utilisateur.getCodePostal());
 		request.setAttribute("ville", utilisateur.getVille());
 		
-	
 		request.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(request, response);
+			
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

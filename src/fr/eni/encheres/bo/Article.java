@@ -14,12 +14,12 @@ public class Article {
 	int prixVente;
 	Utilisateur utilisateur;
 	Categorie categorie;
-	Boolean venteEffectuee;
+	int venteEffectuee;
 	Retrait pointDeRetrait;
-
+	
 
 	public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial,
-			int prixVente, Utilisateur utilisateur, Categorie categorie, Boolean venteEffectuee) {
+			int prixVente, Utilisateur utilisateur, Categorie categorie, int venteEffectuee) {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
@@ -130,11 +130,11 @@ public class Article {
 		this.categorie = categorie;
 	}
 
-	public Boolean getVenteEffectuee() {
+	public int getVenteEffectuee() {
 		return venteEffectuee;
 	}
 
-	public void setVenteEffectuee(Boolean venteEffectuee) {
+	public void setVenteEffectuee(int venteEffectuee) {
 		this.venteEffectuee = venteEffectuee;
 	}
 	

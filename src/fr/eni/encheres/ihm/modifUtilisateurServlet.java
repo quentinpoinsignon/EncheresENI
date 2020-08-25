@@ -79,7 +79,6 @@ public class modifUtilisateurServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 			break;
 		case "annuler":
-			System.out.println("case annuler");
 			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 			break;
 		case "retour":
