@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.dal.interfaces.RetraitDAO;
 
 /**
@@ -42,21 +41,20 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	 * 
 	 */
 	@Override
-	public void insertWithdrawalPoint(Article newArticle) throws Exception {
+	public void insertWithdrawalPoint(int idArticle, String street, String town, String postalCode) throws Exception {
 
-		int noArticle = newArticle.getNoArticle();
-
-		String street = newArticle.getPointDeRetrait().getRue();
-		String town = newArticle.getPointDeRetrait().getVille();
-		String postalCode = newArticle.getPointDeRetrait().getCodePostal();
+		int noArticle = idArticle;
+		String streetRetrait = street;
+		String townRetrait = town;
+		String postalCodeRetrait = postalCode;
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = databaseConnection.prepareStatement(INSERT_WITHDRAWAL_POINT)) {
 
 			preparedStatement.setInt(1, noArticle);
-			preparedStatement.setString(2, street);
-			preparedStatement.setString(3, town);
-			preparedStatement.setString(4, postalCode);
+			preparedStatement.setString(2, streetRetrait);
+			preparedStatement.setString(3, townRetrait);
+			preparedStatement.setString(4, postalCodeRetrait);
 
 			preparedStatement.executeUpdate();
 
