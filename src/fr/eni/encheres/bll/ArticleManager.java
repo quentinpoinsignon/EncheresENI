@@ -19,9 +19,9 @@ public class ArticleManager {
 		aDAO = DAOFactory.getArticleDAO();
 	}
 
-	public void addArticle(Article article) {
+	public void addArticle(Article article, String street, String town, String postalCode) {
 		try {
-			aDAO.insertNewArticle(article);
+			aDAO.insertNewArticle(article, street, town, postalCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +55,5 @@ public class ArticleManager {
 
 		return allArticles;
 	}
-	
-
 
 }
