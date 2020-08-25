@@ -32,14 +32,14 @@ public class profilServlet extends HttpServlet {
 		Boolean isConnectedUser = (connectedUser.getPseudo().equals(pseudoTemp)) ? true : false;
 		
 		Utilisateur utilisateur = uMger.getUserProfileByPseudo(pseudoTemp);
-		//définition des paramètres à envoyer à la jsp profil
+		//définition des paramètres à envoyer à la jsp profil, attributs à "" s'il ne s'agit pas de l'utilisateur connecté
 		request.setAttribute("isConnectedUser", isConnectedUser);
 		request.setAttribute("pseudo", utilisateur.getPseudo());
-		request.setAttribute("nom", utilisateur.getNom());
+		request.setAttribute("nom", isConnectedUser?utilisateur.getNom():"");
 		request.setAttribute("prenom", utilisateur.getPrenom());
-		request.setAttribute("email", utilisateur.getEmail());
-		request.setAttribute("telephone", utilisateur.getTelephone());
-		request.setAttribute("rue", utilisateur.getRue());
+		request.setAttribute("email", isConnectedUser?utilisateur.getEmail():"");
+		request.setAttribute("telephone", isConnectedUser?utilisateur.getTelephone():"");
+		request.setAttribute("rue", isConnectedUser?utilisateur.getRue():"");
 		request.setAttribute("codePostal", utilisateur.getCodePostal());
 		request.setAttribute("ville", utilisateur.getVille());
 		
