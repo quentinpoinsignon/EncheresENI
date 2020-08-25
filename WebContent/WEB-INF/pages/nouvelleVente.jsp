@@ -25,6 +25,7 @@
 
 <form method="post" name="nouvelleVente" action="${pageContext.request.contextPath}/nouvelleVente">
 		<h2>Nouvelle vente</h2>
+		<p><center>${msg}</center></p>
 		
 		<label for="nomArticle">Article:</label>
 		<input class="input" name="nomArticle" id="nomArticle" type="text" value="${nom}" autofocus title="libellé article" size="30" required><br><br>
@@ -74,6 +75,5 @@
 		</div>
 </form>
 </div>
-<p>${msg}</p>
 </body>
 </html>

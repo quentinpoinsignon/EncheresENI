@@ -50,7 +50,7 @@ a:hover {
 }
 
 form {
-	width: 320px;
+	width: 400px;
 	background-color: WhiteSmoke;
 	border : none;
 	border-radius: 10px;
@@ -59,10 +59,22 @@ form {
 }
 
 .article {
-	width: 320px;
+	width: 400px;
 	background-color: WhiteSmoke;
 	border : 2px solid rgb(19, 74, 128);
 	border-radius: 10px;
 	margin: 0px Opx;
 	padding : 10px 10px 20px 20px;
+}
+
+.menuRadio {
+	width: 400px;
+	background-color: WhiteSmoke;
+	border-radius: 10px;
+	margin: 0px Opx;
+	padding : 10px 10px 20px 20px;
+}
+
+#divVentes {
+	float: left;
 }

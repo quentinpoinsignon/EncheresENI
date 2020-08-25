@@ -60,34 +60,33 @@
 <%-- <% String rdoAchatsVentes = (String)request.getAttribute("rdoAchatsVentes");%> --%>
 
 
-<!-- 		<div> -->
-<!-- 		<div> -->
-<!-- 			<input type="radio" name="rdoSelectAchatsVentes" value="achats" name="rdoAchats">Achats<br> -->
-<!-- 		  	<input type="radio" name="rdoAchats" value="encheresOuvertes" checked="checked">enchères ouvertes<br> -->
-<!-- 		  	<input type="radio" name="rdoAchats" value="mesEncheres">mes enchères<br> -->
-<!-- 		  	<input type="radio" name="rdoAchats" value="encheresRemportees">mes enchères remportées<br> -->
+		<div class="menuRadio">
+		<div id="divVentes">
+			<input type="radio" name="rdoSelectAchatsVentes" value="achats" name="rdoAchats">Achats<br>
+		  	<input type="radio" name="rdoAchats" value="encheresOuvertes" checked="checked">enchères ouvertes<br>
+		  	<input type="radio" name="rdoAchats" value="mesEncheres">mes enchères<br>
+		  	<input type="radio" name="rdoAchats" value="encheresRemportees">mes enchères remportées<br>
 		
-<!-- 		</div> -->
-<!-- 		<div> -->
-<!-- 			<input type="radio" name="rdoSelectAchatsVentes" value="ventes" name="rdoVentes">Ventes<br> -->
-<!-- 		  	<input type="radio" name="rdoVentes" value="ventesEnCours">mes ventes en cours<br> -->
-<!-- 		  	<input type="radio" name="rdoVentes" value="ventesNonDebutees">ventes non débutées<br> -->
-<!-- 		  	<input type="radio" name="rdoVentes" value="ventesTerminees">ventes terminées<br> -->
-<!-- 	  	</div> -->
-<!-- 		</div> -->
+		</div>
+		<div id="divAchats">
+			<input type="radio" name="rdoSelectAchatsVentes" value="ventes" name="rdoVentes">Ventes<br>
+		  	<input type="radio" name="rdoVentes" value="ventesEnCours">mes ventes en cours<br>
+		  	<input type="radio" name="rdoVentes" value="ventesNonDebutees">ventes non débutées<br>
+		  	<input type="radio" name="rdoVentes" value="ventesTerminees">ventes terminées<br>
+	  	</div>
+		</div>
 
 
 
 <!-- affichage de la liste des articles -->
 
 <%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectAllArticles();%>
+<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
 <%! String formatDate = "dd/mm/yyyy H:m"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
-
 <% if (listeArticles != null) {%>
 <%for (Article article : listeArticles) {%>
-<%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0")) && article.getNomArticle().contains((CharSequence)request.getAttribute("search"))){%>
+<%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
 		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>

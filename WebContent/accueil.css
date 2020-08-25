@@ -50,7 +50,7 @@ a:hover {
 }
 
 form {
-	width: 320px;
+	width: 400px;
 	background-color: WhiteSmoke;
 	border : none;
 	border-radius: 10px;
@@ -59,7 +59,7 @@ form {
 }
 
 .article {
-	width: 320px;
+	width: 400px;
 	background-color: WhiteSmoke;
 	border : 2px solid rgb(19, 74, 128);
 	border-radius: 10px;
