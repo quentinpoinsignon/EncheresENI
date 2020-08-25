@@ -32,10 +32,14 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("rechercher");
+		
 		if(("rechercher").equals(action)) {
 			String categorie = request.getParameter("selectedCategorie");
+			String search = request.getParameter("search");
 			request.setAttribute("selectedCategorie", categorie);
+			request.setAttribute("search", search);
 		}
+		
 		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
 

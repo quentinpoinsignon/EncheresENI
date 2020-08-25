@@ -36,7 +36,7 @@
 <form action="${pageContext.request.contextPath}/accueilConnecte" method="get">
 	<h2>Liste des enchères</h2>
 	<label for="txtSearch">Filtres : </label>
-	<input type="search" name="txtSearch" id="txtSearch"><br><br>
+	<input type="search" name="search" id="txtSearch"><br><br>
 </form>
 
 <!-- affichage de la liste des catégories -->
@@ -81,12 +81,13 @@
 <!-- affichage de la liste des articles -->
 
 <%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
+<%! List<Article> listeArticles = aMger.selectAllArticles();%>
 <%! String formatDate = "dd/mm/yyyy H:m"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
+
 <% if (listeArticles != null) {%>
 <%for (Article article : listeArticles) {%>
-<%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
+<%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0")) && article.getNomArticle().contains((CharSequence)request.getAttribute("search"))){%>
 		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
