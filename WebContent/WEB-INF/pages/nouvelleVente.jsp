@@ -52,26 +52,26 @@
 		
 			
 		<label for="dateDebut">Début de l'enchère</label>
-		<input type="datetime-local" id="dateDebut" name="dateDebut" value='${dateDebut}'><br><br>
+		<input type="date" id="dateDebut" name="dateDebut" value='${dateDebut}'><br><br>
 		
 		<label for="dateFin">Fin de l'enchère</label>
-		<input type="datetime-local" id="dateFin" name="dateFin" value='${dateFin}'><br><br>
+		<input type="date" id="dateFin" name="dateFin" value='${dateFin}'><br><br>
 	
 		
 		
 		<fieldset>
   			<legend > Retrait </legend>
   			<label for="rue">Rue:</label>
-			<input class="input" name="rue" id="rue" type="text" value='${rue}' size="30" required><br>
+			<input class="input" name="rue" id="rue" type="text" value='${rue}' size="30"><br>
 			<label for="codepostal">Code postal:</label>
-			<input class="input" name="codepostal" id="codepostal" type="text" value='${codepostal}' size="30" required><br>
+			<input class="input" name="codepostal" id="codepostal" type="text" value='${codepostal}' size="30"><br>
 			<label for="ville">Ville:</label>
-			<input class="input" name="ville" id="ville" type="text" value='${ville}' size="30" required>
+			<input class="input" name="ville" id="ville" type="text" value='${ville}' size="30">
 		</fieldset><br><br>
 		
 		<div class="boutons">
 		<button type= "submit" name="enregistrer" id="enregistrer" value="1">Enregistrer</button>
-        <a href="accueil"> <input type="button" name="Annuler" value="Annuler"> </a>
+        <a href="accueilConnecte"> <input type="button" name="Annuler" value="Annuler"> </a>
 		</div>
       	
 	

@@ -37,20 +37,5 @@ public class ihmUtils {
 		else return null;
 	}
 	
-	/**
-	 * @author qpoinsig2020
-	 * @param listeCategories
-	 * @param noCategorie
-	 * @return
-	 * @commentaire méthode pour retourner un objet categorie by id
-	 */
-	public static Categorie returnCategorieById (List<Categorie> listeCategories, int noCategorie) {
-		Categorie selectedCategorie = null;
-		for (Categorie categorie : listeCategories) {
-			if(categorie.getNoCategorie() == noCategorie) {
-				selectedCategorie = categorie;
-			}
-		}
-		return selectedCategorie;
-	}
+
 }
