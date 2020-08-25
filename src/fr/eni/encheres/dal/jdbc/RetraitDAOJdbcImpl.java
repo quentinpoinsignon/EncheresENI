@@ -10,9 +10,9 @@ import fr.eni.encheres.dal.interfaces.RetraitDAO;
  * 
  * @author jarrigon2020
  * 
- * @Commentaire Cette classe contient l'int�gralit� des m�thodes permettant
- *              d'utiliser des requ�tes SQL concernant la table RETRAITS dans la
- *              base de donn�es
+ * @Commentaire Cette classe contient l'int�gralit� des m�thodes
+ *              permettant d'utiliser des requ�tes SQL concernant la table
+ *              RETRAITS dans la base de donn�es
  *
  */
 
@@ -31,13 +31,14 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param newArticle -> Objet de type Article qui va nous permettre de r�cup�rer
-	 *                   les informations li�es au point de retrait de l'article
+	 * @param newArticle -> Objet de type Article qui va nous permettre de
+	 *                   r�cup�rer les informations li�es au point de retrait
+	 *                   de l'article
 	 * @throws Exception
 	 * 
 	 * @Commentaire Cette fonction permet d'enregistrer un nouveau point de retrait
-	 *              dans la base de donn�es. Elle est appel�e au sein de la m�thode
-	 *              insertNewArticle dans la classe ArticleDAOJdbcImpl
+	 *              dans la base de donn�es. Elle est appel�e au sein de la
+	 *              m�thode insertNewArticle dans la classe ArticleDAOJdbcImpl
 	 * 
 	 */
 	@Override
@@ -53,8 +54,8 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 			preparedStatement.setInt(1, noArticle);
 			preparedStatement.setString(2, streetRetrait);
-			preparedStatement.setString(3, townRetrait);
-			preparedStatement.setString(4, postalCodeRetrait);
+			preparedStatement.setString(3, postalCodeRetrait);
+			preparedStatement.setString(4, townRetrait);
 
 			preparedStatement.executeUpdate();
 

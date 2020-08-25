@@ -243,25 +243,20 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			preparedStatement.setInt(9, newArticle.getVenteEffectuee());
 
 			int nombreLigne = preparedStatement.executeUpdate();
-			if(nombreLigne == 1) {
-				System.out.println("dans le if nombre ligne ==1");
-				 generatedKey = preparedStatement.getGeneratedKeys();
-				 if(generatedKey.next() ) {
-					 idArticle = generatedKey.getInt(1);
-				 }
+
+			if (nombreLigne == 1) {
+
+				generatedKey = preparedStatement.getGeneratedKeys();
+				if (generatedKey.next()) {
+					idArticle = generatedKey.getInt(1);
+				}
 			}
-			
-			
-			
-			System.out.println("idarticle : " + idArticle);
 
-				
-				// On appelle une fonction permettant d'enregistrer les
-				// informations li�es aux point de retrait de l'article dans la table RETRAITS
+			// On appelle une fonction permettant d'enregistrer les
+			// informations li�es aux point de retrait de l'article dans la table RETRAITS
 
-				RetraitDAO DAORetrait = DAOFactory.getRetraitDAO();
-				DAORetrait.insertWithdrawalPoint(idArticle, streetRetrait, townRetrait, postalCodeRetrait);
-				System.out.println("fin de la fonction");
+			RetraitDAO DAORetrait = DAOFactory.getRetraitDAO();
+			DAORetrait.insertWithdrawalPoint(idArticle, streetRetrait, townRetrait, postalCodeRetrait);
 
 		}
 

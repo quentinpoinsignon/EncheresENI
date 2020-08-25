@@ -59,11 +59,35 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param research    -> Chaine de caractères correspondant au texte rentré dans
-	 *                    le champs de recherche de la page accueil par
-	 *                    l'utilisateur
+	 * @param research        -> Chaine de caractères correspondant au texte rentré
+	 *                        dans le champs de recherche de la page accueil par
+	 *                        l'utilisateur
 	 * 
-	 * @param idCategorie -> Identifiant de la categorie sélectionné
+	 * @param idCategorie     -> Identifiant de la categorie sélectionnée
+	 * 
+	 * @param shoppingChecked -> Boolean permettant de savoir si le bouton radio
+	 *                        achat est sélectionné
+	 * 
+	 * @param openAuction     -> Boolean permettant de savoir si la checkbox enchere
+	 *                        en cour achat est sélectionnée
+	 * 
+	 * @param winAuction      -> Boolean permettant de savoir si la checkbox
+	 *                        encheres remportées est sélectionnée
+	 * 
+	 * @param myAuction       -> Boolean permettant de savoir si la checkbox mes
+	 *                        enchères est sélectionnée
+	 * 
+	 * @param mySales         -> Boolean permettant de savoir si le bouton radio mes
+	 *                        ventes est sélectionné
+	 * 
+	 * @param myCurrentSales  -> Boolean permettant de savoir si la checkbox mes
+	 *                        ventes en cours est sélectionnée
+	 * 
+	 * @param notSartedSales  -> Boolean permettant de savoir si la checkbox ventes
+	 *                        non débutées est sélectionnée
+	 * 
+	 * @param endedSales      -> Boolean permettant de savoir si la checkbox ventes
+	 *                        terminées est sélectionnée
 	 * 
 	 * @return searchResult -> Objet de type ArrayList contenant des objets de type
 	 *         Enchere
@@ -71,15 +95,18 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * @Commentaire Cette méthode permet d'effectuer une recherche dans la base de
 	 *              données de récupérer des encheres par rapport à la chaine de
 	 *              caractère rentrée par un utilisateur dans le champs "Recherche"
-	 *              et le selecteur de categories de la page d'accueil.
+	 *              et le selecteur de categories de la page d'accueil. Nous
+	 *              prendronss également en compte les boutons radios et les
+	 *              checkbox sélectionnées par l'utilisateur
 	 * 
 	 */
 	@Override
-	public List<Enchere> articleSearchByUserRequest(String research, int idCategorie, Boolean openAuction,
-			Boolean winAuction, Boolean myAuction) throws Exception {
+	public List<Enchere> articleSearchByUserRequest(String research, int idCategorie, Boolean shoppingChecked,
+			Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean mySales, Boolean myCurrentSales,
+			Boolean notSartedSales, Boolean endedSales) throws Exception {
 
 		ResultSet myResultset = null;
-		String SQLRequest = ARTICLE_SEARCH_BY_USER_REQUEST;
+		String SQLRequest = null;
 
 		Enchere enchere = null;
 		Utilisateur sellerUser = null;
@@ -91,24 +118,44 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 		/**
 		 * Nous allons vérifier les champs cochés par l'utilisateur grâce à des booleens
-		 * et adapté la requête SQL en fonction
+		 * et adapter la requête SQL en fonction
 		 */
+		if (shoppingChecked) { // Si le bouton radio achats est selectionné
 
-		if (openAuction && !myAuction && !winAuction) { // OK / NotOK / NotOk
+			if (openAuction && !myAuction && !winAuction) { // OK / NotOK / NotOk
 
-			SQLRequest = "";
-		} else if (!openAuction && myAuction && !winAuction) { // NotOK / OK / NotOk
+				SQLRequest = "";
+			} else if (!openAuction && myAuction && !winAuction) { // NotOK / OK / NotOk
 
-			SQLRequest = "";
-		} else if (!openAuction && !myAuction && winAuction) { // NotOK /NotOK / OK
+				SQLRequest = "";
+			} else if (!openAuction && !myAuction && winAuction) { // NotOK /NotOK / OK
 
-			SQLRequest = "";
-		} else if (openAuction && myAuction && !winAuction) { // OK / OK / NotOk
-			SQLRequest = "";
-		} else if (openAuction && !myAuction && winAuction) { // OK / NotOK / Ok
-			SQLRequest = "";
-		} else if (!openAuction && myAuction && winAuction) { // NotOK / OK / Ok
-			SQLRequest = "";
+				SQLRequest = "";
+			} else if (openAuction && myAuction && !winAuction) { // OK / OK / NotOk
+				SQLRequest = "";
+			} else if (openAuction && !myAuction && winAuction) { // OK / NotOK / Ok
+				SQLRequest = "";
+			} else if (!openAuction && myAuction && winAuction) { // NotOK / OK / Ok
+				SQLRequest = "";
+			}
+		} else if (mySales) { // Si le boutons mes ventes est selectionné
+
+			if (myCurrentSales && !notSartedSales && !endedSales) { // OK / NotOK / NotOk
+				SQLRequest = "";
+			} else if (!myCurrentSales && notSartedSales && !endedSales) { // NotOK / OK / NotOk
+				SQLRequest = "";
+			} else if (!myCurrentSales && !notSartedSales && endedSales) { // NotOK /NotOK / OK
+				SQLRequest = "";
+			} else if (myCurrentSales && notSartedSales && !endedSales) { // OK / OK / NotOk
+				SQLRequest = "";
+			} else if (myCurrentSales && !notSartedSales && endedSales) { // OK / NotOK / Ok
+				SQLRequest = "";
+			} else if (!myCurrentSales && notSartedSales && endedSales) { // NotOK / OK / Ok
+				SQLRequest = "";
+			}
+
+		} else {
+			SQLRequest = ARTICLE_SEARCH_BY_USER_REQUEST;
 		}
 
 		try (Connection databaseConnection = JdbcTools.getConnection();
