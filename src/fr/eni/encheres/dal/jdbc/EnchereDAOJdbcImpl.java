@@ -75,9 +75,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * 
 	 */
 	@Override
-	public List<Enchere> articleSearchByUserRequest(String research, int idCategorie) throws Exception {
+	public List<Enchere> articleSearchByUserRequest(String research, int idCategorie, Boolean openAuction,
+			Boolean winAuction, Boolean myAuction) throws Exception {
 
 		ResultSet myResultset = null;
+		String SQLRequest = ARTICLE_SEARCH_BY_USER_REQUEST;
 
 		Enchere enchere = null;
 		Utilisateur sellerUser = null;
@@ -87,9 +89,30 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 		List<Enchere> searchResult = new ArrayList<Enchere>();
 
+		/**
+		 * Nous allons vérifier les champs cochés par l'utilisateur grâce à des booleens
+		 * et adapté la requête SQL en fonction
+		 */
+
+		if (openAuction && !myAuction && !winAuction) { // OK / NotOK / NotOk
+
+			SQLRequest = "";
+		} else if (!openAuction && myAuction && !winAuction) { // NotOK / OK / NotOk
+
+			SQLRequest = "";
+		} else if (!openAuction && !myAuction && winAuction) { // NotOK /NotOK / OK
+
+			SQLRequest = "";
+		} else if (openAuction && myAuction && !winAuction) { // OK / OK / NotOk
+			SQLRequest = "";
+		} else if (openAuction && !myAuction && winAuction) { // OK / NotOK / Ok
+			SQLRequest = "";
+		} else if (!openAuction && myAuction && winAuction) { // NotOK / OK / Ok
+			SQLRequest = "";
+		}
+
 		try (Connection databaseConnection = JdbcTools.getConnection();
-				PreparedStatement preparedStatement = databaseConnection
-						.prepareStatement(ARTICLE_SEARCH_BY_USER_REQUEST)) {
+				PreparedStatement preparedStatement = databaseConnection.prepareStatement(SQLRequest)) {
 
 			preparedStatement.setString(1, research);
 			preparedStatement.setString(2, research);

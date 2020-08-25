@@ -6,6 +6,7 @@ import fr.eni.encheres.bo.Enchere;
 
 public interface EnchereDAO {
 
-	List<Enchere> articleSearchByUserRequest(String research, int idCategorie) throws Exception;
+	List<Enchere> articleSearchByUserRequest(String research, int idCategorie, Boolean openAuction, Boolean WinAuction,
+			Boolean myAuction) throws Exception;
 
 }
