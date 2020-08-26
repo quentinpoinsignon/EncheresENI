@@ -20,6 +20,8 @@
 </head>
 <body>
 <div class="divPage">
+<div></div>
+<div class="headerAndForm">
 <header>
 <img src="${pageContext.request.contextPath}/resources/logo-eni.png" alt="logo-eni">
 	<h1>ENI-Enchères</h1>
@@ -33,8 +35,6 @@
 	</div>
  
 </header>
-
-
 
 
 <!-- affichage de la liste des catégories -->
@@ -57,20 +57,16 @@
 	</select><br><br>
 	<button type= "submit" name="rechercher" id="btnRechercher" value="rechercher">Rechercher</button><br><br>
 
-	
-
-<!-- EN CHANTIER : affichage conditionnel du menu radio + checkboxes Achats ou Ventes -->
-<%-- <% String rdoAchatsVentes = (String)request.getAttribute("rdoAchatsVentes");%> --%>
 
 
 		<div class="menuRadio">
-			<div id="divAchats">
+			<div id="divAV">
 			<p>Achats : </p>
 		  	<input type="radio" name="rdoAV" value="encheresOuvertes">enchères ouvertes<br>
 		  	<input type="radio" name="rdoAV" value="mesEncheres">mes enchères<br>
 		  	<input type="radio" name="rdoAV" value="encheresRemportees">mes enchères remportées<br>
 		  	</div>
-		  	<div id="divVentes">
+		  	<div id="divAV">
 			<p>Ventes : </p>
 		  	<input type="radio" name="rdoAV" value="ventesEnCours">mes ventes en cours<br>
 		  	<input type="radio" name="rdoAV" value="ventesNonDebutees">ventes non débutées<br>
@@ -78,8 +74,8 @@
 		  	</div>
 		</div>
 </form>
-
-
+</div>	
+<div></div>
 <!-- affichage de la liste des articles -->
 
 
@@ -87,6 +83,7 @@
 <%! String formatDate = "dd/mm/yyyy H:m"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeEncheres != null) {%>
+<div class="articleContainer">
 <%for (Article article : listeEncheres) {%>
 <%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
 		<div class="article">
@@ -98,7 +95,7 @@
 		<%}%>
 		 <%}%>
 <%}%>
-
+</div>
 </div>
 </body>
 </html>

@@ -58,6 +58,13 @@ form {
 	padding : 10px 10px 20px 20px;
 }
 
+.articleContainer {
+	display: grid;
+	grid-template-columns: auto auto auto;
+	text-align: center;
+}
+
+
 .article {
 	width: 400px;
 	background-color: WhiteSmoke;

@@ -55,6 +55,7 @@
 <%! String formatDate = "dd/mm/yyyy H:m"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
 <% if (listeEncheres != null) {%>
+<div class="articleContainer">
 <%for (Article article : listeEncheres) {%>
 <%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
 		<div class="article">
@@ -66,7 +67,7 @@
 		<%}%>
 		 <%}%>
 <%}%>
-
+</div>
 </div>
 </body>
 </html>
