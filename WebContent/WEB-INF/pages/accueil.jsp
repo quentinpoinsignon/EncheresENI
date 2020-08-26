@@ -20,6 +20,8 @@
 </head>
 <body>
 <div class="divPage">
+<div></div>
+<div class="headerAndForm">
 <header>
 	<img src="${pageContext.request.contextPath}/resources/logo-eni.png" alt="logo-eni">
 	<h1>ENI-Enchères</h1>
@@ -47,7 +49,8 @@
 	</select><br><br>
 	<button type= "submit" name="rechercher" id="btnRechercher" value="rechercher">Rechercher</button><br><br>
 </form>
-
+</div>
+<div></div>
 <!-- affichage de la liste des articles -->
 
 

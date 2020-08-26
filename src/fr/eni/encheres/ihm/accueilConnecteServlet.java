@@ -29,11 +29,21 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		//affichage par défaut lors de l'arrivée sur la page
+		Boolean myCurrentSales = true;
+		Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
+		List<Article> listeEncheres = eMger.userSearchEncheres("", connectedUser.getPseudo(), 0,
+				false, false, false, myCurrentSales, false, false);
+		request.setAttribute("listeEncheres", listeEncheres);
+		request.setAttribute("myCurrentSales", true);
+		
+		//déconnexion 
 		String action = request.getParameter("action");
 		if (("deconnexion").equals(action)) {
 			request.getSession().removeAttribute("connectedUser");
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-		} else {
+		}
+		else {
 			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 		}
 	}

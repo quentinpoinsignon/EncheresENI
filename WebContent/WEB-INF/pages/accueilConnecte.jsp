@@ -62,15 +62,15 @@
 		<div class="menuRadio">
 			<div id="divAV">
 			<p>Achats : </p>
-		  	<input type="radio" name="rdoAV" value="encheresOuvertes">enchères ouvertes<br>
-		  	<input type="radio" name="rdoAV" value="mesEncheres">mes enchères<br>
-		  	<input type="radio" name="rdoAV" value="encheresRemportees">mes enchères remportées<br>
+		  	<input type="radio" name="rdoAV" value="encheresOuvertes" ${openAuction?'checked':''}>enchères ouvertes<br>
+		  	<input type="radio" name="rdoAV" value="mesEncheres" ${myAuction?'checked':''}>mes enchères<br>
+		  	<input type="radio" name="rdoAV" value="encheresRemportees" ${winAuction?'checked':''}>mes enchères remportées<br>
 		  	</div>
 		  	<div id="divAV">
 			<p>Ventes : </p>
-		  	<input type="radio" name="rdoAV" value="ventesEnCours">mes ventes en cours<br>
-		  	<input type="radio" name="rdoAV" value="ventesNonDebutees">ventes non débutées<br>
-		  	<input type="radio" name="rdoAV" value="ventesTerminees">ventes terminées<br>
+		  	<input type="radio" name="rdoAV" value="ventesEnCours" ${myCurrentSales?'checked':''}>mes ventes en cours<br>
+		  	<input type="radio" name="rdoAV" value="ventesNonDebutees" ${notSartedSales?'checked':''}>ventes non débutées<br>
+		  	<input type="radio" name="rdoAV" value="ventesTerminees" ${endedSales?'checked':''}>ventes terminées<br>
 		  	</div>
 		</div>
 </form>
