@@ -6,6 +6,7 @@
 <%@page import="fr.eni.encheres.bll.ArticleManager"%>
 <%@page import="fr.eni.encheres.bo.Utilisateur"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
+<%@page import="fr.eni.encheres.bo.Enchere"%>
 <%@page import="fr.eni.encheres.bo.Categorie"%>
 <%@page import="fr.eni.encheres.bll.CategorieManager"%>
 <%@page import="javax.servlet.http.HttpSession"%>
@@ -81,12 +82,12 @@
 
 <!-- affichage de la liste des articles -->
 
-<%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
+
+<% List<Article> listeEncheres = (List<Article>)request.getAttribute("listeEncheres");%>
 <%! String formatDate = "dd/mm/yyyy H:m"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
-<% if (listeArticles != null) {%>
-<%for (Article article : listeArticles) {%>
+<% if (listeEncheres != null) {%>
+<%for (Article article : listeEncheres) {%>
 <%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
 		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>

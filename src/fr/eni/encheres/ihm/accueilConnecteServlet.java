@@ -54,7 +54,7 @@ public class accueilConnecteServlet extends HttpServlet {
 			Boolean myCurrentSales = false;
 			Boolean notSartedSales = false;
 			Boolean endedSales = false;
-			String rdoAV = request.getParameter("rdoAV");
+			String rdoAV = (request.getParameter("rdoAV")==null?"":request.getParameter("rdoAV"));
 
 			switch (rdoAV) {
 			case "encheresOuvertes":
