@@ -93,7 +93,7 @@
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
 			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
-			<p>Vendeur : <%=article.getUtilisateur().getPseudo()%></p><br>
+			<p>Vendeur : <a href='${pageContext.request.contextPath}/profil?user=<%=article.getUtilisateur().getPseudo()%>'><%=article.getUtilisateur().getPseudo()%></a></p><br>
 		</div>
 		<%}%>
 		 <%}%>
