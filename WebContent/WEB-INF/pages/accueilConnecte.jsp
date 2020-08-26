@@ -61,19 +61,18 @@
 
 
 		<div class="menuRadio">
-		<div id="divVentes">
-			<input type="radio" name="rdoSelectAchatsVentes" value="achats" name="rdoAchats">Achats<br>
-		  	<input type="radio" name="rdoAchats" value="encheresOuvertes" checked="checked">enchères ouvertes<br>
-		  	<input type="radio" name="rdoAchats" value="mesEncheres">mes enchères<br>
-		  	<input type="radio" name="rdoAchats" value="encheresRemportees">mes enchères remportées<br>
-		
-		</div>
-		<div id="divAchats">
-			<input type="radio" name="rdoSelectAchatsVentes" value="ventes" name="rdoVentes">Ventes<br>
-		  	<input type="radio" name="rdoVentes" value="ventesEnCours">mes ventes en cours<br>
-		  	<input type="radio" name="rdoVentes" value="ventesNonDebutees">ventes non débutées<br>
-		  	<input type="radio" name="rdoVentes" value="ventesTerminees">ventes terminées<br>
-	  	</div>
+			<div id="divAchats">
+			<p>Achats : </p>
+		  	<input type="radio" name="rdoAV" value="encheresOuvertes">enchères ouvertes<br>
+		  	<input type="radio" name="rdoAV" value="mesEncheres">mes enchères<br>
+		  	<input type="radio" name="rdoAV" value="encheresRemportees">mes enchères remportées<br>
+		  	</div>
+		  	<div id="divVentes">
+			<p>Ventes : </p>
+		  	<input type="radio" name="rdoAV" value="ventesEnCours">mes ventes en cours<br>
+		  	<input type="radio" name="rdoAV" value="ventesNonDebutees">ventes non débutées<br>
+		  	<input type="radio" name="rdoAV" value="ventesTerminees">ventes terminées<br>
+		  	</div>
 		</div>
 
 

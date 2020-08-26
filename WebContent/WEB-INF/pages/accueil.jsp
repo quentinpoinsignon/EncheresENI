@@ -33,7 +33,7 @@
 <form action="${pageContext.request.contextPath}/accueil">
 	<h2>Liste des enchères</h2>
 	<label for="txtSearch">Filtres : </label>
-	<input type="search" name="txtSearch" id="txtSearch"><br><br>
+	<input type="search" name="txtSearch" id="txtSearch" placeholder="Le nom de l'article contient"><br><br>
 	
 	
 

@@ -13,7 +13,7 @@ html {
 	left: 50px;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], [type=search] {
 	width: 300px;
 	padding: 6px 10px;
 	margin: 5px 0px;
@@ -66,6 +66,8 @@ form {
 	margin: 0px Opx;
 	padding : 10px 10px 20px 20px;
 }
+
+
 
 
 
