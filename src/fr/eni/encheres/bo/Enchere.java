@@ -18,6 +18,14 @@ public class Enchere {
 		this.vendeur = vendeur;
 	}
 
+	public Enchere(Date dateEnchere, int montantEnchere, Utilisateur acheteur, Utilisateur vendeur) {
+
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
+		this.acheteur = acheteur;
+		this.vendeur = vendeur;
+	}
+
 	public int getNoEnchere() {
 		return noEnchere;
 	}
@@ -58,11 +66,11 @@ public class Enchere {
 		this.article = article;
 	}
 
-	public Utilisateur getUtilisateur() {
+	public Utilisateur getAcheteur() {
 		return acheteur;
 	}
 
-	public void setUtilisateur(Utilisateur acheteur) {
+	public void setAcheteur(Utilisateur acheteur) {
 		this.acheteur = acheteur;
 	}
 

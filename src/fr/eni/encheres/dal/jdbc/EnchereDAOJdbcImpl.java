@@ -98,7 +98,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 */
 
 	private final String ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION = "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,utl2.pseudo as vendeur, ench.montant_enchere,ench.date_enchere\n"
-			+ "FROM ENCHERES ench \n" + "INNER JOIN ARTICLES_VENDUS artvd ON ench.no_article = artvd.no_article\n"
+			+ "FROM ARTICLES_VENDUS artvd \n" + "INNER JOIN ENCHERES ench  ON ench.no_article = artvd.no_article\n"
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
@@ -116,25 +116,25 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * 
 	 * @value "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle,
 	 *        nom_article, description, prix_initial, prix_vente,utl2.pseudo as
-	 *        vendeur, ench.montant_enchere, MAX(ench.date_enchere)\n" + "FROM
-	 *        ENCHERES ench \n" + "INNER JOIN ARTICLES_VENDUS artvd ON
-	 *        ench.no_article = artvd.no_article\n" + "INNER JOIN UTILISATEURS utl2
-	 *        ON utl2.no_utilisateur = artvd.no_utilisateur\n" + "INNER JOIN
-	 *        UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n" +
-	 *        "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
-	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE TRIM('%?%') AND
-	 *        vente_effectuee = 1 AND utl.pseudo = '?'\n" + "GROUP BY
-	 *        utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article, description,
-	 *        prix_initial, prix_vente,utl2.pseudo, ench.montant_enchere,
-	 *        ench.date_enchere,artvd.date_fin_encheres \n" + "ORDER BY
-	 *        artvd.date_fin_encheres ASC";
+	 *        vendeur, ench.montant_enchere, MAX(ench.date_enchere) as
+	 *        dateEnchere\n" + "FROM ARTICLES_VENDUS artvd\n" + "INNER JOIN ENCHERES
+	 *        ench ON ench.no_article = artvd.no_article\n" + "INNER JOIN
+	 *        UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n" +
+	 *        "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur =
+	 *        ench.no_utilisateur\n" + "INNER JOIN CATEGORIES ctgr ON
+	 *        ctgr.no_categorie = artvd.no_categorie\n" + "WHERE nom_article LIKE
+	 *        TRIM('%%') AND vente_effectuee = 0 AND utl.pseudo = 'Jeanjean'\n" +
+	 *        "GROUP BY utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article,
+	 *        description, prix_initial, prix_vente,utl2.pseudo,
+	 *        ench.montant_enchere, ench.date_enchere,artvd.date_fin_encheres \n" +
+	 *        "ORDER BY artvd.date_fin_encheres ASC";
 	 */
-	private final String ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION = "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle, nom_article, description, prix_initial, prix_vente,utl2.pseudo as vendeur, ench.montant_enchere, MAX(ench.date_enchere)\n"
-			+ "FROM ENCHERES ench \n" + "INNER JOIN ARTICLES_VENDUS artvd ON ench.no_article = artvd.no_article\n"
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION = "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle, nom_article, description, prix_initial, prix_vente,utl2.pseudo as vendeur, ench.montant_enchere, MAX(ench.date_enchere) as dateEnchere\n"
+			+ "FROM  ARTICLES_VENDUS artvd\n" + "INNER JOIN ENCHERES ench ON ench.no_article = artvd.no_article\n"
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM('%?%')   AND vente_effectuee = 1 AND utl.pseudo = '?'\n"
+			+ "WHERE nom_article LIKE TRIM('%%') AND vente_effectuee = 0 AND utl.pseudo = 'Jeanjean'\n"
 			+ "GROUP BY utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article, description, prix_initial, prix_vente,utl2.pseudo, ench.montant_enchere, ench.date_enchere,artvd.date_fin_encheres \n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
@@ -263,9 +263,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 *              prendronss également en compte les boutons radios et les
 	 *              checkbox sélectionnées par l'utilisateur
 	 * 
+	 *              public static <T> T addTo(T e, Collection<T> c){ c.add(e);
+	 *              return e; }
 	 */
 	@Override
-	public List<Enchere> articleSearchByUserRequest(String research, String userPseudo, int idCategorie,
+	public List<Article> articleSearchByUserRequest(String research, String userPseudo, int idCategorie,
 			Boolean shoppingChecked, Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean mySales,
 			Boolean myCurrentSales, Boolean notSartedSales, Boolean endedSales) throws Exception {
 
@@ -278,7 +280,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		Article article = null;
 		Categorie categorie = null;
 
-		List<Enchere> searchResult = new ArrayList<Enchere>();
+		List<Article> searchResult = new ArrayList<Article>();
 
 		/**
 		 * Nous allons vérifier les champs cochés par l'utilisateur grâce à des booleens
@@ -286,95 +288,308 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		 */
 		if (shoppingChecked) { // Si le bouton radio achats est selectionné
 
-			if (openAuction && !myAuction && !winAuction) { // OK / NotOK / NotOk
+			/**
+			 * ENCHERES OUVERTES
+			 */
+			if (openAuction) {
 
 				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
 
 				preparedStatement.setString(1, research);
 
-			} else if (!openAuction && myAuction && !winAuction) { // NotOK / OK / NotOk
+				myResultset = preparedStatement.executeQuery();
+
+				while (myResultset.next()) {
+
+					// Objets Utilisateur
+
+					String seller = myResultset.getString(9); // VENDEUR
+					sellerUser = new Utilisateur(seller);
+
+					// Objet Categorie
+
+					int noCategorie = myResultset.getInt(1);
+					String libelleCategorie = myResultset.getString(2);
+
+					categorie = new Categorie(noCategorie, libelleCategorie);
+
+					// Objet Article
+
+					String articleName = myResultset.getString(3);
+					String description = myResultset.getString(4);
+					Date startOfAuction = myResultset.getDate(5);
+					Date endOfAuction = myResultset.getDate(6);
+					int initialPrice = myResultset.getInt(7);
+					int soldPrice = myResultset.getInt(8);
+
+					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
+							soldPrice, sellerUser, categorie);
+
+					searchResult.add(article);
+				}
+				/**
+				 * MES ENCHERES
+				 */
+
+			} else if (myAuction) {
 
 				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION);
 
 				preparedStatement.setString(1, research);
 				preparedStatement.setString(2, userPseudo);
 
-			} else if (!openAuction && !myAuction && winAuction) { // NotOK /NotOK / OK
+				myResultset = preparedStatement.executeQuery();
+
+				while (myResultset.next()) {
+
+					// Objets Utilisateur
+
+					String Buyer = myResultset.getString(1); // ACHETEUR
+					buyerUser = new Utilisateur(Buyer);
+
+					String seller = myResultset.getString(10); // VENDEUR
+					sellerUser = new Utilisateur(seller);
+
+					// Objet Categorie
+
+					int noCategorie = myResultset.getInt(2);
+					String libelleCategorie = myResultset.getString(3);
+
+					categorie = new Categorie(noCategorie, libelleCategorie);
+
+					// Objet Article
+
+					String articleName = myResultset.getString(4);
+					String description = myResultset.getString(5);
+					Date startOfAuction = myResultset.getDate(6);
+					Date endOfAuction = myResultset.getDate(7);
+					int initialPrice = myResultset.getInt(8);
+					int soldPrice = myResultset.getInt(9);
+
+					// Objet Enchere
+
+					Date auctionDate = myResultset.getDate(11);
+					int auctionAmount = myResultset.getInt(12);
+
+					enchere = new Enchere(auctionDate, auctionAmount, buyerUser, sellerUser);
+
+					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
+							soldPrice, sellerUser, categorie, enchere);
+
+					searchResult.add(article);
+				}
+				/**
+				 * ENCHERES REMPORTEES
+				 */
+			} else if (winAuction) {
 
 				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION);
 
 				preparedStatement.setString(1, research);
 				preparedStatement.setString(2, userPseudo);
 
+				myResultset = preparedStatement.executeQuery();
+
+				while (myResultset.next()) {
+
+					// Objets Utilisateur
+
+					String Buyer = myResultset.getString(1); // ACHETEUR
+					buyerUser = new Utilisateur(Buyer);
+
+					String seller = myResultset.getString(8); // VENDEUR
+					sellerUser = new Utilisateur(seller);
+
+					// Objet Categorie
+
+					int noCategorie = myResultset.getInt(2);
+					String libelleCategorie = myResultset.getString(3);
+
+					categorie = new Categorie(noCategorie, libelleCategorie);
+
+					// Objet Article
+
+					String articleName = myResultset.getString(4);
+					String description = myResultset.getString(5);
+					int initialPrice = myResultset.getInt(6);
+					int soldPrice = myResultset.getInt(7);
+
+					// Objet Enchere
+
+					int auctionAmount = myResultset.getInt(9);
+					Date auctionDate = myResultset.getDate(10);
+
+					enchere = new Enchere(auctionDate, auctionAmount, buyerUser, sellerUser);
+
+					article = new Article(articleName, description, initialPrice, soldPrice, sellerUser, categorie,
+							enchere);
+
+					searchResult.add(article);
+				}
+
 			}
 		} else if (mySales) { // Si le boutons mes ventes est selectionné
 
-			if (myCurrentSales && !notSartedSales && !endedSales) { // OK / NotOK / NotOk
+			/**
+			 * VENTE EN COURS
+			 */
+
+			if (myCurrentSales) {
 
 				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_CURRENT_SALES);
 
 				preparedStatement.setString(1, research);
 				preparedStatement.setString(2, userPseudo);
 
-			} else if (!myCurrentSales && notSartedSales && !endedSales) { // NotOK / OK / NotOk
+				myResultset = preparedStatement.executeQuery();
+
+				while (myResultset.next()) {
+
+					// Objets Utilisateur
+
+					String seller = myResultset.getString(1); // Vendeur
+					buyerUser = new Utilisateur(seller);
+
+					// Objet Categorie
+
+					int noCategorie = myResultset.getInt(2);
+					String libelleCategorie = myResultset.getString(3);
+
+					categorie = new Categorie(noCategorie, libelleCategorie);
+
+					// Objet Article
+
+					String articleName = myResultset.getString(4);
+					String description = myResultset.getString(5);
+					int initialPrice = myResultset.getInt(6);
+					int soldPrice = myResultset.getInt(7);
+					Date startOfAuction = myResultset.getDate(8);
+					Date endOfAuction = myResultset.getDate(9);
+
+					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
+							soldPrice, sellerUser, categorie);
+
+					searchResult.add(article);
+				}
+
+				/**
+				 * VENTES NON DEBUTES
+				 */
+
+			} else if (notSartedSales) {
 
 				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_NOT_STARTED_SALES);
 
 				preparedStatement.setString(1, research);
 				preparedStatement.setString(2, userPseudo);
 
-			} else if (!myCurrentSales && !notSartedSales && endedSales) { // NotOK /NotOK / OK
+				myResultset = preparedStatement.executeQuery();
+
+				while (myResultset.next()) {
+
+					// Objets Utilisateur
+
+					String seller = myResultset.getString(1); // Vendeur
+					buyerUser = new Utilisateur(seller);
+
+					// Objet Categorie
+
+					int noCategorie = myResultset.getInt(2);
+					String libelleCategorie = myResultset.getString(3);
+
+					categorie = new Categorie(noCategorie, libelleCategorie);
+
+					// Objet Article
+
+					String articleName = myResultset.getString(4);
+					String description = myResultset.getString(5);
+					int initialPrice = myResultset.getInt(6);
+					int soldPrice = myResultset.getInt(7);
+					Date startOfAuction = myResultset.getDate(8);
+					Date endOfAuction = myResultset.getDate(9);
+
+					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
+							soldPrice, sellerUser, categorie);
+
+					searchResult.add(article);
+				}
+
+				/**
+				 * VENTES TERMINEES
+				 */
+
+			} else if (endedSales) {
 
 				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES);
 
 				preparedStatement.setString(1, research);
 				preparedStatement.setString(2, userPseudo);
 
+				myResultset = preparedStatement.executeQuery();
+
+				while (myResultset.next()) {
+
+					// Objets Utilisateur
+
+					String seller = myResultset.getString(1); // Vendeur
+					buyerUser = new Utilisateur(seller);
+
+					// Objet Categorie
+
+					int noCategorie = myResultset.getInt(2);
+					String libelleCategorie = myResultset.getString(3);
+
+					categorie = new Categorie(noCategorie, libelleCategorie);
+
+					// Objet Article
+
+					String articleName = myResultset.getString(4);
+					String description = myResultset.getString(5);
+					int initialPrice = myResultset.getInt(6);
+					int soldPrice = myResultset.getInt(7);
+					Date startOfAuction = myResultset.getDate(8);
+					Date endOfAuction = myResultset.getDate(9);
+
+					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
+							soldPrice, sellerUser, categorie);
+
+					searchResult.add(article);
+				}
+
 			} else {
 				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION);
 				preparedStatement.setString(1, research);
-			}
 
-			myResultset = preparedStatement.executeQuery();
+				myResultset = preparedStatement.executeQuery();
 
-			while (myResultset.next()) {
+				while (myResultset.next()) {
 
-				// Objets Utilisateur
+					// Objets Utilisateur
 
-				String Buyer = myResultset.getString(1); // ACHETEUR
-				buyerUser = new Utilisateur(Buyer);
+					String seller = myResultset.getString(9); // VENDEUR
+					sellerUser = new Utilisateur(seller);
 
-				String seller = myResultset.getString(12); // VENDEUR
-				sellerUser = new Utilisateur(seller);
+					// Objet Categorie
 
-				// Objet Categorie
+					int noCategorie = myResultset.getInt(1);
+					String libelleCategorie = myResultset.getString(2);
 
-				int noCategorie = myResultset.getInt(2);
-				String libelleCategorie = myResultset.getString(3);
+					categorie = new Categorie(noCategorie, libelleCategorie);
 
-				categorie = new Categorie(noCategorie, libelleCategorie);
+					// Objet Article
 
-				// Objet Article
+					String articleName = myResultset.getString(3);
+					String description = myResultset.getString(4);
+					Date startOfAuction = myResultset.getDate(5);
+					Date endOfAuction = myResultset.getDate(6);
+					int initialPrice = myResultset.getInt(7);
+					int soldPrice = myResultset.getInt(8);
 
-				String articleName = myResultset.getString(4);
-				String description = myResultset.getString(5);
-				Date startOfAuction = myResultset.getDate(6);
-				Date endOfAuction = myResultset.getDate(7);
-				int initialPrice = myResultset.getInt(8);
-				int soldPrice = myResultset.getInt(9);
+					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
+							soldPrice, sellerUser, categorie);
 
-				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
-						sellerUser, categorie);
-
-				// Objet Enchere
-
-				Date auctionDate = myResultset.getDate(10);
-				int auctionAmount = myResultset.getInt(11);
-
-				enchere = new Enchere(auctionDate, auctionAmount, article, buyerUser, sellerUser);
-
-				searchResult.add(enchere);
-
+					searchResult.add(article);
+				}
 			}
 
 			myResultset.close();

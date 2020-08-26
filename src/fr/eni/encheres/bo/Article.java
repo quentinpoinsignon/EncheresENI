@@ -1,6 +1,5 @@
 package fr.eni.encheres.bo;
 
-
 import java.sql.Date;
 
 public class Article {
@@ -16,7 +15,7 @@ public class Article {
 	Categorie categorie;
 	int venteEffectuee;
 	Retrait pointDeRetrait;
-	
+	Enchere enchere;
 
 	public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial,
 			int prixVente, Utilisateur utilisateur, Categorie categorie, int venteEffectuee) {
@@ -43,7 +42,34 @@ public class Article {
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
 	}
-	
+
+	public Article(String nomArticle, String description, int prixInitial, int prixVente, Utilisateur vendeur,
+			Categorie categorie, Enchere enchere) {
+
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = vendeur;
+		this.categorie = categorie;
+		this.enchere = enchere;
+
+	}
+
+	public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial,
+			int prixVente, Utilisateur utilisateur, Categorie categorie, Enchere enchere) {
+
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+		this.enchere = enchere;
+	}
+
 	public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial,
 			int prixVente, Utilisateur utilisateur, Categorie categorie, Retrait pointDeRetrait) {
 		super();
@@ -57,7 +83,7 @@ public class Article {
 		this.categorie = categorie;
 		this.pointDeRetrait = pointDeRetrait;
 	}
-	
+
 	public int getNoArticle() {
 		return noArticle;
 	}
@@ -137,12 +163,11 @@ public class Article {
 	public void setVenteEffectuee(int venteEffectuee) {
 		this.venteEffectuee = venteEffectuee;
 	}
-	
-	
+
 	public Retrait getPointDeRetrait() {
 		return pointDeRetrait;
 	}
-	
+
 	public void setPointDeRetrait(Retrait pointDeRetrait) {
 		this.pointDeRetrait = pointDeRetrait;
 	}
