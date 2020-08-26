@@ -30,6 +30,20 @@ public class Article {
 		this.venteEffectuee = venteEffectuee;
 	}
 
+	public Article(int idArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
+			int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie) {
+
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+		this.noArticle = idArticle;
+	}
+
 	public Article(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial,
 			int prixVente, Utilisateur utilisateur, Categorie categorie) {
 
@@ -41,6 +55,36 @@ public class Article {
 		this.prixVente = prixVente;
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
+
+	}
+
+	public Article(int idArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
+			int prixInitial, int prixVente, Utilisateur utilisateur, Categorie categorie, Enchere enchere) {
+
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
+		this.noArticle = idArticle;
+		this.enchere = enchere;
+	}
+
+	public Article(int idArticle, String nomArticle, String description, int prixInitial, int prixVente,
+			Utilisateur vendeur, Categorie categorie, Enchere enchere) {
+
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.prixInitial = prixInitial;
+		this.prixVente = prixVente;
+		this.utilisateur = vendeur;
+		this.categorie = categorie;
+		this.enchere = enchere;
+		this.noArticle = idArticle;
+
 	}
 
 	public Article(String nomArticle, String description, int prixInitial, int prixVente, Utilisateur vendeur,
