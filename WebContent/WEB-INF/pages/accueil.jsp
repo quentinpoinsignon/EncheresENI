@@ -7,6 +7,7 @@
 <%@page import="fr.eni.encheres.bll.ArticleManager"%>
 <%@page import="fr.eni.encheres.bll.CategorieManager"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
+<%@page import="fr.eni.encheres.bo.Enchere"%>
 <%@page import="fr.eni.encheres.bo.Categorie"%>
 <%@page session="true"%>
 
@@ -29,17 +30,10 @@
 	</div>
 </header>
 
- 
-<form action="${pageContext.request.contextPath}/accueil">
-	<h2>Liste des enchères</h2>
-	<label for="txtSearch">Filtres : </label>
-	<input type="search" name="txtSearch" id="txtSearch" placeholder="Le nom de l'article contient"><br><br>
-	
-	
-
-</form>
-
 <!-- affichage de la liste des catégories -->
+<h2>Liste des enchères</h2>
+<label for="txtSearch">Filtres : </label>
+<input type="search" name="search" id="txtSearch" placeholder="Le nom de l'article contient"><br><br>
 <form action="${pageContext.request.contextPath}/accueil" method="post">
 <%! CategorieManager cMger = new CategorieManager();%>
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
@@ -56,18 +50,18 @@
 
 <!-- affichage de la liste des articles -->
 
-<%! ArticleManager aMger = new ArticleManager();%>
-<%! List<Article> listeArticles = aMger.selectTop3Articles();%>
-<%! String formatDate = "dd/mm/yyyy HH:mm"; %>
+
+<% List<Article> listeEncheres = (List<Article>)request.getAttribute("listeEncheres");%>
+<%! String formatDate = "dd/mm/yyyy H:m"; %>
 <%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
-<% if (listeArticles != null) {%>
-<%for (Article article : listeArticles) {%>
+<% if (listeEncheres != null) {%>
+<%for (Article article : listeEncheres) {%>
 <%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
 		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
-			<p>Fin de l'enchère : <%=article.getDateFinEncheres()%></p><br>
-			<p>Vendeur : <%=article.getUtilisateur().getPseudo()%></p><br>
+			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
+			<p>Vendeur : <a href="${pageContext.request.contextPath}/profil?user=<%=article.getUtilisateur().getPseudo()%>"><%=article.getUtilisateur().getPseudo()%></a></p><br>
 		</div>
 		<%}%>
 		 <%}%>

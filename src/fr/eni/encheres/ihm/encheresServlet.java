@@ -3,16 +3,14 @@ package fr.eni.encheres.ihm;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import fr.eni.encheres.bll.CategorieManager;
-import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bo.Article;
 
 
 /**
@@ -23,8 +21,16 @@ import fr.eni.encheres.bo.Categorie;
 @WebServlet({"/encheres", "/accueil"})
 public class encheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private EnchereManager eMger = new EnchereManager();
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("inthedoget");
+		//initialisation de la liste des articles
+		List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
+				false, false, false, false, false, false);
+		request.setAttribute("listeEncheres", listeEncheres);
+		
+		
 		//redirection avec boutons inscrire et connecter 
 		String action = request.getParameter("action");
 		if(action!=null) {
@@ -36,7 +42,6 @@ public class encheresServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
 				break;
 			default:
-				request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 				break;
 			}
 		}
@@ -46,8 +51,19 @@ public class encheresServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("rechercher");
 		if(("rechercher").equals(action)) {
+			String research = (request.getParameter("search")==null?"":request.getParameter("search"));
 			String categorie = request.getParameter("selectedCategorie");
+			int idCategorie = Integer.parseInt(categorie);
+			List<Article> listeEncheres = eMger.userSearchEncheres(research, "", idCategorie, false, false, false, false, false, false);
+			request.setAttribute("listeEncheres", listeEncheres);
 			request.setAttribute("selectedCategorie", categorie);
+			request.setAttribute("search", research);
+			
+		}
+		else {
+			List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
+					false, false, false, false, false, false);
+			request.setAttribute("listeEncheres", listeEncheres);
 		}
 		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 	}
