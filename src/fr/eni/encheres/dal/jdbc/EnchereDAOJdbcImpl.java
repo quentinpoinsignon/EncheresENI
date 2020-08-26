@@ -454,7 +454,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				// Objets Utilisateur
 
 				String seller = myResultset.getString(1); // Vendeur
-				buyerUser = new Utilisateur(seller);
+				sellerUser = new Utilisateur(seller);
 
 				// Objet Categorie
 
@@ -497,7 +497,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				// Objets Utilisateur
 
 				String seller = myResultset.getString(1); // Vendeur
-				buyerUser = new Utilisateur(seller);
+				sellerUser = new Utilisateur(seller);
 
 				// Objet Categorie
 
@@ -540,7 +540,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				// Objets Utilisateur
 
 				String seller = myResultset.getString(1); // Vendeur
-				buyerUser = new Utilisateur(seller);
+				sellerUser = new Utilisateur(seller);
 
 				// Objet Categorie
 
