@@ -42,11 +42,12 @@ public class accueilConnecteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// récupération des paramètres
 		String action = request.getParameter("rechercher");
+		String categorie = request.getParameter("selectedCategorie");
 		if (("rechercher").equals(action)) {
-			String research = request.getParameter("search");
+			String research = (request.getParameter("search")==null?"":request.getParameter("search"));
 			Utilisateur connectedUser = (Utilisateur) request.getSession().getAttribute("connectedUser");
 			String userPseudo = connectedUser.getPseudo();
-			int idCategorie = Integer.parseInt(request.getParameter("selectedCategorie"));
+			int idCategorie = Integer.parseInt(categorie);
 			Boolean openAuction = false;
 			Boolean myAuction = false;
 			Boolean winAuction = false;
@@ -69,7 +70,7 @@ public class accueilConnecteServlet extends HttpServlet {
 				myCurrentSales = true;
 				break;
 			case "ventesNonDebutees":
-				notSartedSales = true;
+				notSartedSales = true; 
 				break;
 			case "ventesTerminees":
 				endedSales = true;
@@ -83,7 +84,7 @@ public class accueilConnecteServlet extends HttpServlet {
 					openAuction, winAuction, myAuction, myCurrentSales, notSartedSales, endedSales);
 
 			request.setAttribute("listeEncheres", listeEncheres);
-			request.setAttribute("selectedCategorie", idCategorie);
+			request.setAttribute("selectedCategorie", categorie);
 			request.setAttribute("search", research);
 
 			// set des boutons radios

@@ -14,12 +14,12 @@ public class EnchereManager {
 	}
 
 	public List<Article> userSearchEncheres(String research, String userPseudo, int idCategorie,
-			Boolean shoppingChecked, Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean mySales,
-			Boolean myCurrentSales, Boolean notSartedSales, Boolean endedSales) {
+			Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean myCurrentSales, Boolean notSartedSales,
+			Boolean endedSales) {
 		List<Article> listeEncheres = null;
 		try {
-			listeEncheres = eDAO.articleSearchByUserRequest(research, userPseudo, idCategorie, shoppingChecked,
-					openAuction, winAuction, myAuction, mySales, myCurrentSales, notSartedSales, endedSales);
+			listeEncheres = eDAO.articleSearchByUserRequest(research, userPseudo,idCategorie,
+					openAuction, winAuction, myAuction, myCurrentSales, notSartedSales, endedSales);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

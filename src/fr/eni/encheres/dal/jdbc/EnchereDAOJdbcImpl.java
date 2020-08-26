@@ -18,8 +18,8 @@ import fr.eni.encheres.dal.interfaces.EnchereDAO;
  * 
  * @author jarrigon2020
  * 
- * @Commentaire Cette classe contient les différentes méthodes permettant de
- *              réaliser les requête sql concernant les enchères effectuées sur
+ * @Commentaire Cette classe contient les diffï¿½rentes mï¿½thodes permettant de
+ *              rï¿½aliser les requï¿½te sql concernant les enchï¿½res effectuï¿½es sur
  *              l'application
  *
  */
@@ -27,11 +27,11 @@ import fr.eni.encheres.dal.interfaces.EnchereDAO;
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	/**
-	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST -> Chaine de caractères contenant
-	 *            une requête SQL effectuant une recherche dans la table enchere
-	 *            permettant de récupérer une liste d'encheres correspondant à ce
-	 *            que l'utilisateur a rentré dans le champs de recherche ainsi que
-	 *            la catégorie qu'il a sélectionné
+	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST -> Chaine de caractï¿½res contenant
+	 *            une requï¿½te SQL effectuant une recherche dans la table enchere
+	 *            permettant de rï¿½cupï¿½rer une liste d'encheres correspondant ï¿½ ce
+	 *            que l'utilisateur a rentrï¿½ dans le champs de recherche ainsi que
+	 *            la catï¿½gorie qu'il a sï¿½lectionnï¿½
 	 * 
 	 * @value "SELECT ctgr.no_categorie, ctgr.libelle, nom_article,
 	 *        description,date_debut_encheres,date_fin_encheres, prix_initial,
@@ -45,16 +45,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "FROM ARTICLES_VENDUS artvd \n"
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM('%?%')  \n" + "ORDER BY artvd.date_fin_encheres ASC;";
+			+ "WHERE nom_article LIKE TRIM('%?%') \n" + "ORDER BY artvd.date_fin_encheres ASC;";
 
 	/**
 	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION -> Chaine de
-	 *            caractères contenant une requête SQL effectuant une recherche dans
-	 *            la table ARTICLE_VENDUS permettant de récupérer une liste
-	 *            d'encheres correspondant à ce que l'utilisateur a rentré dans le
-	 *            champs de recherche, la catégorie qu'il a sélectionné, si le
-	 *            bouton radio achat est sélectionné et que seule la checkbox
-	 *            encheres ouvertes est cochée
+	 *            caractï¿½res contenant une requï¿½te SQL effectuant une recherche dans
+	 *            la table ARTICLE_VENDUS permettant de rï¿½cupï¿½rer une liste
+	 *            d'encheres correspondant ï¿½ ce que l'utilisateur a rentrï¿½ dans le
+	 *            champs de recherche, la catï¿½gorie qu'il a sï¿½lectionnï¿½, si le
+	 *            bouton radio achat est sï¿½lectionnï¿½ et que seule la checkbox
+	 *            encheres ouvertes est cochï¿½e
 	 * 
 	 * @Value "SELECT ctgr.no_categorie, ctgr.libelle, nom_article,
 	 *        description,date_debut_encheres,date_fin_encheres, prix_initial,
@@ -71,16 +71,16 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "FROM ARTICLES_VENDUS artvd \n"
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM('%?%')  AND date_debut_encheres < GETDATE() And date_fin_encheres > GETDATE() AND vente_effectuee = 0\n"
+			+ "WHERE nom_article LIKE TRIM(?)  AND date_debut_encheres < GETDATE() And date_fin_encheres > GETDATE() AND vente_effectuee = 0\n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
-	 * Constante ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION -> Chaine de caractères
-	 * contenant une requête SQL effectuant une recherche dans la table
-	 * ARTICLE_VENDUS permettant de récupérer une liste d'encheres correspondant à
-	 * ce que l'utilisateur a rentré dans le champs de recherche, la catégorie qu'il
-	 * a sélectionné, si le bouton radio achat est sélectionné et que seule la
-	 * checkbox mes encheres est cochée
+	 * Constante ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION -> Chaine de caractï¿½res
+	 * contenant une requï¿½te SQL effectuant une recherche dans la table
+	 * ARTICLE_VENDUS permettant de rï¿½cupï¿½rer une liste d'encheres correspondant ï¿½
+	 * ce que l'utilisateur a rentrï¿½ dans le champs de recherche, la catï¿½gorie qu'il
+	 * a sï¿½lectionnï¿½, si le bouton radio achat est sï¿½lectionnï¿½ et que seule la
+	 * checkbox mes encheres est cochï¿½e
 	 * 
 	 * @value "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle,
 	 *        nom_article, description,date_debut_encheres,date_fin_encheres,
@@ -106,13 +106,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
-	 * @Contante ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION -> Chaine de caractères
-	 *           contenant une requête SQL effectuant une recherche dans la table
-	 *           ARTICLE_VENDUS permettant de récupérer une liste d'encheres
-	 *           correspondant à ce que l'utilisateur a rentré dans le champs de
-	 *           recherche, la catégorie qu'il a sélectionné, si le bouton radio
-	 *           achat est sélectionné et que seule la checkbox mes encheres
-	 *           remportées est cochée
+	 * @Contante ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION -> Chaine de caractï¿½res
+	 *           contenant une requï¿½te SQL effectuant une recherche dans la table
+	 *           ARTICLE_VENDUS permettant de rï¿½cupï¿½rer une liste d'encheres
+	 *           correspondant ï¿½ ce que l'utilisateur a rentrï¿½ dans le champs de
+	 *           recherche, la catï¿½gorie qu'il a sï¿½lectionnï¿½, si le bouton radio
+	 *           achat est sï¿½lectionnï¿½ et que seule la checkbox mes encheres
+	 *           remportï¿½es est cochï¿½e
 	 * 
 	 * @value "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle,
 	 *        nom_article, description, prix_initial, prix_vente,utl2.pseudo as
@@ -140,12 +140,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	/**
 	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_CURRENT_SALES -> Chaine de
-	 *            caractères contenant une requête SQL effectuant une recherche dans
-	 *            la table ARTICLE_VENDUS permettant de récupérer une liste
-	 *            d'encheres correspondant à ce que l'utilisateur a rentré dans le
-	 *            champs de recherche, la catégorie qu'il a sélectionné, si le
-	 *            bouton radio achat est sélectionné et que seule le bouton radio
-	 *            mes ventes en cours est coché
+	 *            caractï¿½res contenant une requï¿½te SQL effectuant une recherche dans
+	 *            la table ARTICLE_VENDUS permettant de rï¿½cupï¿½rer une liste
+	 *            d'encheres correspondant ï¿½ ce que l'utilisateur a rentrï¿½ dans le
+	 *            champs de recherche, la catï¿½gorie qu'il a sï¿½lectionnï¿½, si le
+	 *            bouton radio achat est sï¿½lectionnï¿½ et que seule le bouton radio
+	 *            mes ventes en cours est cochï¿½
 	 * 
 	 * @value "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article,
 	 *        description, prix_initial, prix_vente,artvd.date_debut_encheres,
@@ -167,12 +167,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	/**
 	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_NOT_STARTED_SALES -> Chaine de
-	 *            caractères contenant une requête SQL effectuant une recherche dans
-	 *            la table ARTICLE_VENDUS permettant de récupérer une liste
-	 *            d'encheres correspondant à ce que l'utilisateur a rentré dans le
-	 *            champs de recherche, la catégorie qu'il a sélectionné, si le
-	 *            bouton radio achat est sélectionné et que seule le bouton radio
-	 *            mes ventes non débutées est coché
+	 *            caractï¿½res contenant une requï¿½te SQL effectuant une recherche dans
+	 *            la table ARTICLE_VENDUS permettant de rï¿½cupï¿½rer une liste
+	 *            d'encheres correspondant ï¿½ ce que l'utilisateur a rentrï¿½ dans le
+	 *            champs de recherche, la catï¿½gorie qu'il a sï¿½lectionnï¿½, si le
+	 *            bouton radio achat est sï¿½lectionnï¿½ et que seule le bouton radio
+	 *            mes ventes non dï¿½butï¿½es est cochï¿½
 	 * 
 	 * @value "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article,
 	 *        description, prix_initial, prix_vente,artvd.date_debut_encheres,
@@ -192,13 +192,13 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
-	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES -> Chaine de caractères
-	 *            contenant une requête SQL effectuant une recherche dans la table
-	 *            ARTICLE_VENDUS permettant de récupérer une liste d'encheres
-	 *            correspondant à ce que l'utilisateur a rentré dans le champs de
-	 *            recherche, la catégorie qu'il a sélectionné, si le bouton radio
-	 *            achat est sélectionné et que seule le bouton radio mes ventes
-	 *            terminées est coché
+	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES -> Chaine de caractï¿½res
+	 *            contenant une requï¿½te SQL effectuant une recherche dans la table
+	 *            ARTICLE_VENDUS permettant de rï¿½cupï¿½rer une liste d'encheres
+	 *            correspondant ï¿½ ce que l'utilisateur a rentrï¿½ dans le champs de
+	 *            recherche, la catï¿½gorie qu'il a sï¿½lectionnï¿½, si le bouton radio
+	 *            achat est sï¿½lectionnï¿½ et que seule le bouton radio mes ventes
+	 *            terminï¿½es est cochï¿½
 	 * 
 	 * @value "SELECT utl.pseudo, ctgr.no_categorie, ctgr.libelle, nom_article,
 	 *        description, prix_initial, prix_vente,artvd.date_debut_encheres,
@@ -220,48 +220,48 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	/**
 	 * @author jarrigon2020
 	 * 
-	 * @param research        -> Chaine de caractères correspondant au texte rentré
+	 * @param research        -> Chaine de caractï¿½res correspondant au texte rentrï¿½
 	 *                        dans le champs de recherche de la page accueil par
 	 *                        l'utilisateur
 	 * 
-	 * @param ->              Chaine de caractères correspondant au pseudo de
+	 * @param ->              Chaine de caractï¿½res correspondant au pseudo de
 	 *                        l'utilisateur
 	 * 
-	 * @param idCategorie     -> Identifiant de la categorie sélectionnée
+	 * @param idCategorie     -> Identifiant de la categorie sï¿½lectionnï¿½e
 	 * 
 	 * @param shoppingChecked -> Boolean permettant de savoir si le bouton radio
-	 *                        achat est sélectionné
+	 *                        achat est sï¿½lectionnï¿½
 	 * 
 	 * @param openAuction     -> Boolean permettant de savoir si la checkbox enchere
-	 *                        en cour achat est sélectionnée
+	 *                        en cour achat est sï¿½lectionnï¿½e
 	 * 
 	 * @param winAuction      -> Boolean permettant de savoir si la checkbox
-	 *                        encheres remportées est sélectionnée
+	 *                        encheres remportï¿½es est sï¿½lectionnï¿½e
 	 * 
 	 * @param myAuction       -> Boolean permettant de savoir si la checkbox mes
-	 *                        enchères est sélectionnée
+	 *                        enchï¿½res est sï¿½lectionnï¿½e
 	 * 
 	 * @param mySales         -> Boolean permettant de savoir si le bouton radio mes
-	 *                        ventes est sélectionné
+	 *                        ventes est sï¿½lectionnï¿½
 	 * 
 	 * @param myCurrentSales  -> Boolean permettant de savoir si la checkbox mes
-	 *                        ventes en cours est sélectionnée
+	 *                        ventes en cours est sï¿½lectionnï¿½e
 	 * 
 	 * @param notSartedSales  -> Boolean permettant de savoir si la checkbox ventes
-	 *                        non débutées est sélectionnée
+	 *                        non dï¿½butï¿½es est sï¿½lectionnï¿½e
 	 * 
 	 * @param endedSales      -> Boolean permettant de savoir si la checkbox ventes
-	 *                        terminées est sélectionnée
+	 *                        terminï¿½es est sï¿½lectionnï¿½e
 	 * 
 	 * @return searchResult -> Objet de type ArrayList contenant des objets de type
 	 *         Enchere
 	 * 
-	 * @Commentaire Cette méthode permet d'effectuer une recherche dans la base de
-	 *              données de récupérer des encheres par rapport à la chaine de
-	 *              caractère rentrée par un utilisateur dans le champs "Recherche"
+	 * @Commentaire Cette mï¿½thode permet d'effectuer une recherche dans la base de
+	 *              donnï¿½es de rï¿½cupï¿½rer des encheres par rapport ï¿½ la chaine de
+	 *              caractï¿½re rentrï¿½e par un utilisateur dans le champs "Recherche"
 	 *              et le selecteur de categories de la page d'accueil. Nous
-	 *              prendronss également en compte les boutons radios et les
-	 *              checkbox sélectionnées par l'utilisateur
+	 *              prendronss ï¿½galement en compte les boutons radios et les
+	 *              checkbox sï¿½lectionnï¿½es par l'utilisateur
 	 * 
 	 *              public static <T> T addTo(T e, Collection<T> c){ c.add(e);
 	 *              return e; }
@@ -283,8 +283,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		List<Article> searchResult = new ArrayList<Article>();
 
 		/**
-		 * Nous allons vérifier les champs cochés par l'utilisateur grâce à des booleens
-		 * et adapter la requête SQL en fonction
+		 * Nous allons vï¿½rifier les champs cochï¿½s par l'utilisateur grï¿½ce ï¿½ des booleens
+		 * et adapter la requï¿½te SQL en fonction
 		 */
 
 		/**
@@ -292,21 +292,27 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		 */
 		if (openAuction) {
 
-			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
+			/**
+			 * preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
+			 */	
 
-			preparedStatement.setString(1, research);
+			Connection databaseConnection = JdbcTools.getConnection();
+			 preparedStatement = databaseConnection.prepareStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
+
+			preparedStatement.setString(1, "%" + research + "%");
 
 			myResultset = preparedStatement.executeQuery();
+			
+			System.out.println(myResultset.toString());
 
 			while (myResultset.next()) {
 
-				// Objets Utilisateur
-
-				String seller = myResultset.getString(9); // VENDEUR
-				sellerUser = new Utilisateur(seller);
+				
 
 				// Objet Categorie
 
+				System.out.println(myResultset.getInt(1));
+				
 				int noCategorie = myResultset.getInt(1);
 				String libelleCategorie = myResultset.getString(2);
 
@@ -320,6 +326,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				Date endOfAuction = myResultset.getDate(6);
 				int initialPrice = myResultset.getInt(7);
 				int soldPrice = myResultset.getInt(8);
+				
+				// Objets Utilisateur
+
+				String seller = myResultset.getString(9); // VENDEUR
+				sellerUser = new Utilisateur(seller);
 
 				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
 						sellerUser, categorie);
@@ -594,13 +605,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 
 		myResultset.close();
-
+        System.out.println(searchResult.toString());
 		return searchResult;
+		
 	}
 
 	/**
 	 * 
-	 * @param SQLRequest -> Chaine de caractères contenant une requête SQL
+	 * @param SQLRequest -> Chaine de caractï¿½res contenant une requï¿½te SQL
 	 * 
 	 * @return preparedStatement -> Objet de type PreparedStatement
 	 * 
@@ -608,8 +620,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * 
 	 * @Commentaire
 	 * 
-	 *              Cette méthode permet de créer une requête préparée. Elle est
-	 *              utilisée dans la méthode articleSearchByUserRequest
+	 *              Cette mï¿½thode permet de crï¿½er une requï¿½te prï¿½parï¿½e. Elle est
+	 *              utilisï¿½e dans la mï¿½thode articleSearchByUserRequest
 	 */
 	private PreparedStatement getPreparedStatement(String SQLRequest) throws SQLException {
 

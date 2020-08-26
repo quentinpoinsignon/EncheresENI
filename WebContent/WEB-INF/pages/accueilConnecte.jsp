@@ -33,14 +33,17 @@
  
 </header>
 
-<form action="${pageContext.request.contextPath}/accueilConnecte" method="get">
-	<h2>Liste des enchères</h2>
-	<label for="txtSearch">Filtres : </label>
-	<input type="search" name="search" id="txtSearch"><br><br>
-</form>
+
+
 
 <!-- affichage de la liste des catégories -->
 <form action="${pageContext.request.contextPath}/accueilConnecte" method="post">
+	<h2>Liste des enchères</h2>
+	<label for="txtSearch">Filtres : </label>
+	<input type="search" name="search" id="txtSearch"><br><br>
+
+
+
 <%! CategorieManager cMger = new CategorieManager();%>
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 <% String selectedCategorie = (String)request.getAttribute("selectedCategorie")==null?"0":(String)request.getAttribute("selectedCategorie");%>
@@ -52,7 +55,6 @@
 			<%}%>
 	</select><br><br>
 	<button type= "submit" name="rechercher" id="btnRechercher" value="rechercher">Rechercher</button><br><br>
-</form>
 
 	
 
@@ -74,7 +76,7 @@
 		  	<input type="radio" name="rdoAV" value="ventesTerminees">ventes terminées<br>
 		  	</div>
 		</div>
-
+</form>
 
 
 <!-- affichage de la liste des articles -->
