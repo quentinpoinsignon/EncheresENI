@@ -268,8 +268,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 */
 	@Override
 	public List<Article> articleSearchByUserRequest(String research, String userPseudo, int idCategorie,
-			Boolean shoppingChecked, Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean mySales,
-			Boolean myCurrentSales, Boolean notSartedSales, Boolean endedSales) throws Exception {
+			Boolean openAuction, Boolean winAuction, Boolean myAuction, Boolean myCurrentSales, Boolean notSartedSales,
+			Boolean endedSales) throws Exception {
 
 		PreparedStatement preparedStatement;
 		ResultSet myResultset = null;
@@ -286,315 +286,315 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		 * Nous allons vérifier les champs cochés par l'utilisateur grâce à des booleens
 		 * et adapter la requête SQL en fonction
 		 */
-		if (shoppingChecked) { // Si le bouton radio achats est selectionné
 
-			/**
-			 * ENCHERES OUVERTES
-			 */
-			if (openAuction) {
+		/**
+		 * ENCHERES OUVERTES
+		 */
+		if (openAuction) {
 
-				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
+			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
 
-				preparedStatement.setString(1, research);
+			preparedStatement.setString(1, research);
 
-				myResultset = preparedStatement.executeQuery();
+			myResultset = preparedStatement.executeQuery();
 
-				while (myResultset.next()) {
+			while (myResultset.next()) {
 
-					// Objets Utilisateur
+				// Objets Utilisateur
 
-					String seller = myResultset.getString(9); // VENDEUR
-					sellerUser = new Utilisateur(seller);
+				String seller = myResultset.getString(9); // VENDEUR
+				sellerUser = new Utilisateur(seller);
 
-					// Objet Categorie
+				// Objet Categorie
 
-					int noCategorie = myResultset.getInt(1);
-					String libelleCategorie = myResultset.getString(2);
+				int noCategorie = myResultset.getInt(1);
+				String libelleCategorie = myResultset.getString(2);
 
-					categorie = new Categorie(noCategorie, libelleCategorie);
+				categorie = new Categorie(noCategorie, libelleCategorie);
 
-					// Objet Article
+				// Objet Article
 
-					String articleName = myResultset.getString(3);
-					String description = myResultset.getString(4);
-					Date startOfAuction = myResultset.getDate(5);
-					Date endOfAuction = myResultset.getDate(6);
-					int initialPrice = myResultset.getInt(7);
-					int soldPrice = myResultset.getInt(8);
+				String articleName = myResultset.getString(3);
+				String description = myResultset.getString(4);
+				Date startOfAuction = myResultset.getDate(5);
+				Date endOfAuction = myResultset.getDate(6);
+				int initialPrice = myResultset.getInt(7);
+				int soldPrice = myResultset.getInt(8);
 
-					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
-							soldPrice, sellerUser, categorie);
+				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
+						sellerUser, categorie);
 
-					searchResult.add(article);
-				}
-				/**
-				 * MES ENCHERES
-				 */
-
-			} else if (myAuction) {
-
-				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION);
-
-				preparedStatement.setString(1, research);
-				preparedStatement.setString(2, userPseudo);
-
-				myResultset = preparedStatement.executeQuery();
-
-				while (myResultset.next()) {
-
-					// Objets Utilisateur
-
-					String Buyer = myResultset.getString(1); // ACHETEUR
-					buyerUser = new Utilisateur(Buyer);
-
-					String seller = myResultset.getString(10); // VENDEUR
-					sellerUser = new Utilisateur(seller);
-
-					// Objet Categorie
-
-					int noCategorie = myResultset.getInt(2);
-					String libelleCategorie = myResultset.getString(3);
-
-					categorie = new Categorie(noCategorie, libelleCategorie);
-
-					// Objet Article
-
-					String articleName = myResultset.getString(4);
-					String description = myResultset.getString(5);
-					Date startOfAuction = myResultset.getDate(6);
-					Date endOfAuction = myResultset.getDate(7);
-					int initialPrice = myResultset.getInt(8);
-					int soldPrice = myResultset.getInt(9);
-
-					// Objet Enchere
-
-					Date auctionDate = myResultset.getDate(11);
-					int auctionAmount = myResultset.getInt(12);
-
-					enchere = new Enchere(auctionDate, auctionAmount, buyerUser, sellerUser);
-
-					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
-							soldPrice, sellerUser, categorie, enchere);
-
-					searchResult.add(article);
-				}
-				/**
-				 * ENCHERES REMPORTEES
-				 */
-			} else if (winAuction) {
-
-				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION);
-
-				preparedStatement.setString(1, research);
-				preparedStatement.setString(2, userPseudo);
-
-				myResultset = preparedStatement.executeQuery();
-
-				while (myResultset.next()) {
-
-					// Objets Utilisateur
-
-					String Buyer = myResultset.getString(1); // ACHETEUR
-					buyerUser = new Utilisateur(Buyer);
-
-					String seller = myResultset.getString(8); // VENDEUR
-					sellerUser = new Utilisateur(seller);
-
-					// Objet Categorie
-
-					int noCategorie = myResultset.getInt(2);
-					String libelleCategorie = myResultset.getString(3);
-
-					categorie = new Categorie(noCategorie, libelleCategorie);
-
-					// Objet Article
-
-					String articleName = myResultset.getString(4);
-					String description = myResultset.getString(5);
-					int initialPrice = myResultset.getInt(6);
-					int soldPrice = myResultset.getInt(7);
-
-					// Objet Enchere
-
-					int auctionAmount = myResultset.getInt(9);
-					Date auctionDate = myResultset.getDate(10);
-
-					enchere = new Enchere(auctionDate, auctionAmount, buyerUser, sellerUser);
-
-					article = new Article(articleName, description, initialPrice, soldPrice, sellerUser, categorie,
-							enchere);
-
-					searchResult.add(article);
-				}
-
-			}
-		} else if (mySales) { // Si le boutons mes ventes est selectionné
-
-			/**
-			 * VENTE EN COURS
-			 */
-
-			if (myCurrentSales) {
-
-				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_CURRENT_SALES);
-
-				preparedStatement.setString(1, research);
-				preparedStatement.setString(2, userPseudo);
-
-				myResultset = preparedStatement.executeQuery();
-
-				while (myResultset.next()) {
-
-					// Objets Utilisateur
-
-					String seller = myResultset.getString(1); // Vendeur
-					buyerUser = new Utilisateur(seller);
-
-					// Objet Categorie
-
-					int noCategorie = myResultset.getInt(2);
-					String libelleCategorie = myResultset.getString(3);
-
-					categorie = new Categorie(noCategorie, libelleCategorie);
-
-					// Objet Article
-
-					String articleName = myResultset.getString(4);
-					String description = myResultset.getString(5);
-					int initialPrice = myResultset.getInt(6);
-					int soldPrice = myResultset.getInt(7);
-					Date startOfAuction = myResultset.getDate(8);
-					Date endOfAuction = myResultset.getDate(9);
-
-					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
-							soldPrice, sellerUser, categorie);
-
-					searchResult.add(article);
-				}
-
-				/**
-				 * VENTES NON DEBUTES
-				 */
-
-			} else if (notSartedSales) {
-
-				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_NOT_STARTED_SALES);
-
-				preparedStatement.setString(1, research);
-				preparedStatement.setString(2, userPseudo);
-
-				myResultset = preparedStatement.executeQuery();
-
-				while (myResultset.next()) {
-
-					// Objets Utilisateur
-
-					String seller = myResultset.getString(1); // Vendeur
-					buyerUser = new Utilisateur(seller);
-
-					// Objet Categorie
-
-					int noCategorie = myResultset.getInt(2);
-					String libelleCategorie = myResultset.getString(3);
-
-					categorie = new Categorie(noCategorie, libelleCategorie);
-
-					// Objet Article
-
-					String articleName = myResultset.getString(4);
-					String description = myResultset.getString(5);
-					int initialPrice = myResultset.getInt(6);
-					int soldPrice = myResultset.getInt(7);
-					Date startOfAuction = myResultset.getDate(8);
-					Date endOfAuction = myResultset.getDate(9);
-
-					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
-							soldPrice, sellerUser, categorie);
-
-					searchResult.add(article);
-				}
-
-				/**
-				 * VENTES TERMINEES
-				 */
-
-			} else if (endedSales) {
-
-				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES);
-
-				preparedStatement.setString(1, research);
-				preparedStatement.setString(2, userPseudo);
-
-				myResultset = preparedStatement.executeQuery();
-
-				while (myResultset.next()) {
-
-					// Objets Utilisateur
-
-					String seller = myResultset.getString(1); // Vendeur
-					buyerUser = new Utilisateur(seller);
-
-					// Objet Categorie
-
-					int noCategorie = myResultset.getInt(2);
-					String libelleCategorie = myResultset.getString(3);
-
-					categorie = new Categorie(noCategorie, libelleCategorie);
-
-					// Objet Article
-
-					String articleName = myResultset.getString(4);
-					String description = myResultset.getString(5);
-					int initialPrice = myResultset.getInt(6);
-					int soldPrice = myResultset.getInt(7);
-					Date startOfAuction = myResultset.getDate(8);
-					Date endOfAuction = myResultset.getDate(9);
-
-					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
-							soldPrice, sellerUser, categorie);
-
-					searchResult.add(article);
-				}
-
-			} else {
-				preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION);
-				preparedStatement.setString(1, research);
-
-				myResultset = preparedStatement.executeQuery();
-
-				while (myResultset.next()) {
-
-					// Objets Utilisateur
-
-					String seller = myResultset.getString(9); // VENDEUR
-					sellerUser = new Utilisateur(seller);
-
-					// Objet Categorie
-
-					int noCategorie = myResultset.getInt(1);
-					String libelleCategorie = myResultset.getString(2);
-
-					categorie = new Categorie(noCategorie, libelleCategorie);
-
-					// Objet Article
-
-					String articleName = myResultset.getString(3);
-					String description = myResultset.getString(4);
-					Date startOfAuction = myResultset.getDate(5);
-					Date endOfAuction = myResultset.getDate(6);
-					int initialPrice = myResultset.getInt(7);
-					int soldPrice = myResultset.getInt(8);
-
-					article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice,
-							soldPrice, sellerUser, categorie);
-
-					searchResult.add(article);
-				}
+				searchResult.add(article);
 			}
 
-			myResultset.close();
+			/**
+			 * MES ENCHERES
+			 */
+
+		} else if (myAuction) {
+
+			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_MY_AUCTION);
+
+			preparedStatement.setString(1, research);
+			preparedStatement.setString(2, userPseudo);
+
+			myResultset = preparedStatement.executeQuery();
+
+			while (myResultset.next()) {
+
+				// Objets Utilisateur
+
+				String Buyer = myResultset.getString(1); // ACHETEUR
+				buyerUser = new Utilisateur(Buyer);
+
+				String seller = myResultset.getString(10); // VENDEUR
+				sellerUser = new Utilisateur(seller);
+
+				// Objet Categorie
+
+				int noCategorie = myResultset.getInt(2);
+				String libelleCategorie = myResultset.getString(3);
+
+				categorie = new Categorie(noCategorie, libelleCategorie);
+
+				// Objet Article
+
+				String articleName = myResultset.getString(4);
+				String description = myResultset.getString(5);
+				Date startOfAuction = myResultset.getDate(6);
+				Date endOfAuction = myResultset.getDate(7);
+				int initialPrice = myResultset.getInt(8);
+				int soldPrice = myResultset.getInt(9);
+
+				// Objet Enchere
+
+				Date auctionDate = myResultset.getDate(11);
+				int auctionAmount = myResultset.getInt(12);
+
+				enchere = new Enchere(auctionDate, auctionAmount, buyerUser, sellerUser);
+
+				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
+						sellerUser, categorie, enchere);
+
+				searchResult.add(article);
+			}
+
+			/**
+			 * ENCHERES REMPORTEES
+			 */
+
+		} else if (winAuction) {
+
+			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION);
+
+			preparedStatement.setString(1, research);
+			preparedStatement.setString(2, userPseudo);
+
+			myResultset = preparedStatement.executeQuery();
+
+			while (myResultset.next()) {
+
+				// Objets Utilisateur
+
+				String Buyer = myResultset.getString(1); // ACHETEUR
+				buyerUser = new Utilisateur(Buyer);
+
+				String seller = myResultset.getString(8); // VENDEUR
+				sellerUser = new Utilisateur(seller);
+
+				// Objet Categorie
+
+				int noCategorie = myResultset.getInt(2);
+				String libelleCategorie = myResultset.getString(3);
+
+				categorie = new Categorie(noCategorie, libelleCategorie);
+
+				// Objet Article
+
+				String articleName = myResultset.getString(4);
+				String description = myResultset.getString(5);
+				int initialPrice = myResultset.getInt(6);
+				int soldPrice = myResultset.getInt(7);
+
+				// Objet Enchere
+
+				int auctionAmount = myResultset.getInt(9);
+				Date auctionDate = myResultset.getDate(10);
+
+				enchere = new Enchere(auctionDate, auctionAmount, buyerUser, sellerUser);
+
+				article = new Article(articleName, description, initialPrice, soldPrice, sellerUser, categorie,
+						enchere);
+
+				searchResult.add(article);
+			}
 
 		}
+
+		/**
+		 * VENTE EN COURS
+		 */
+
+		else if (myCurrentSales) {
+
+			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_CURRENT_SALES);
+
+			preparedStatement.setString(1, research);
+			preparedStatement.setString(2, userPseudo);
+
+			myResultset = preparedStatement.executeQuery();
+
+			while (myResultset.next()) {
+
+				// Objets Utilisateur
+
+				String seller = myResultset.getString(1); // Vendeur
+				buyerUser = new Utilisateur(seller);
+
+				// Objet Categorie
+
+				int noCategorie = myResultset.getInt(2);
+				String libelleCategorie = myResultset.getString(3);
+
+				categorie = new Categorie(noCategorie, libelleCategorie);
+
+				// Objet Article
+
+				String articleName = myResultset.getString(4);
+				String description = myResultset.getString(5);
+				int initialPrice = myResultset.getInt(6);
+				int soldPrice = myResultset.getInt(7);
+				Date startOfAuction = myResultset.getDate(8);
+				Date endOfAuction = myResultset.getDate(9);
+
+				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
+						sellerUser, categorie);
+
+				searchResult.add(article);
+			}
+
+			/**
+			 * VENTES NON DEBUTES
+			 */
+
+		} else if (notSartedSales) {
+
+			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_NOT_STARTED_SALES);
+
+			preparedStatement.setString(1, research);
+			preparedStatement.setString(2, userPseudo);
+
+			myResultset = preparedStatement.executeQuery();
+
+			while (myResultset.next()) {
+
+				// Objets Utilisateur
+
+				String seller = myResultset.getString(1); // Vendeur
+				buyerUser = new Utilisateur(seller);
+
+				// Objet Categorie
+
+				int noCategorie = myResultset.getInt(2);
+				String libelleCategorie = myResultset.getString(3);
+
+				categorie = new Categorie(noCategorie, libelleCategorie);
+
+				// Objet Article
+
+				String articleName = myResultset.getString(4);
+				String description = myResultset.getString(5);
+				int initialPrice = myResultset.getInt(6);
+				int soldPrice = myResultset.getInt(7);
+				Date startOfAuction = myResultset.getDate(8);
+				Date endOfAuction = myResultset.getDate(9);
+
+				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
+						sellerUser, categorie);
+
+				searchResult.add(article);
+			}
+
+			/**
+			 * VENTES TERMINEES
+			 */
+
+		} else if (endedSales) {
+
+			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ENDED_SALES);
+
+			preparedStatement.setString(1, research);
+			preparedStatement.setString(2, userPseudo);
+
+			myResultset = preparedStatement.executeQuery();
+
+			while (myResultset.next()) {
+
+				// Objets Utilisateur
+
+				String seller = myResultset.getString(1); // Vendeur
+				buyerUser = new Utilisateur(seller);
+
+				// Objet Categorie
+
+				int noCategorie = myResultset.getInt(2);
+				String libelleCategorie = myResultset.getString(3);
+
+				categorie = new Categorie(noCategorie, libelleCategorie);
+
+				// Objet Article
+
+				String articleName = myResultset.getString(4);
+				String description = myResultset.getString(5);
+				int initialPrice = myResultset.getInt(6);
+				int soldPrice = myResultset.getInt(7);
+				Date startOfAuction = myResultset.getDate(8);
+				Date endOfAuction = myResultset.getDate(9);
+
+				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
+						sellerUser, categorie);
+
+				searchResult.add(article);
+			}
+
+		} else {
+			preparedStatement = getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION);
+			preparedStatement.setString(1, research);
+
+			myResultset = preparedStatement.executeQuery();
+
+			while (myResultset.next()) {
+
+				// Objets Utilisateur
+
+				String seller = myResultset.getString(9); // VENDEUR
+				sellerUser = new Utilisateur(seller);
+
+				// Objet Categorie
+
+				int noCategorie = myResultset.getInt(1);
+				String libelleCategorie = myResultset.getString(2);
+
+				categorie = new Categorie(noCategorie, libelleCategorie);
+
+				// Objet Article
+
+				String articleName = myResultset.getString(3);
+				String description = myResultset.getString(4);
+				Date startOfAuction = myResultset.getDate(5);
+				Date endOfAuction = myResultset.getDate(6);
+				int initialPrice = myResultset.getInt(7);
+				int soldPrice = myResultset.getInt(8);
+
+				article = new Article(articleName, description, startOfAuction, endOfAuction, initialPrice, soldPrice,
+						sellerUser, categorie);
+
+				searchResult.add(article);
+			}
+		}
+
+		myResultset.close();
+
 		return searchResult;
 	}
 
