@@ -34,17 +34,19 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 * 
 	 * @value "SELECT ctgr.no_categorie, ctgr.libelle, nom_article,
 	 *        description,date_debut_encheres,date_fin_encheres, prix_initial,
-	 *        prix_vente,utl2.pseudo as vendeur\n" + "FROM ARTICLES_VENDUS artvd \n"
-	 *        + "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur =
-	 *        artvd.no_utilisateur\n" + "INNER JOIN CATEGORIES ctgr ON
-	 *        ctgr.no_categorie = artvd.no_categorie\n" + "WHERE nom_article LIKE
-	 *        TRIM('%?%') \n" + "ORDER BY artvd.date_fin_encheres ASC;";
+	 *        prix_vente,utl2.pseudo as vendeur\r\n" + "FROM ARTICLES_VENDUS artvd
+	 *        \r\n" + "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur =
+	 *        artvd.no_utilisateur\r\n" + "INNER JOIN CATEGORIES ctgr ON
+	 *        ctgr.no_categorie = artvd.no_categorie\r\n" + "WHERE nom_article LIKE
+	 *        TRIM(?) AND vente_effectuee = 0 AND artvd.date_fin_encheres >
+	 *        GETDATE()\r\n" + "ORDER BY artvd.date_fin_encheres ASC";
 	 */
-	private final String ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION = "SELECT ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,utl2.pseudo as vendeur\n"
-			+ "FROM ARTICLES_VENDUS artvd \n"
-			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
-			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM(?) \n" + "ORDER BY artvd.date_fin_encheres ASC;";
+	private final String ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION = "SELECT ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,utl2.pseudo as vendeur\r\n"
+			+ "FROM ARTICLES_VENDUS artvd \r\n"
+			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\r\n"
+			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n"
+			+ "WHERE nom_article LIKE TRIM(?) AND vente_effectuee = 0 AND artvd.date_fin_encheres > GETDATE()\r\n"
+			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
 	 * @Constante ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION -> Chaine de
@@ -291,11 +293,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		 */
 		if (openAuction) {
 
-			/**
-			 * preparedStatement =
-			 * getPreparedStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
-			 */
-
 			Connection databaseConnection = JdbcTools.getConnection();
 			preparedStatement = databaseConnection.prepareStatement(ARTICLE_SEARCH_BY_USER_REQUEST_OPEN_AUCTION);
 
@@ -303,13 +300,9 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			myResultset = preparedStatement.executeQuery();
 
-			System.out.println(myResultset.toString());
-
 			while (myResultset.next()) {
 
 				// Objet Categorie
-
-				System.out.println(myResultset.getInt(1));
 
 				int noCategorie = myResultset.getInt(1);
 				String libelleCategorie = myResultset.getString(2);
