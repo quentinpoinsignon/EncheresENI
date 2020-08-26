@@ -101,7 +101,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM(?)  AND date_debut_encheres < GETDATE() And date_fin_encheres > GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n"
+			+ "WHERE nom_article LIKE TRIM(?)  AND date_debut_encheres < GETDATE() And date_fin_encheres > GETDATE() AND vente_effectuee = 0 AND utl.pseudo = ? \n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
@@ -122,18 +122,18 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 *        "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur =
 	 *        ench.no_utilisateur\n" + "INNER JOIN CATEGORIES ctgr ON
 	 *        ctgr.no_categorie = artvd.no_categorie\n" + "WHERE nom_article LIKE
-	 *        TRIM('%%') AND vente_effectuee = 0 AND utl.pseudo = 'Jeanjean'\n" +
-	 *        "GROUP BY utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article,
-	 *        description, prix_initial, prix_vente,utl2.pseudo,
-	 *        ench.montant_enchere, ench.date_enchere,artvd.date_fin_encheres \n" +
-	 *        "ORDER BY artvd.date_fin_encheres ASC";
+	 *        TRIM('%%') AND vente_effectuee = 0 AND utl.pseudo = ?\n" + "GROUP BY
+	 *        utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article, description,
+	 *        prix_initial, prix_vente,utl2.pseudo, ench.montant_enchere,
+	 *        ench.date_enchere,artvd.date_fin_encheres \n" + "ORDER BY
+	 *        artvd.date_fin_encheres ASC";
 	 */
 	private final String ARTICLE_SEARCH_BY_USER_REQUEST_WIN_AUCTION = "SELECT utl.pseudo as acheteur, ctgr.no_categorie, ctgr.libelle, nom_article, description, prix_initial, prix_vente,utl2.pseudo as vendeur, ench.montant_enchere, MAX(ench.date_enchere) as dateEnchere\n"
 			+ "FROM  ARTICLES_VENDUS artvd\n" + "INNER JOIN ENCHERES ench ON ench.no_article = artvd.no_article\n"
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = ench.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM(?) AND vente_effectuee = 0 AND utl.pseudo = 'Jeanjean'\n"
+			+ "WHERE nom_article LIKE TRIM(?) AND vente_effectuee = 0 AND utl.pseudo = ?\n"
 			+ "GROUP BY utl.pseudo,ctgr.no_categorie,ctgr.libelle,nom_article, description, prix_initial, prix_vente,utl2.pseudo, ench.montant_enchere, ench.date_enchere,artvd.date_fin_encheres \n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
@@ -153,7 +153,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 *        + "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie =
 	 *        artvd.no_categorie\n" + "WHERE nom_article LIKE TRIM('%?%') AND
 	 *        artvd.date_debut_encheres <= GETDATE() AND artvd.date_fin_encheres >
-	 *        GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n" + "ORDER BY
+	 *        GETDATE() AND vente_effectuee = 0 AND utl.pseudo = ?\n" + "ORDER BY
 	 *        artvd.date_fin_encheres ASC";
 	 */
 
@@ -161,7 +161,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "FROM ARTICLES_VENDUS artvd\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM(?) AND artvd.date_debut_encheres <= GETDATE() AND artvd.date_fin_encheres > GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n"
+			+ "WHERE nom_article LIKE TRIM(?) AND artvd.date_debut_encheres <= GETDATE() AND artvd.date_fin_encheres > GETDATE() AND vente_effectuee = 0 AND utl.pseudo = ?\n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
@@ -187,7 +187,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "FROM ARTICLES_VENDUS artvd\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM(?) AND artvd.date_debut_encheres >= GETDATE() AND vente_effectuee = 0 AND utl.pseudo = '?'\n"
+			+ "WHERE nom_article LIKE TRIM(?) AND artvd.date_debut_encheres >= GETDATE() AND vente_effectuee = 0 AND utl.pseudo = ?\n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
@@ -213,7 +213,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "FROM ARTICLES_VENDUS artvd\n"
 			+ "INNER JOIN UTILISATEURS utl ON utl.no_utilisateur = artvd.no_utilisateur\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\n"
-			+ "WHERE nom_article LIKE TRIM(?) AND artvd.date_fin_encheres <= GETDATE()  AND utl.pseudo = '?'\n"
+			+ "WHERE nom_article LIKE TRIM(?) AND artvd.date_fin_encheres <= GETDATE()  AND utl.pseudo = ?\n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
