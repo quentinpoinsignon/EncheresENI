@@ -24,7 +24,6 @@ public class encheresServlet extends HttpServlet {
 	private EnchereManager eMger = new EnchereManager();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("inthedoget");
 		//initialisation de la liste des articles
 		List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
 				false, false, false, false, false, false);
@@ -52,6 +51,7 @@ public class encheresServlet extends HttpServlet {
 		String action = request.getParameter("rechercher");
 		if(("rechercher").equals(action)) {
 			String research = (request.getParameter("search")==null?"":request.getParameter("search"));
+			System.out.println(research);
 			String categorie = request.getParameter("selectedCategorie");
 			int idCategorie = Integer.parseInt(categorie);
 			List<Article> listeEncheres = eMger.userSearchEncheres(research, "", idCategorie, false, false, false, false, false, false);

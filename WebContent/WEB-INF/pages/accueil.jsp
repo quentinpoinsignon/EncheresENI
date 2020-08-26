@@ -31,10 +31,10 @@
 </header>
 
 <!-- affichage de la liste des catégories -->
+<form action="${pageContext.request.contextPath}/accueil" method="post">
 <h2>Liste des enchères</h2>
 <label for="txtSearch">Filtres : </label>
 <input type="search" name="search" id="txtSearch" placeholder="Le nom de l'article contient"><br><br>
-<form action="${pageContext.request.contextPath}/accueil" method="post">
 <%! CategorieManager cMger = new CategorieManager();%>
 <%! List<Categorie> listeCategories = cMger.selectAllCategories();%>
 <% String selectedCategorie = (String)request.getAttribute("selectedCategorie")==null?"0":(String)request.getAttribute("selectedCategorie");%>
