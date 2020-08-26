@@ -36,6 +36,7 @@ public class loginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		messageErreur = "";
 		//récupération des attributs
 		String action = request.getParameter("action");
 		
@@ -43,7 +44,14 @@ public class loginServlet extends HttpServlet {
 		case "connexion":
 			String identifiant = request.getParameter("identifiant");
 			String password = request.getParameter("password");
-			if(identifiant != null && password != null) {
+			
+			if(identifiant.equals("") || password.equals("")) {
+				messageErreur = "Veuillez entrer un login et un mot de passe";
+				request.setAttribute("erreurLogin", messageErreur);
+				request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
+			}
+			
+			else {
 				Utilisateur connectedUser = null;
 				switch (ihmUtils.natureIdentifiant(identifiant)) {
 				case "pseudo":

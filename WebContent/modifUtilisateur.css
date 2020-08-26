@@ -58,6 +58,11 @@ button:hover {
 	margin-left: 170px;
 }
 
+#btnSupprimer:hover {
+	background-color: red;
+	margin-left: 170px;
+}
+
 a:hover {
 	color: rgb(19, 74, 128);
 }

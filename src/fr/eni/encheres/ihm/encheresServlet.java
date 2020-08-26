@@ -3,6 +3,7 @@ package fr.eni.encheres.ihm;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,10 +23,8 @@ import fr.eni.encheres.bo.Categorie;
 @WebServlet({"/encheres", "/accueil"})
 public class encheresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static List<Categorie> listeCategories = null;
 	
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		//redirection avec boutons inscrire et connecter 
 		String action = request.getParameter("action");
 		if(action!=null) {
