@@ -59,21 +59,22 @@ public class nouvelleVenteServlet extends HttpServlet {
 		String rue = request.getParameter("rue");
 		String ville = request.getParameter("ville");
 		String codepostal = request.getParameter("codepostal");
-		Boolean isValidDateDebut = null;
-		Boolean isValidDateFin = null;
 		String msg = "";
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
 		System.out.println(utilisateur.toString());
+		String essaiDebut = request.getParameter("dateDebut");
+		System.out.println(essaiDebut);
 		
 
 		// récupération des dates
 		// formatage des dates en java.sql.time
 		java.util.Date debut = null;
 		java.util.Date fin = null;
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.FRENCH);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH);
 		try {
 			debut = formatter.parse(request.getParameter("dateDebut"));
+			System.out.println(debut.toString());
 		} catch (ParseException e2) {
 			e2.printStackTrace();
 		}
@@ -87,8 +88,6 @@ public class nouvelleVenteServlet extends HttpServlet {
 
 		java.sql.Date dateFin=null;
 			dateFin = bllUtils.dateUtilToSql(fin);
-			System.out.println(dateDebut.toString());
-			System.out.println(dateFin.toString());
 		
 		if(dateFin.after(dateDebut) && dateFin!=null && dateDebut!=null) {
 			// création de l'article sans point de retrait
