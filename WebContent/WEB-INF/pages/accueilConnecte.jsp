@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="fr.eni.encheres.bll.ArticleManager"%>
 <%@page import="fr.eni.encheres.bo.Utilisateur"%>
 <%@page import="fr.eni.encheres.bo.Article"%>
@@ -80,8 +81,7 @@
 
 
 <% List<Article> listeEncheres = (List<Article>)request.getAttribute("listeEncheres");%>
-<%! String formatDate = "dd/mm/yyyy H:m"; %>
-<%! DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatDate); %>
+<%! SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy"); %>
 <% if (listeEncheres != null) {%>
 <div class="articleContainer">
 <%for (Article article : listeEncheres) {%>
@@ -89,7 +89,7 @@
 		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
-			<p>Fin de l'enchère : <%=article.getDateFinEncheres().toString()%></p><br>
+			<p>Fin de l'enchère : <%=dateFormat.format(article.getDateFinEncheres())%></p><br>
 			<p>Vendeur : <a href="${pageContext.request.contextPath}/profil?user=<%=article.getUtilisateur().getPseudo()%>"><%=article.getUtilisateur().getPseudo()%></a></p><br>
 		</div>
 		<%}%>
