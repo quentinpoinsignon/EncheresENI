@@ -24,7 +24,7 @@ img {
 	float: left;
 }
 
-button {
+button, input[type=button] {
 	background-color: CornflowerBlue;
 	border: none;
 	border-radius: 5px;
@@ -34,12 +34,12 @@ button {
 	width: 150px;
 }
 
-#btnAnnuler:hover {
-	background-color: IndianRed;
+button:hover, input[type=button]:hover {
+	background-color: rgb(19, 74, 128);
 }
 
-button:hover {
-	background-color: rgb(19, 74, 128);
+a {
+	text-decoration : none;
 }
 
 a:hover {

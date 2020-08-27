@@ -29,18 +29,18 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//affichage par défaut lors de l'arrivée sur la page
-//		Boolean myCurrentSales = true;
-//		Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
-//		List<Article> listeEncheres = eMger.userSearchEncheres("", connectedUser.getPseudo(), 0,
-//				false, false, false, myCurrentSales, false, false);
-//		request.setAttribute("listeEncheres", listeEncheres);
-//		request.setAttribute("myCurrentSales", myCurrentSales);
 		
-		//déconnexion 
 		String action = request.getParameter("action");
 		if (("deconnexion").equals(action)) {
+			// on tue la session en enlevant l'utilisateur connecté
 			request.getSession().removeAttribute("connectedUser");
+			//set des attributs pour affichage correct de la page d'accueil non connecté
+			Boolean myCurrentSales = true;
+			Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
+			List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
+					false, false, false, false, false, false);
+			request.setAttribute("listeEncheres", listeEncheres);
+			request.setAttribute("myCurrentSales", myCurrentSales);
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		}
 		else {
@@ -66,6 +66,7 @@ public class accueilConnecteServlet extends HttpServlet {
 		Boolean endedSales = false;
 		String rdoAV = (request.getParameter("rdoAV")==null?"":request.getParameter("rdoAV"));
 
+		//set des booleens nécessaires à l'exécution de la requête sql en fonction du choix utilisateur
 		switch (rdoAV) {
 		case "encheresOuvertes":
 			openAuction = true;
@@ -89,16 +90,15 @@ public class accueilConnecteServlet extends HttpServlet {
 			myCurrentSales = true;
 			break;
 		}
-		// récupération de la liste d'Enchères en fonction des critères sélectionnés par
-		// l'utilisateur
+		// récupération de la liste d'Enchères en fonction des critères sélectionnés par l'utilisateur
 		List<Article> listeEncheres = eMger.userSearchEncheres(research, userPseudo, idCategorie,
 				openAuction, winAuction, myAuction, myCurrentSales, notSartedSales, endedSales);
 
 		request.setAttribute("listeEncheres", listeEncheres);
+
+		// set des attributs pour persistance des choix utilisateur
 		request.setAttribute("selectedCategorie", categorie);
 		request.setAttribute("search", research);
-
-		// set des boutons radios
 		request.setAttribute("openAuction", openAuction);
 		request.setAttribute("myAuction", myAuction);
 		request.setAttribute("winAuction", winAuction);

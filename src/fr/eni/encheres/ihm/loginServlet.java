@@ -26,13 +26,6 @@ public class loginServlet extends HttpServlet {
 
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
-	
-		//à recoder pour traiter le mot de passe oublié (remplacer accueil ci-dessous)
-		if(("accueil").equals(action)) {
-			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
-		}
-		request.setAttribute("erreurLogin", messageErreur);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,7 +59,6 @@ public class loginServlet extends HttpServlet {
 				if(connectedUser != null) {
 					HttpSession session = request.getSession(true);
 					session.setAttribute("connectedUser", connectedUser);
-//					request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte").forward(request, response);
 					request.getRequestDispatcher("/accueilConnecte").forward(request, response);
 				}
 				else {

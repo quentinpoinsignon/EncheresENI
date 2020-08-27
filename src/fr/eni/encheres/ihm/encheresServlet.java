@@ -29,7 +29,6 @@ public class encheresServlet extends HttpServlet {
 				false, false, false, false, false, false);
 		request.setAttribute("listeEncheres", listeEncheres);
 		
-		
 		//redirection avec boutons inscrire et connecter 
 		String action = request.getParameter("action");
 		if(action!=null) {
@@ -48,23 +47,15 @@ public class encheresServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("rechercher");
-		if(("rechercher").equals(action)) {
-			String research = (request.getParameter("search")==null?"":request.getParameter("search"));
-			System.out.println(research);
-			String categorie = request.getParameter("selectedCategorie");
-			int idCategorie = Integer.parseInt(categorie);
-			List<Article> listeEncheres = eMger.userSearchEncheres(research, "", idCategorie, false, false, false, false, false, false);
-			request.setAttribute("listeEncheres", listeEncheres);
-			request.setAttribute("selectedCategorie", categorie);
-			request.setAttribute("search", research);
+		String research = (request.getParameter("search")==null?"":request.getParameter("search"));
+		System.out.println(research);
+		String categorie = (request.getParameter("selectedCategorie")==null?"0":request.getParameter("selectedCategorie"));
+		int idCategorie = (Integer.valueOf(categorie)==null?0:Integer.parseInt(categorie));
+		List<Article> listeEncheres = eMger.userSearchEncheres(research, "", idCategorie, false, false, false, false, false, false);
+		request.setAttribute("listeEncheres", listeEncheres);
+		request.setAttribute("selectedCategorie", categorie);
+		request.setAttribute("search", research);
 			
-		}
-		else {
-			List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
-					false, false, false, false, false, false);
-			request.setAttribute("listeEncheres", listeEncheres);
-		}
 		request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 	}
 
