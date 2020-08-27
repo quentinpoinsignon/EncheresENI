@@ -39,14 +39,14 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	 *        utl2.no_utilisateur = artvd.no_utilisateur\r\n" + "INNER JOIN
 	 *        CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n" +
 	 *        "WHERE nom_article LIKE TRIM(?) AND vente_effectuee = 0 AND
-	 *        artvd.date_fin_encheres > GETDATE()\r\n" + "ORDER BY
-	 *        artvd.date_fin_encheres ASC";
+	 *        artvd.date_fin_encheres > GETDATE() AND artvd.date_debut_encheres <
+	 *        GETDATE()\r\n" + "ORDER BY artvd.date_fin_encheres ASC";
 	 */
 	private final String ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION = "SELECT ctgr.no_categorie, ctgr.libelle, nom_article, description,date_debut_encheres,date_fin_encheres, prix_initial, prix_vente,utl2.pseudo as vendeur, artvd.no_article\r\n"
 			+ "FROM ARTICLES_VENDUS artvd \r\n"
 			+ "INNER JOIN UTILISATEURS utl2 ON utl2.no_utilisateur = artvd.no_utilisateur\r\n"
 			+ "INNER JOIN CATEGORIES ctgr ON ctgr.no_categorie = artvd.no_categorie\r\n"
-			+ "WHERE nom_article LIKE TRIM(?) AND vente_effectuee = 0 AND artvd.date_fin_encheres > GETDATE()\r\n"
+			+ "WHERE nom_article LIKE TRIM(?) AND vente_effectuee = 0 AND artvd.date_fin_encheres > GETDATE() AND artvd.date_debut_encheres < GETDATE()\r\n"
 			+ "ORDER BY artvd.date_fin_encheres ASC";
 
 	/**
