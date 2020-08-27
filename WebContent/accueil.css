@@ -1,8 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+
 html {
 	margin : 0px 20px 20px 20px;
+	font-family: 'Balsamiq Sans', cursive;
 	
 }
+a{
+	 text-decoration:none; 
+}
 
+#txtSearch{
+	border-radius: 3px 5px 5px 6px;
+}
+
+select{
+	border-radius: 3px 5px 5px 6px;
+}
 
 .divPage {
 	 display: grid;
