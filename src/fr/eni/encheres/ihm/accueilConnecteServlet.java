@@ -29,14 +29,13 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("in the do get of accueil connecté");
 		//affichage par défaut lors de l'arrivée sur la page
-		Boolean myCurrentSales = true;
-		Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
-		List<Article> listeEncheres = eMger.userSearchEncheres("", connectedUser.getPseudo(), 0,
-				false, false, false, myCurrentSales, false, false);
-		request.setAttribute("listeEncheres", listeEncheres);
-		request.setAttribute("myCurrentSales", true);
+//		Boolean myCurrentSales = true;
+//		Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
+//		List<Article> listeEncheres = eMger.userSearchEncheres("", connectedUser.getPseudo(), 0,
+//				false, false, false, myCurrentSales, false, false);
+//		request.setAttribute("listeEncheres", listeEncheres);
+//		request.setAttribute("myCurrentSales", myCurrentSales);
 		
 		//déconnexion 
 		String action = request.getParameter("action");
@@ -52,60 +51,60 @@ public class accueilConnecteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// récupération des paramètres
-		String action = request.getParameter("rechercher");
-		String categorie = request.getParameter("selectedCategorie");
-		if (("rechercher").equals(action)) {
-			String research = (request.getParameter("search")==null?"":request.getParameter("search"));
-			Utilisateur connectedUser = (Utilisateur) request.getSession().getAttribute("connectedUser");
-			String userPseudo = connectedUser.getPseudo();
-			int idCategorie = Integer.parseInt(categorie);
-			Boolean openAuction = false;
-			Boolean myAuction = false;
-			Boolean winAuction = false;
-			Boolean myCurrentSales = false;
-			Boolean notSartedSales = false;
-			Boolean endedSales = false;
-			String rdoAV = (request.getParameter("rdoAV")==null?"":request.getParameter("rdoAV"));
+		String action = (request.getParameter("rechercher")==null?"":request.getParameter("rechercher"));
+		String categorie = (request.getParameter("selectedCategorie")==null?"0":request.getParameter("selectedCategorie"));
+		System.out.println(categorie);
+		String research = (request.getParameter("search")==null?"":request.getParameter("search"));
+		Utilisateur connectedUser = (Utilisateur) request.getSession().getAttribute("connectedUser");
+		String userPseudo = connectedUser.getPseudo();
+		int idCategorie = (Integer.valueOf(categorie)==null?0:Integer.parseInt(categorie));
+		Boolean openAuction = false;
+		Boolean myAuction = false;
+		Boolean winAuction = false;
+		Boolean myCurrentSales = false;
+		Boolean notSartedSales = false;
+		Boolean endedSales = false;
+		String rdoAV = (request.getParameter("rdoAV")==null?"":request.getParameter("rdoAV"));
 
-			switch (rdoAV) {
-			case "encheresOuvertes":
-				openAuction = true;
-				break;
-			case "mesEncheres":
-				myAuction = true;
-				break;
-			case "encheresRemportees":
-				winAuction = true;
-				break;
-			case "ventesEnCours":
-				myCurrentSales = true;
-				break;
-			case "ventesNonDebutees":
-				notSartedSales = true; 
-				break;
-			case "ventesTerminees":
-				endedSales = true;
-				break;
-			default:
-				break;
-			}
-			// récupération de la liste d'Enchères en fonction des critères sélectionnés par
-			// l'utilisateur
-			List<Article> listeEncheres = eMger.userSearchEncheres(research, userPseudo, idCategorie,
-					openAuction, winAuction, myAuction, myCurrentSales, notSartedSales, endedSales);
-
-			request.setAttribute("listeEncheres", listeEncheres);
-			request.setAttribute("selectedCategorie", categorie);
-			request.setAttribute("search", research);
-
-			// set des boutons radios
-			request.setAttribute("openAuction", openAuction);
-			request.setAttribute("myAuction", myAuction);
-			request.setAttribute("winAuction", winAuction);
-			request.setAttribute("myCurrentSales", myCurrentSales);
-			request.setAttribute("notSartedSales", notSartedSales);
-			request.setAttribute("endedSales", endedSales);
+		switch (rdoAV) {
+		case "encheresOuvertes":
+			openAuction = true;
+			break;
+		case "mesEncheres":
+			myAuction = true;
+			break;
+		case "encheresRemportees":
+			winAuction = true;
+			break;
+		case "ventesEnCours":
+			myCurrentSales = true;
+			break;
+		case "ventesNonDebutees":
+			notSartedSales = true; 
+			break;
+		case "ventesTerminees":
+			endedSales = true;
+			break;
+		default:
+			myCurrentSales = true;
+			break;
 		}
+		// récupération de la liste d'Enchères en fonction des critères sélectionnés par
+		// l'utilisateur
+		List<Article> listeEncheres = eMger.userSearchEncheres(research, userPseudo, idCategorie,
+				openAuction, winAuction, myAuction, myCurrentSales, notSartedSales, endedSales);
+
+		request.setAttribute("listeEncheres", listeEncheres);
+		request.setAttribute("selectedCategorie", categorie);
+		request.setAttribute("search", research);
+
+		// set des boutons radios
+		request.setAttribute("openAuction", openAuction);
+		request.setAttribute("myAuction", myAuction);
+		request.setAttribute("winAuction", winAuction);
+		request.setAttribute("myCurrentSales", myCurrentSales);
+		request.setAttribute("notSartedSales", notSartedSales);
+		request.setAttribute("endedSales", endedSales);
 
 		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
