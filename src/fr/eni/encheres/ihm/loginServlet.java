@@ -1,6 +1,7 @@
 package fr.eni.encheres.ihm;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ch.qos.logback.classic.Logger;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
-import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.interfaces.UtilisateurDAO;
+import fr.eni.encheres.logger.encheresLogger;
 
 /**
  * @author qpoinsig2020
@@ -23,6 +24,7 @@ public class loginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager uMger = new UtilisateurManager();
 	private String messageErreur = "";
+	public Logger logger = encheresLogger.logger;
 
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,6 +61,7 @@ public class loginServlet extends HttpServlet {
 				if(connectedUser != null) {
 					HttpSession session = request.getSession(true);
 					session.setAttribute("connectedUser", connectedUser);
+					logger.info("Utilisateur" + connectedUser.getPseudo() + "connecté");
 					request.getRequestDispatcher("/accueilConnecte").forward(request, response);
 				}
 				else {
