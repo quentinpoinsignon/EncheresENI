@@ -54,7 +54,7 @@
 		<input type="date" id="dateFin" name="dateFin" value="${dateFin}"><br><br>
 	
 		
-		
+		<div class="retrait">
 		<fieldset>
   			<legend > Retrait </legend>
   			<label for="rue">Rue:</label>
@@ -64,7 +64,7 @@
 			<label for="ville">Ville:</label>
 			<input class="input" name="ville" id="ville" type="text" value="${ville}" size="30">
 		</fieldset><br><br>
-		
+		</div>
 		<div class="boutons">
 		<button type= "submit" name="enregistrer" id="enregistrer" value="1">Enregistrer</button>
         <a href="accueilConnecte"> <input type="button" name="Annuler" value="Annuler"> </a>

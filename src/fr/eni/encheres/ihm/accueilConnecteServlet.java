@@ -114,7 +114,6 @@ public class accueilConnecteServlet extends HttpServlet {
 		request.setAttribute("myCurrentSales", myCurrentSales);
 		request.setAttribute("notSartedSales", notSartedSales);
 		request.setAttribute("endedSales", endedSales);
-
 		request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 	}
 
