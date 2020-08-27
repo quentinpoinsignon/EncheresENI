@@ -64,31 +64,36 @@ public class nouvelleVenteServlet extends HttpServlet {
 		String msg = "";
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
+		System.out.println(utilisateur.toString());
 		
 
+		// récupération des dates
 		// formatage des dates en java.sql.time
+		java.util.Date debut = null;
+		java.util.Date fin = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.FRENCH);
-		java.sql.Date dateDebut=null;
 		try {
-			dateDebut = bllUtils.dateUtilToSql(formatter.parse(request.getParameter("dateDebut")));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			debut = formatter.parse(request.getParameter("dateDebut"));
+		} catch (ParseException e2) {
+			e2.printStackTrace();
 		}
+		try {
+			fin = formatter.parse(request.getParameter("dateFin"));
+		} catch (ParseException e2) {
+			e2.printStackTrace();
+		}
+		java.sql.Date dateDebut=null;
+			dateDebut = bllUtils.dateUtilToSql(debut);
 
 		java.sql.Date dateFin=null;
-		try {
-			dateFin = bllUtils.dateUtilToSql(formatter.parse(request.getParameter("dateFin")));
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			dateFin = bllUtils.dateUtilToSql(fin);
+			System.out.println(dateDebut.toString());
+			System.out.println(dateFin.toString());
 		
 		if(dateFin.after(dateDebut) && dateFin!=null && dateDebut!=null) {
 			// création de l'article sans point de retrait
 			// nouvelle vente à 0 par défaut à la création de la vente
 			Article newArticle = new Article(nomArticle, description, dateDebut, dateFin, prixDepart, prixVente, utilisateur, selectedCategorie, 0);
-			System.out.println(newArticle.getUtilisateur().getNoUtilisateur());
 			
 			// saisie de l'article dans la BDD
 			aMger.addArticle(newArticle, rue, ville, codepostal);
