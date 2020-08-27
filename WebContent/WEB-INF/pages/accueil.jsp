@@ -28,8 +28,8 @@
 	<h1>ENI-Enchères</h1>
 	<br>
 	<div class="liens">
-	<a href="${pageContext.request.contextPath}/encheres?action=inscription">S'inscrire</a>
-	<a href="${pageContext.request.contextPath}/encheres?action=login">Se connecter</a>
+	<a href="${pageContext.request.contextPath}/encheres?action=inscription" class="liensHeader">S'inscrire</a>
+	<a href="${pageContext.request.contextPath}/encheres?action=login" class="liensHeader">Se connecter</a>
 	</div>
 </header>
 

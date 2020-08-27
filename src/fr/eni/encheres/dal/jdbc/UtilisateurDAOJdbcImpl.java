@@ -560,7 +560,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * 
 	 * @param user        -> Objet de type Utilisateur. Permet de r�cup�rer l'ancien
 	 *                    mot de passe enregistr� dans la base de donn�es
-	 * @param oldPassword -> Chaine de caract�res correspondant � l'ancien mot de
+	 * @param oldPassword -> Chaine de caract�res correspondant à l'ancien mot de
 	 *                    passe fourni par l'utilisateur
 	 * @param newPassword -> Chaine de caract�res correspondant au nouveau mot de
 	 *                    passe fourni par l'utilisateur

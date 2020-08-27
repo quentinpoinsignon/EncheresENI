@@ -29,9 +29,9 @@
 	<br>
 
 	<div class="liens">
-		<a href="${pageContext.request.contextPath}/nouvelleVente">Vendre un article    </a>
-		<a href="${pageContext.request.contextPath}/profil?user=${connectedUser.getPseudo()}">Mon profil    </a>
-		<a href="${pageContext.request.contextPath}/accueilConnecte?action=deconnexion">Déconnexion    </a>
+		<a href="${pageContext.request.contextPath}/nouvelleVente" class="liensHeader">Vendre un article    </a>
+		<a href="${pageContext.request.contextPath}/profil?user=${connectedUser.getPseudo()}" class="liensHeader">Mon profil    </a>
+		<a href="${pageContext.request.contextPath}/accueilConnecte?action=deconnexion" class="liensHeader">Déconnexion    </a>
 	</div>
  
 </header>
