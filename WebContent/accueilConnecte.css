@@ -1,4 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+
 html {
+	font-family: 'Balsamiq Sans', cursive;
+}
+
+a{
+	 text-decoration:none; 
 }
 
 .divPage {
@@ -94,7 +101,7 @@ form {
 	background-color: WhiteSmoke;
 	border : 2px solid rgb(19, 74, 128);
 	border-radius: 10px;
-	margin: 10px 5px 5px 5px;
+	margin: 20px;
 	position: relative;
 }
 
