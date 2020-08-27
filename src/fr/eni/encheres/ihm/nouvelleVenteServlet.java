@@ -62,7 +62,6 @@ public class nouvelleVenteServlet extends HttpServlet {
 		String msg = "";
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("connectedUser");
-		System.out.println(utilisateur.toString());
 		String essaiDebut = request.getParameter("dateDebut");
 		System.out.println(essaiDebut);
 		

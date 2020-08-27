@@ -576,7 +576,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			Connection databaseConnection = JdbcTools.getConnection();
 
 			preparedStatement = databaseConnection.prepareStatement(ARTICLE_SEARCH_BY_USER_REQUEST_ALL_AUCTION);
-			System.out.println("Je passe ici");
 			preparedStatement.setString(1, "%" + research + "%");
 
 			myResultset = preparedStatement.executeQuery();
@@ -613,7 +612,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 
 		myResultset.close();
-		System.out.println(searchResult.toString());
 		return searchResult;
 
 	}

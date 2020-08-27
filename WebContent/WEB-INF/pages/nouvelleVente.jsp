@@ -43,10 +43,6 @@
 			<%}%>
 		</select><br><br>
 		
-		<!-- lien pour telecharger une photo -->
-		<label for="photo">Photo de l'article:</label>
-		<input type="file" id="photo" name="photo" accept="image/png, image/jpeg"><br><br>
-		
 		<label for="prixDepart">Mise à prix</label>
 		<input type="number" id="prixDepart" name="prixDepart" value="${prixDepart}" min="10" max="1000"><br><br>
 		

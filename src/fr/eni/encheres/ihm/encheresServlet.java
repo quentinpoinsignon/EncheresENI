@@ -48,7 +48,6 @@ public class encheresServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String research = (request.getParameter("search")==null?"":request.getParameter("search"));
-		System.out.println(research);
 		String categorie = (request.getParameter("selectedCategorie")==null?"0":request.getParameter("selectedCategorie"));
 		int idCategorie = (Integer.valueOf(categorie)==null?0:Integer.parseInt(categorie));
 		List<Article> listeEncheres = eMger.userSearchEncheres(research, "", idCategorie, false, false, false, false, false, false);

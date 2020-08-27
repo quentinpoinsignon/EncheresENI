@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<appender name="fichier" class="ch.qos.logback.core.FileAppender">
-		<file>C:\Users\qpoinsig2020\Documents\eclipse-workspace\EncheresENI\encheres.log</file>
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>C:\Users\qpoinsig2020\Documents\eclipse-workspace\EncheresENI\WebContent\encheres.log</file>
 		<encoder>
 			<pattern>
 				%d{HH:mm:ss} %-5level %logger{36} - %msg%n
@@ -16,7 +16,7 @@
 		</encoder>
 	</appender>
 	<logger name="fr.eni.encheres">
-		<appender-ref ref="fichier" />
+		<appender-ref ref="FILE" />
 	</logger>
 	<root level="debug">
 		<appender-ref ref="stdout" />

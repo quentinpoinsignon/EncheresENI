@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Logger;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
-import fr.eni.encheres.logger.encheresLogger;
 
 /**
  * @author qpoinsig2020
@@ -24,7 +24,7 @@ public class loginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UtilisateurManager uMger = new UtilisateurManager();
 	private String messageErreur = "";
-	public Logger logger = encheresLogger.logger;
+	public Logger logger = (Logger) LoggerFactory.getLogger(loginServlet.class);
 
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,6 +66,7 @@ public class loginServlet extends HttpServlet {
 				}
 				else {
 					messageErreur = "Login ou mot de passe incorrect";
+					logger.error("Erreur connexion de l'utilisateur : " + identifiant);
 					request.setAttribute("erreurLogin", messageErreur);
 					request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
 				}

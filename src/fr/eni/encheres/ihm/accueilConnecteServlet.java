@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Logger;
 import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Utilisateur;
+
 
 /**
  * Servlet implementation class accueilConnecteServlet
@@ -26,14 +29,17 @@ import fr.eni.encheres.bo.Utilisateur;
 public class accueilConnecteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private EnchereManager eMger = new EnchereManager();
+	public Logger logger = (Logger) LoggerFactory.getLogger(accueilConnecteServlet.class);
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("inthedoget accueilConnecte");
 		String action = request.getParameter("action");
 		if (("deconnexion").equals(action)) {
 			// on tue la session en enlevant l'utilisateur connecté
+			Utilisateur connectedUser = (Utilisateur) request.getSession().getAttribute("connectedUser");
+			logger.info("Utilisateur " + connectedUser.getPseudo() + " déconnecté");
 			request.getSession().removeAttribute("connectedUser");
+			connectedUser = null;
 			//set des attributs pour affichage correct de la page d'accueil non connecté
 			List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
 					false, false, false, false, false, false);
@@ -54,11 +60,9 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("inthedopost accueilConnecte");
 		// récupération des paramètres
 		String action = (request.getParameter("rechercher")==null?"":request.getParameter("rechercher"));
 		String categorie = (request.getParameter("selectedCategorie")==null?"0":request.getParameter("selectedCategorie"));
-		System.out.println(categorie);
 		String research = (request.getParameter("search")==null?"":request.getParameter("search"));
 		Utilisateur connectedUser = (Utilisateur) request.getSession().getAttribute("connectedUser");
 		String userPseudo = connectedUser.getPseudo();
