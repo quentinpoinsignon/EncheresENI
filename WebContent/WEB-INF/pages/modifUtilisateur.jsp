@@ -64,8 +64,8 @@
 				<div id="btnActions">
 					<button type= "submit" name="btnAction" id="btnModifier" value="modifier">Modifier</button>
 					${modifEffectuee ? '
-					<button type= "submit" name="btnAction" id="btnRetour" value="retour">Retour</button>':
-					'<button type= "submit" name="btnAction" id="btnAnnuler" value="annuler">Annuler</button>'}
+					<a href="accueilConnecte"> <input type="button" value="Retour"> </a>':
+					'<a href="accueilConnecte"> <input type="button" value="Annuler"> </a>'}
 					<button type= "submit" name="btnAction" id="btnSupprimer" value="supprimer">Supprimer</button>
 				</div>
      			

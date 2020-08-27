@@ -29,6 +29,7 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("in the doget");
 		
 		String action = request.getParameter("action");
 		if (("deconnexion").equals(action)) {
@@ -36,7 +37,6 @@ public class accueilConnecteServlet extends HttpServlet {
 			request.getSession().removeAttribute("connectedUser");
 			//set des attributs pour affichage correct de la page d'accueil non connecté
 			Boolean myCurrentSales = true;
-			Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
 			List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
 					false, false, false, false, false, false);
 			request.setAttribute("listeEncheres", listeEncheres);
@@ -44,6 +44,13 @@ public class accueilConnecteServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		}
 		else {
+			Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
+			String userPseudo = connectedUser.getPseudo();
+			List<Article> listeEncheres = eMger.userSearchEncheres("", userPseudo, 0,
+					false, false, false, false, false, false);
+			Boolean myCurrentSales = true;
+			request.setAttribute("listeEncheres", listeEncheres);
+			request.setAttribute("myCurrentSales", myCurrentSales);
 			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 		}
 	}

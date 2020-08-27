@@ -50,8 +50,8 @@
                     <div id="btnActions">
                     	${isConnectedUser ? 
                     	'<button type="submit" name="action" id="btnRetour" value="modifier">Modifier</button>
-                    	<button type="submit" name="action" id="btnRetour" value="retour">Retour</button> ': 
-                    	'<button type="submit" name="action" id="btnRetour" value="retour">Retour</button>'}
+                    	<a href="accueilConnecte"> <input type="button" value="Retour"> </a> ': 
+                    	'<a href="accueilConnecte"> <input type="button" value="Retour"> </a>'}
                     </div>
                 </div>
 </form>

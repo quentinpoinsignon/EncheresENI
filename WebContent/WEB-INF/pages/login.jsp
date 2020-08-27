@@ -19,7 +19,7 @@
 		<h2>Login</h2>
 		<br>
 		<label for="identifiant">Identifiant : </label><br>
-		<input type="text" name="identifiant" id="identifiant autofocus title="Entrez votre pseudo ou email"><br><br>
+		<input type="text" name="identifiant" id="identifiant" autofocus title="Entrez votre pseudo ou email"><br><br>
 		
 		<label for="password">Mot de Passe : </label><br>
 		<input type="password" name="password" id="password" ><br><br>
