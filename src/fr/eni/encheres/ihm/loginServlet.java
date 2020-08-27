@@ -61,7 +61,7 @@ public class loginServlet extends HttpServlet {
 				if(connectedUser != null) {
 					HttpSession session = request.getSession(true);
 					session.setAttribute("connectedUser", connectedUser);
-					logger.info("Utilisateur" + connectedUser.getPseudo() + "connecté");
+					logger.info("Utilisateur " + connectedUser.getPseudo() + " connecté");
 					request.getRequestDispatcher("/accueilConnecte").forward(request, response);
 				}
 				else {

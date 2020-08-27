@@ -2,7 +2,7 @@
 <configuration>
 	<appender name="fichier"
 		class="ch.qos.logback.core.FileAppender">
-		<file>encheres.log</file>
+		<file>/encheres.log</file>
 		<encoder>
 			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
 			</pattern>

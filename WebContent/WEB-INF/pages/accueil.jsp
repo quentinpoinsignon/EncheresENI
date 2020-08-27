@@ -63,6 +63,7 @@
 <%if(article != null && (selectedCategorie.equals((String.valueOf(article.getCategorie().getNoCategorie()))) || (selectedCategorie).equals("0"))){%>
 		<div class="article">
 			<p><%=article.getNomArticle()%></p><br>
+			<p>Description : <%=article.getDescription()%></p><br>
 			<p>Prix : <%=article.getPrixInitial()%> points</p><br>
 			<p>Fin de l'enchère : <%=dateFormat.format(article.getDateFinEncheres())%></p><br>
 			<p>Vendeur : <%=article.getUtilisateur().getPseudo()%></p><br>
