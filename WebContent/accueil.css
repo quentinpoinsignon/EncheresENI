@@ -1,17 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,300&display=swap');
 
 html {
 	margin : 0px 20px 20px 20px;
-	font-family: 'Balsamiq Sans', cursive;
-	
+font-family: 'Roboto', sans-serif;
 }
 a{
 	 text-decoration:none; 
 }
 
-#txtSearch{
-	border-radius: 3px 5px 5px 6px;
-}
+
 
 select{
 	border-radius: 3px 5px 5px 6px;
