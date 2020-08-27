@@ -29,6 +29,7 @@ public class profilServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur connectedUser = (Utilisateur)session.getAttribute("connectedUser");
 		String pseudoTemp = request.getParameter("user");
+		
 		Boolean isConnectedUser = (connectedUser.getPseudo().equals(pseudoTemp)) ? true : false;
 		
 		Utilisateur utilisateur = uMger.getUserProfileByPseudo(pseudoTemp);
