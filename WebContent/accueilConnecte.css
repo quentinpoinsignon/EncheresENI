@@ -1,5 +1,4 @@
 html {
-	margin : 0px 20px 20px 20px;
 }
 
 .divPage {
@@ -95,8 +94,7 @@ form {
 	background-color: WhiteSmoke;
 	border : 2px solid rgb(19, 74, 128);
 	border-radius: 10px;
-	margin: auto;
-	padding : auto;
+	margin: 10px 5px 5px 5px;
 	position: relative;
 }
 
