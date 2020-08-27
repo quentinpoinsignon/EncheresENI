@@ -29,33 +29,32 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		System.out.println("inthedoget accueilConnecte");
 		String action = request.getParameter("action");
 		if (("deconnexion").equals(action)) {
 			// on tue la session en enlevant l'utilisateur connecté
 			request.getSession().removeAttribute("connectedUser");
 			//set des attributs pour affichage correct de la page d'accueil non connecté
-			Boolean myCurrentSales = true;
 			List<Article> listeEncheres = eMger.userSearchEncheres("", "", 0,
 					false, false, false, false, false, false);
 			request.setAttribute("listeEncheres", listeEncheres);
-			request.setAttribute("myCurrentSales", myCurrentSales);
 			request.getRequestDispatcher("/WEB-INF/pages/accueil.jsp").forward(request, response);
 		}
 		else {
 			Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
 			String userPseudo = connectedUser.getPseudo();
+			Boolean openAuction = true;
 			List<Article> listeEncheres = eMger.userSearchEncheres("", userPseudo, 0,
-					false, false, false, false, false, false);
-			Boolean myCurrentSales = true;
+					openAuction, false, false, false, false, false);
 			request.setAttribute("listeEncheres", listeEncheres);
-			request.setAttribute("myCurrentSales", myCurrentSales);
+			request.setAttribute("openAuction", openAuction);
 			request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("inthedopost accueilConnecte");
 		// récupération des paramètres
 		String action = (request.getParameter("rechercher")==null?"":request.getParameter("rechercher"));
 		String categorie = (request.getParameter("selectedCategorie")==null?"0":request.getParameter("selectedCategorie"));
@@ -93,7 +92,7 @@ public class accueilConnecteServlet extends HttpServlet {
 			endedSales = true;
 			break;
 		default:
-			myCurrentSales = true;
+			openAuction = true;
 			break;
 		}
 		// récupération de la liste d'Enchères en fonction des critères sélectionnés par l'utilisateur
