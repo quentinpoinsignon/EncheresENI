@@ -74,7 +74,6 @@ public class nouvelleVenteServlet extends HttpServlet {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH);
 		try {
 			debut = formatter.parse(request.getParameter("dateDebut"));
-			System.out.println(debut.toString());
 		} catch (ParseException e2) {
 			e2.printStackTrace();
 		}

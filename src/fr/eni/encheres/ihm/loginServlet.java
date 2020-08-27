@@ -66,7 +66,8 @@ public class loginServlet extends HttpServlet {
 				if(connectedUser != null) {
 					HttpSession session = request.getSession(true);
 					session.setAttribute("connectedUser", connectedUser);
-					request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte.jsp").forward(request, response);
+//					request.getRequestDispatcher("/WEB-INF/pages/accueilConnecte").forward(request, response);
+					request.getRequestDispatcher("/accueilConnecte").forward(request, response);
 				}
 				else {
 					messageErreur = "Login ou mot de passe incorrect";

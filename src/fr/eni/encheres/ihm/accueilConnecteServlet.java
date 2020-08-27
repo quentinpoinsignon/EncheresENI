@@ -29,6 +29,7 @@ public class accueilConnecteServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("in the do get of accueil connecté");
 		//affichage par défaut lors de l'arrivée sur la page
 		Boolean myCurrentSales = true;
 		Utilisateur connectedUser = (Utilisateur)request.getSession().getAttribute("connectedUser");
