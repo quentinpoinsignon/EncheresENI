@@ -1,4 +1,4 @@
 /build/
-WebContent\WEB-INF\classes\logback.xml
-WebContent\encheres.log
 
+WebContent/encheres.log
+WebContent/WEB-INF/classes/logback.xml

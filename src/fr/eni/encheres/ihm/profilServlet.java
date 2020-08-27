@@ -33,7 +33,7 @@ public class profilServlet extends HttpServlet {
 		Boolean isConnectedUser = (connectedUser.getPseudo().equals(pseudoTemp)) ? true : false;
 		
 		Utilisateur utilisateur = uMger.getUserProfileByPseudo(pseudoTemp);
-		//définition des paramètres à envoyer à la jsp profil, attributs à "" s'il ne s'agit pas de l'utilisateur connecté
+		//définition des paramètres à envoyer à la jsp profil, attributs à "" s'il ne s'agit pas de l'utilisateur connecté pour respect confidentialité
 		request.setAttribute("isConnectedUser", isConnectedUser);
 		request.setAttribute("pseudo", utilisateur.getPseudo());
 		request.setAttribute("nom", isConnectedUser?utilisateur.getNom():"");
@@ -45,8 +45,6 @@ public class profilServlet extends HttpServlet {
 		request.setAttribute("ville", utilisateur.getVille());
 		
 		request.getRequestDispatcher("/WEB-INF/pages/profil.jsp").forward(request, response);
-			
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
