@@ -62,9 +62,9 @@
 		<div class="menuRadio">
 			<div id="divAV">
 			<p>Achats : </p>
-		  	<input type="radio" name="rdoAV" value="encheresOuvertes" ${openAuction?'checked':''}>enchères ouvertes<br>
-		  	<input type="radio" name="rdoAV" value="mesEncheres" ${myAuction?'checked':''}>mes enchères<br>
-		  	<input type="radio" name="rdoAV" value="encheresRemportees" ${winAuction?'checked':''}>mes enchères remportées<br>
+		  	<input type="radio" name="rdoAV" value="encheresOuvertes" ${openAuction?'checked':''}>Enchères ouvertes<br>
+		  	<input type="radio" name="rdoAV" value="mesEncheres" ${myAuction?'checked':''}>Mes enchères<br>
+		  	<input type="radio" name="rdoAV" value="encheresRemportees" ${winAuction?'checked':''}>Enchères remportées<br>
 		  	</div>
 		  	<div id="divAV">
 			<p>Ventes : </p>
