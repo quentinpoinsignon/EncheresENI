@@ -116,9 +116,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private final String SELECT_ALL_PSEUDO = "SELECT pseudo FROM UTILISATEURS\r\n" + "ORDER BY pseudo";
 
 	/**
-	 * @Constante SELECT_ALL_EMAIL -> Chaine de caract�res contenant une requ�te SQL
-	 *            permettant de r�cup�rer l'ensemble des emails enregistr�s dans la
-	 *            base de donn�es
+	 * @Constante SELECT_ALL_EMAIL -> Chaine de caractères contenant une requète SQL
+	 *            permettant de récupérer l'ensemble des emails enregistr�s dans la
+	 *            base de données
 	 * 
 	 * @value "SELECT email FROM UTILISATEURS\r\n\" + \"ORDER BY email";
 	 */
@@ -178,7 +178,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * 
 	 * @commentaire
 	 * 
-	 *              Cette m�thode permet de v�rifier si l'email et le mot de passe
+	 *              Cette méthode permet de v�rifier si l'email et le mot de passe
 	 *              fourni par l'utilisateur sont bien pr�sents dans la base de
 	 *              donn�es et correspondent entre eux.
 	 */
